@@ -1,8 +1,8 @@
 import React from "react";
 import { useState } from "react";
 import styled from "styled-components";
-import Field from "./Field";
-import Label from "./Label";
+import Field from "../components/common/Field";
+import Label from "../components/common/Label";
 
 const StyledTextarea = styled.textarea`
     width: 100%;
