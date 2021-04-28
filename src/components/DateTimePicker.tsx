@@ -5,7 +5,7 @@ import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import MomentUtils from "@date-io/moment";
 import { MuiPickersUtilsProvider } from "@material-ui/pickers";
 import TimePicker from "./TimePicker";
-import Calendar from "./Calendar";
+import Calendar from "./common/Calendar";
 import { dataTimePickerCalendarTheme } from "../themes";
 
 const DateTimePickerRoot = styled.div`

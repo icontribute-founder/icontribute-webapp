@@ -1,4 +1,3 @@
-import React from "react";
 import styled from "styled-components";
 
 export const StyledBackground = styled.div`
@@ -7,9 +6,3 @@ export const StyledBackground = styled.div`
     border-radius: 24px;
     padding: 35px;
 `;
-
-const WidgetPaper = ({ children }: any) => {
-    return <StyledBackground>{children}</StyledBackground>;
-};
-
-export default WidgetPaper;

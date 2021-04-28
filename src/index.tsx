@@ -17,6 +17,3 @@ ReactDOM.render(
 
 //here is the edit that Steven made
 //just testing / practicing the git commands again - Steven Bai
-
-
-

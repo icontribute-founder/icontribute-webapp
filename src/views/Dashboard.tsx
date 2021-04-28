@@ -3,7 +3,6 @@ import MomentUtils from "@date-io/moment";
 import { MuiPickersUtilsProvider } from "@material-ui/pickers";
 import { Grid, List, ListItem, Typography } from "@material-ui/core";
 import { uniqueId } from "lodash";
-import Calendar from "../components/Calendar";
 import {
     configApiRequestToken,
     configAuthToken,
@@ -18,7 +17,7 @@ import {
 
 import OpportunityCard from "../components/OpportunityCard";
 import { dashboardContext } from "../context/dashboardContext";
-import { dashboardCalendarTheme } from "../themes";
+import DashboardCalendar from "../components/DashboardCalendar";
 
 const Dashboard = () => {
     // this blocked is used only before login/register portal built up, delete later
@@ -72,20 +71,28 @@ const Dashboard = () => {
         <div>
             <MuiPickersUtilsProvider utils={MomentUtils}>
                 <Grid container>
-                    <Grid item lg={3}>
+                    <Grid item lg={4}>
                         <br />
-                        <Calendar
-                            daysHaveOpportunities={daysHaveOpportunities}
-                            theme={dashboardCalendarTheme}
-                            handleSelectDate={handleSelectDate}
-                        />
+                        <div style={{ position: "fixed" }}>
+                            <DashboardCalendar
+                                daysHaveOpportunities={daysHaveOpportunities}
+                                handleSelectDate={handleSelectDate}
+                            />
+                        </div>
                     </Grid>
-                    <Grid item lg={9}>
+                    <Grid item lg>
                         <List>
                             <ListItem>
-                                <Typography variant="h3">
+                                <h3
+                                    style={{
+                                        fontSize: "28px",
+                                        fontFamily: "Source Sans Pro",
+                                        margin: "16px 0px 8px 0px",
+                                        width: "100%",
+                                    }}
+                                >
                                     Your Opportunities
-                                </Typography>
+                                </h3>
                             </ListItem>
                             {events.map((opportunity) => (
                                 <ListItem key={uniqueId()}>

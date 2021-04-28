@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { StyledBackground } from "./WidgetPaper";
+import { StyledBackground } from "./WidgetPaper/style";
 import Menu from "./Menu";
 import TrashButton from "./TrashButton";
 import { clone, pullAt, uniqueId } from "lodash";

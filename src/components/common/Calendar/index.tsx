@@ -1,31 +1,8 @@
 import React from "react";
-import styled from "styled-components";
 import { useStaticState, Calendar as CalendarUI } from "@material-ui/pickers";
-import { Paper, ThemeProvider } from "@material-ui/core";
+import { ThemeProvider } from "@material-ui/core";
 import { MaterialUiPickersDate } from "@material-ui/pickers/typings/date";
-
-const CalendarPaper = styled(Paper)`
-    overflow: hidden;
-    width: fit-content;
-    background-color: inherit;
-    color: white;
-`;
-
-const DayWithDotContainer = styled.div`
-    position: relative;
-`;
-
-const DateWithDot = styled.div`
-    position: absolute;
-    height: 0;
-    width: 0;
-    border: 3px solid;
-    border-radius: 5px;
-    border-color: #ffbc03;
-    right: 45.5%;
-    transform: translateX(1px);
-    top: 73%;
-`;
+import { CalendarPaper, DateWithDot, DayWithDotContainer } from "./style";
 
 const Calendar = ({
     daysHaveOpportunities,
@@ -68,26 +45,22 @@ const Calendar = ({
         return dayComponent;
     }
 
+    const calendar = (
+        <CalendarPaper>
+            <CalendarUI
+                {...pickerProps}
+                renderDay={renderDay}
+                disablePast={disablePast}
+                shouldDisableDate={shouldDisableDate}
+            />
+        </CalendarPaper>
+    );
+
     if (theme === null) {
-        return (
-            <CalendarPaper elevation={0}>
-                <CalendarUI {...pickerProps} renderDay={renderDay} />
-            </CalendarPaper>
-        );
+        return calendar;
     }
 
-    return (
-        <ThemeProvider theme={theme}>
-            <CalendarPaper elevation={0}>
-                <CalendarUI
-                    {...pickerProps}
-                    renderDay={renderDay}
-                    disablePast={disablePast}
-                    shouldDisableDate={shouldDisableDate}
-                />
-            </CalendarPaper>
-        </ThemeProvider>
-    );
+    return <ThemeProvider theme={{ ...theme }}>{calendar}</ThemeProvider>;
 };
 
 export default Calendar;

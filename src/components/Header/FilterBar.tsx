@@ -41,14 +41,14 @@ const FilterBar = () => {
             <FlexGrow />
             <ToolbarContainer>
                 <FilterMenu
-                    options={sortByOptions}
-                    selected={sortBy}
-                    setSelected={sortBySelected}
-                />
-                <FilterMenu
                     options={typeOptions}
                     selected={opportunityType}
                     setSelected={typeSelected}
+                />
+                <FilterMenu
+                    options={sortByOptions}
+                    selected={sortBy}
+                    setSelected={sortBySelected}
                 />
             </ToolbarContainer>
         </Toolbar>

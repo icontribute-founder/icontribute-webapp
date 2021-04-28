@@ -7,7 +7,7 @@ import { Route, BrowserRouter as Router, Switch } from "react-router-dom";
 import { dashboardContext, intialDashboard } from "../context/dashboardContext";
 import Header from "./Header";
 import { routes } from "../routes";
-import { theme } from "../theme";
+import { theme } from "../themes";
 
 const StyledApp = styled.div`
     height: fit-content;
