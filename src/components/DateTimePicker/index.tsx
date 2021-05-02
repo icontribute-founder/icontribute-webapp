@@ -1,35 +1,16 @@
 import React, { useState, MouseEvent } from "react";
-import styled from "styled-components";
-import { Button, Menu } from "@material-ui/core";
+import { Menu } from "@material-ui/core";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import MomentUtils from "@date-io/moment";
 import { MuiPickersUtilsProvider } from "@material-ui/pickers";
-import TimePicker from "./TimePicker";
-import Calendar from "./common/Calendar";
-import { dataTimePickerCalendarTheme } from "../themes";
-
-const DateTimePickerRoot = styled.div`
-    width: 100%;
-`;
-
-const DateTimeContainer = styled.div`
-    display: flex;
-    background-color: #1284b0;
-`;
-
-const DateTimePickerButton = styled(Button)`
-    width: 100%;
-    border: 3px solid #c4c4c4;
-    box-sizing: border-box;
-    border-radius: 20px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin: 0px;
-    * {
-        margin: 0px !important;
-    }
-`;
+import TimePicker from "../TimePicker";
+import Calendar from "../common/Calendar";
+import { dataTimePickerCalendarTheme } from "../../themes";
+import {
+    DateTimeContainer,
+    DateTimePickerButton,
+    DateTimePickerRoot,
+} from "./style";
 
 const DateTimePicker = ({
     dateTime,

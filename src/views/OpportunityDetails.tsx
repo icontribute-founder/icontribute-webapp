@@ -4,7 +4,7 @@ import { Grid, Box } from "@material-ui/core";
 import { v4 as uuidv4 } from "uuid";
 import InputField from "../components/common/InputField";
 import ShiftCard from "../components/ShiftCard";
-import TextareaField from "../components/TextareaField";
+import TextareaField from "../components/common/TextareaField";
 import WidgetPaper from "../components/WidgetPaper";
 
 const StyledHeader2 = styled.h2`

@@ -1,7 +1,6 @@
-import React from "react";
 import styled from "styled-components";
 
-const StepperContainer = styled.ul`
+export const StepperContainer = styled.ul`
     list-style: none;
     width: 100px;
     margin-block-start: 0px;
@@ -9,7 +8,7 @@ const StepperContainer = styled.ul`
     padding: 0px;
 `;
 
-const Circle = styled.div<{ active: boolean }>`
+export const Circle = styled.div<{ active: boolean }>`
     border: 4px solid ${(props) => (props.active ? "#026896" : "inherit")};
     box-sizing: border-box;
     border-radius: 50%;
@@ -20,7 +19,7 @@ const Circle = styled.div<{ active: boolean }>`
     z-index: 1;
 `;
 
-const Step = styled.li<{ completed: boolean }>`
+export const Step = styled.li<{ completed: boolean }>`
     position: relative;
     height: 137px;
 
@@ -67,52 +66,8 @@ const Step = styled.li<{ completed: boolean }>`
     }
 `;
 
-const StepName = styled.p`
+export const StepName = styled.p`
     margin: 0px;
     margin-left: 12px;
     top: -51px;
 `;
-
-interface props {
-    steps: {
-        name: string;
-        active: boolean;
-        completed: boolean;
-    }[];
-}
-
-const Stepper = ({ steps }: props) => {
-    // const steps = [
-    //     {
-    //         name: "Application Details",
-    //         active: true,
-    //         completed: true,
-    //     },
-    //     {
-    //         name: "Basic Details",
-    //         active: false,
-    //         completed: false,
-    //     },
-    //     {
-    //         name: "Opportunity Details",
-    //         active: false,
-    //         completed: false,
-    //     },
-    //     {
-    //         name: "Review",
-    //         active: false,
-    //         completed: false,
-    //     },
-    // ];
-    return (
-        <StepperContainer>
-            {steps.map(({ name, active, completed }) => (
-                <Step completed={completed} key={name}>
-                    <Circle active={active} />
-                    <StepName>{name}</StepName>
-                </Step>
-            ))}
-        </StepperContainer>
-    );
-};
-export default Stepper;

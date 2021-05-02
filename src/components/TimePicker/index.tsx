@@ -1,43 +1,13 @@
 import React from "react";
-import styled from "styled-components";
-import { ListItem, List, ListItemText, ListSubheader } from "@material-ui/core";
+import { ListItem } from "@material-ui/core";
 import { v4 as uuidv4 } from "uuid";
-
-const TimePickerList = styled(List)`
-    width: 200px;
-    max-height: 327px;
-    overflow: auto;
-    background-color: #f1f1f2;
-`;
-
-const TimePickerListItemText = styled(ListItemText)`
-    text-align: center;
-    color: #13394a;
-    font-family: Source Sans Pro;
-    font-style: normal;
-    font-weight: normal;
-    line-height: 120%;
-`;
-
-const TimePickerListSubheader = styled(ListSubheader)`
-    font-size: 24px;
-    color: #026896;
-    font-family: Source Sans Pro;
-    font-style: normal;
-    font-weight: 600;
-    line-height: 120%;
-    padding: 10px 20px;
-    text-align: center;
-`;
-
-const TimePickerListItem = styled.li`
-    background-color: inherit;
-`;
-
-const TimePickerListUl = styled.ul`
-    background-color: inherit;
-    padding: 0;
-`;
+import {
+    TimePickerList,
+    TimePickerListItem,
+    TimePickerListItemText,
+    TimePickerListSubheader,
+    TimePickerListUl,
+} from "./style";
 
 const TimePicker = ({
     dateString,
@@ -56,6 +26,7 @@ const TimePicker = ({
         date.setHours(parseInt(ds[0]), parseInt(ds[1]), parseInt(ds[2]));
         return shouldDisableTime !== undefined && shouldDisableTime(date);
     };
+
     return (
         <TimePickerList subheader={<TimePickerListItem />}>
             <TimePickerListItem>

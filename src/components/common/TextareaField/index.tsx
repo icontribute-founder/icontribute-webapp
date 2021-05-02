@@ -1,31 +1,8 @@
 import React from "react";
 import { useState } from "react";
-import styled from "styled-components";
-import Field from "../components/common/Field";
-import Label from "../components/common/Label";
-
-const StyledTextarea = styled.textarea`
-    width: 100%;
-    border: 3px solid #cdcdcd;
-    box-sizing: border-box;
-    border-radius: 24px;
-    padding: 10px;
-    resize: none;
-    font-style: normal;
-    font-family: Source Sans Pro;
-    ::placeholder {
-        color: #cdcdcd;
-    }
-`;
-
-const StyledWordCount = styled.span`
-    font-family: Source Sans Pro;
-    font-style: normal;
-    font-weight: 600;
-    font-size: 14px;
-    line-height: 100%;
-    float: right;
-`;
+import Field from "../Field";
+import Label from "../Label";
+import { StyledTextarea, StyledWordCount } from "./style";
 
 const TextareaField = ({
     label,

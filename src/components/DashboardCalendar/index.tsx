@@ -1,6 +1,6 @@
 import React from "react";
-import { dashboardCalendarTheme } from "../themes";
-import Calendar from "./common/Calendar";
+import { dashboardCalendarTheme } from "../../themes";
+import Calendar from "../common/Calendar";
 
 const DashboardCalendar = ({
     daysHaveOpportunities,

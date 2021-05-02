@@ -1,12 +1,7 @@
 import React from "react";
-import styled from "styled-components";
 import { useState } from "react";
-import DateTimePicker from "./DateTimePicker";
-
-const StartEndDates = styled.div`
-    display: flex;
-    justify-content: space-between;
-`;
+import DateTimePicker from "../DateTimePicker";
+import { StartEndDates } from "./style";
 
 const DateTimeRangePicker = ({
     start,
