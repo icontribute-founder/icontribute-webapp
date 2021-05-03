@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import MomentUtils from "@date-io/moment";
 import { MuiPickersUtilsProvider } from "@material-ui/pickers";
-import { Grid, List, ListItem, Typography } from "@material-ui/core";
+import { Grid, List, ListItem, LinearProgress } from "@material-ui/core";
 import { uniqueId } from "lodash";
 import {
     configApiRequestToken,
@@ -20,6 +20,8 @@ import { dashboardContext } from "../context/dashboardContext";
 import DashboardCalendar from "../components/DashboardCalendar";
 
 const Dashboard = () => {
+    const [loading, setLoading] = useState(true);
+
     // this blocked is used only before login/register portal built up, delete later
     configApiRequestToken(getAccessToken);
     configAuthToken(getRefreshBody, setAccessToken);
@@ -51,6 +53,7 @@ const Dashboard = () => {
 
                 const { data: events } = await searchEvent(query);
                 setEvents(events);
+                setLoading(false);
             } catch (error) {
                 console.log(error);
             }
@@ -94,13 +97,17 @@ const Dashboard = () => {
                                     Your Opportunities
                                 </h3>
                             </ListItem>
-                            {events.map((opportunity) => (
-                                <ListItem key={uniqueId()}>
-                                    <OpportunityCard
-                                        opportunity={opportunity}
-                                    />
-                                </ListItem>
-                            ))}
+                            {loading ? (
+                                <LinearProgress />
+                            ) : (
+                                events.map((opportunity) => (
+                                    <ListItem key={uniqueId()}>
+                                        <OpportunityCard
+                                            opportunity={opportunity}
+                                        />
+                                    </ListItem>
+                                ))
+                            )}
                         </List>
                     </Grid>
                 </Grid>
