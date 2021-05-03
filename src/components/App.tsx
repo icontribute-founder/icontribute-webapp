@@ -1,38 +1,53 @@
-import { Container } from "@material-ui/core";
 import React, { useState } from "react";
-import { Route, BrowserRouter as Router } from "react-router-dom";
-import { makeStyles } from "@material-ui/core/styles";
+import { Container } from "@material-ui/core";
+import { StylesProvider } from "@material-ui/core/styles";
+import { ThemeProvider } from "styled-components";
+import styled from "styled-components";
+import { Route, BrowserRouter as Router, Switch } from "react-router-dom";
 import { dashboardContext, intialDashboard } from "../context/dashboardContext";
-import Dashboard from "../views/Dashboard";
 import Header from "./Header";
-import NewOpportunity from "../views/NewOpportunity";
+import { routes } from "../routes";
+import { theme } from "../themes";
 
-const useStyles = makeStyles({
-    root: {
-        // background: "#E7EBEF",
-        height: "fit-content",
-    },
-});
+const StyledApp = styled.div`
+    height: fit-content;
+`;
+
+const RouteWithSubRoutes = (route: any) => {
+    return (
+        <Route
+            path={route.path}
+            exact={route.exact}
+            render={(props) => (
+                <route.component {...props} routes={route.routes} />
+            )}
+        />
+    );
+};
+
 const App = () => {
-    const classes = useStyles();
     const [dashboard, setDashboard] = useState(intialDashboard);
 
+    const router = (
+        <Router>
+            <Header />
+            <Container fixed>
+                <Switch>
+                    {routes.map((route, i) => (
+                        <RouteWithSubRoutes key={`route-${i}`} {...route} />
+                    ))}
+                </Switch>
+            </Container>
+        </Router>
+    );
     return (
-        <div className={classes.root}>
-            <Router>
+        <StylesProvider injectFirst>
+            <ThemeProvider theme={theme}>
                 <dashboardContext.Provider value={{ dashboard, setDashboard }}>
-                    <Header />
-                    <Container fixed>
-                        <Route exact path="/" component={Dashboard} />
-                        <Route
-                            exact
-                            path="/new-opportunity"
-                            component={NewOpportunity}
-                        />
-                    </Container>
+                    <StyledApp>{router}</StyledApp>
                 </dashboardContext.Provider>
-            </Router>
-        </div>
+            </ThemeProvider>
+        </StylesProvider>
     );
 };
 

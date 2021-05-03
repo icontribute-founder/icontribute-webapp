@@ -4,7 +4,7 @@ import { useState } from "react";
 import styled from "styled-components";
 import ApplicationDetails from "../components/ApplicationDetail/ApplicationDetail";
 import OpportunityDetails from "./OpportunityDetails";
-import Stepper from "../components/Stepper";
+import Stepper from "../components/common/Stepper";
 import { Grid } from "@material-ui/core";
 
 const NewOpportunityContainer = styled.div`

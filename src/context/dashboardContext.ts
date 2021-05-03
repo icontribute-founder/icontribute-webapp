@@ -4,7 +4,7 @@ export const intialDashboard = {
     sortBy: "des",
     date: new Date(),
     searchQuery: "",
-    opportunityType: "all",
+    opportunityType: "live",
 };
 
 // type DashboardContextType = {

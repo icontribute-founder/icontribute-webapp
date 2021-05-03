@@ -1,81 +1,17 @@
 import { createMuiTheme } from "@material-ui/core";
+import palette from "./palette";
+import typography from "./typography";
+import {
+    dashboardCalendarTheme as t1,
+    dataTimePickerCalendarTheme as t2,
+} from "./calendar";
 
-export const dataTimePickerCalendarTheme = createMuiTheme({
-    overrides: {
-        MuiPickersCalendar: {
-            week: {
-                padding: 5,
-            },
-        },
-        MuiPickersCalendarHeader: {
-            switchHeader: {
-                padding: "0px 6px",
-            },
-            daysHeader: {
-                padding: "0px 14px",
-            },
-            iconButton: {
-                backgroundColor: "inherit",
-                color: "white",
-            },
-        },
-        MuiPickersDay: {
-            day: {
-                color: "white",
-            },
-            daySelected: {
-                backgroundColor: "#FFBC03",
-                "&:hover": {
-                    backgroundColor: "#FFBC03",
-                },
-            },
-            dayDisabled: {
-                color: "#FFBC03",
-            },
-            current: {
-                color: "#FFBC03",
-            },
-        },
-        MuiTypography: {
-            caption: {
-                color: "white !important",
-            },
-            body1: {
-                fontWeight: 800,
-            },
-        },
-    },
-});
+const baseTheme = {
+    palette,
+    typography,
+};
 
-export const dashboardCalendarTheme = createMuiTheme({
-    spacing: 2,
-    overrides: {
-        MuiPickersDay: {
-            daySelected: {
-                backgroundColor: "#FFBC03",
-                "&:hover": {
-                    backgroundColor: "#FFBC03",
-                },
-            },
-            dayDisabled: {
-                color: "#FFBC03",
-            },
-            current: {
-                color: "#FFBC03",
-            },
-        },
-        MuiTypography: {
-            caption: {
-                color: "black !important",
-            },
-            body1: {
-                fontWeight: 800,
-            },
-        },
-        MuiPickersCalendarHeader: {
-            iconButton: {
-                backgroundColor: "inherit",
-            },
-        },
-    },
-});
+export const theme = createMuiTheme(baseTheme);
+
+export const dashboardCalendarTheme = createMuiTheme(t1);
+export const dataTimePickerCalendarTheme = createMuiTheme(t2);
