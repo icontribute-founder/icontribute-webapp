@@ -7,7 +7,6 @@ import FilterBar from "./FilterBar";
 
 const Header = () => {
     const location = useLocation();
-    console.log(location);
 
     const showFilter = location.pathname === "/";
 
