@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { Grid } from "@material-ui/core";
-import WidgetPaper from "../../components/WidgetPaper";
-import InputField from "../../components/common/InputField";
+import WidgetPaper from "../WidgetPaper";
+import InputField from "../common/InputField";
 
 const StyledHeader3 = styled.h3`
   font-family: Source Sans Pro;
@@ -45,7 +45,7 @@ const SaveButton = styled.button`
   margin-top: 40px;
 `;
 
-function LoginDetail() {
+const LoginDetail = () => {
   return (
     <div>
       <WidgetPaper>
@@ -89,6 +89,6 @@ function LoginDetail() {
       </Grid>
     </div>
   );
-}
+};
 
 export default LoginDetail;

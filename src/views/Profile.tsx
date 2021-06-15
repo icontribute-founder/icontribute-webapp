@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { Grid } from "@material-ui/core";
-import LoginDetail from "../components/LoginDetail/LoginDetail";
+import LoginDetail from "../components/Profile/LoginDetail";
+import ProfileSide from "../components/Profile/ProfileSide";
 
 const ProfileContainer = styled.div`
   width: 100%;
@@ -9,17 +10,11 @@ const ProfileContainer = styled.div`
   padding-top: 20px;
 `;
 
-const ProfileSide = styled.div`
-  position: fixed;
-  margin-top: 20px;
-  margin-left: 25px;
-`;
-
 const ProfileContent = styled.div`
   position: relative;
   width: auto;
   height: 100%;
-  margin-top: 20px;
+  margin-top: 70px;
   margin-right: 30px;
 `;
 
@@ -64,7 +59,7 @@ const SaveButton = styled.button`
   margin-top: 40px;
 `;
 
-function Profile() {
+const Profile = () => {
   const [currentPage, setCurrentPage] = useState(0);
   const [page, setPage] = useState([
     {
@@ -73,16 +68,14 @@ function Profile() {
     },
     {
       name: "Organization Details",
-      //   component: <ApplicationDetails />,
+      //   component: <OrganizationDetail />,
     },
   ]);
 
   return (
     <div>
       <ProfileContainer>
-        <ProfileSide>
-          <h1>Profile Side</h1>
-        </ProfileSide>
+        <ProfileSide />
         <ProfileContent>
           <Grid container>
             <Grid item xs={4}></Grid>
@@ -94,6 +87,6 @@ function Profile() {
       </ProfileContainer>
     </div>
   );
-}
+};
 
 export default Profile;
