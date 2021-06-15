@@ -11,7 +11,6 @@ const ProfileContainer = styled.div`
 `;
 
 const ProfileContent = styled.div`
-  position: relative;
   width: auto;
   height: 100%;
   margin-top: 70px;
@@ -75,15 +74,15 @@ const Profile = () => {
   return (
     <div>
       <ProfileContainer>
-        <ProfileSide />
-        <ProfileContent>
-          <Grid container>
-            <Grid item xs={4}></Grid>
-            <Grid item xs={8}>
-              {page[currentPage].component}
-            </Grid>
+        <Grid container>
+          <Grid item xs={4}>
+            <ProfileSide />
           </Grid>
-        </ProfileContent>
+
+          <Grid item xs={8}>
+            <ProfileContent>{page[currentPage].component}</ProfileContent>
+          </Grid>
+        </Grid>
       </ProfileContainer>
     </div>
   );
