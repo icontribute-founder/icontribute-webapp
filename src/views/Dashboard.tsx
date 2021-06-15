@@ -26,11 +26,11 @@ const Dashboard = () => {
     configApiRequestToken(getAccessToken);
     configAuthToken(getRefreshBody, setAccessToken);
     const [events, setEvents] = useState([]);
-    const userAuth: AuthUser = {
-        email: "organization@email.com",
-        password: "123456",
-        role: "organization",
-    };
+    const userAuth: any = {
+        email: "jiachengzhang1@email.arizona.edu",
+        password: "password",
+        type: "organization",
+      };
 
     const context = useContext(dashboardContext);
     const {
