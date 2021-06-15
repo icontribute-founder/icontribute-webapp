@@ -18,47 +18,6 @@ const ProfileContent = styled.div`
   margin-right: 30px;
 `;
 
-const StyledHeader3 = styled.h3`
-  font-family: Source Sans Pro;
-  font-style: normal;
-  font-weight: normal;
-  font-size: 36px;
-  line-height: 120%;
-  margin: 0px;
-  color: #133a4b;
-`;
-
-const ChangeButton = styled.button`
-  background-color: #5094b9;
-  border-radius: 10px;
-  &:hover {
-    cursor: pointer;
-  }
-  color: white;
-  border: none;
-  font-size: 15px;
-  line-height: 24px;
-  padding: 6px;
-  padding-left: 17px;
-  padding-right: 17px;
-`;
-
-const SaveButton = styled.button`
-  background-color: #5094b9;
-  border-radius: 12px;
-  &:hover {
-    cursor: pointer;
-  }
-  color: white;
-  border: none;
-  font-size: 16px;
-  line-height: 24px;
-  padding: 14px;
-  padding-left: 143px;
-  padding-right: 143px;
-  margin-top: 40px;
-`;
-
 const Profile = () => {
   const [currentPage, setCurrentPage] = useState(0);
   const [page, setPage] = useState([

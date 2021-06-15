@@ -18,8 +18,7 @@ const StyledHeader3 = styled.h3`
 `;
 
 const SideMenuButton = styled.button<{
-  page: string | null;
-  name: string | null;
+  active: boolean;
 }>`
   font-family: Source Sans Pro;
   font-style: normal;
@@ -34,9 +33,8 @@ const SideMenuButton = styled.button<{
   vertical-align: middle;
   padding-left: 16px;
   margin-left: -14px;
-  background: ${(props) =>
-    props.page === props.name ? "#026896" : "transparent"};
-  color: ${(props) => (props.page === props.name ? "#ffffff" : null)};
+  background: ${(props) => (props.active ? "#026896" : "transparent")};
+  color: ${(props) => (props.active ? "#ffffff" : null)};
   :hover {
     cursor: pointer;
   }
@@ -67,8 +65,7 @@ const ProfileSide = ({ setCurrentPage }: any) => {
       <Grid container>
         <Grid item xs={12}>
           <SideMenuButton
-            name="Login Details"
-            page={page[pageIndex]}
+            active={page[pageIndex] === "Login Details"}
             onClick={handleSidebarMenuClick}
           >
             <p>Login Details</p>
@@ -76,8 +73,7 @@ const ProfileSide = ({ setCurrentPage }: any) => {
         </Grid>
         <Grid item xs={12}>
           <SideMenuButton
-            name="Organization Details"
-            page={page[pageIndex]}
+            active={page[pageIndex] === "Organization Details"}
             onClick={handleSidebarMenuClick}
           >
             <p>Organization Details</p>
