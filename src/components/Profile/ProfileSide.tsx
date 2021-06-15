@@ -17,7 +17,10 @@ const StyledHeader3 = styled.h3`
   color: #133a4b;
 `;
 
-const SideMenuButton = styled.button<{ page: String }>`
+const SideMenuButton = styled.button<{
+  page: string | null;
+  name: string | null;
+}>`
   font-family: Source Sans Pro;
   font-style: normal;
   font-weight: normal;
@@ -43,9 +46,21 @@ const SideMenuButton = styled.button<{ page: String }>`
   }
 `;
 
-const ProfileSide = () => {
-  //   const [activePage, setActivePage] = useState(0);
-  const [page, setPage] = useState("Login Details");
+const ProfileSide = ({ setCurrentPage }: any) => {
+  const [pageIndex, setPageIndex] = useState<number>(0);
+  const [page, setPage] = useState<string[]>([
+    "Login Details",
+    "Organization Details",
+  ]);
+
+  const handleSidebarMenuClick = (
+    e: React.MouseEvent<HTMLButtonElement> | any
+  ) => {
+    const currentIndex = page.indexOf(e.currentTarget.textContent);
+    setPageIndex(currentIndex);
+    setCurrentPage(currentIndex);
+  };
+
   return (
     <SidebarMenu>
       <StyledHeader3>Profile</StyledHeader3>
@@ -53,8 +68,8 @@ const ProfileSide = () => {
         <Grid item xs={12}>
           <SideMenuButton
             name="Login Details"
-            page={page}
-            onClick={(e) => setPage("Login Details")}
+            page={page[pageIndex]}
+            onClick={handleSidebarMenuClick}
           >
             <p>Login Details</p>
           </SideMenuButton>
@@ -62,8 +77,8 @@ const ProfileSide = () => {
         <Grid item xs={12}>
           <SideMenuButton
             name="Organization Details"
-            page={page}
-            onClick={(e) => setPage("Organization Details")}
+            page={page[pageIndex]}
+            onClick={handleSidebarMenuClick}
           >
             <p>Organization Details</p>
           </SideMenuButton>

@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { Grid } from "@material-ui/core";
 import LoginDetail from "../components/Profile/LoginDetail";
 import ProfileSide from "../components/Profile/ProfileSide";
+import OrganizationDetail from "../components/Profile/OrganizationDetail";
 
 const ProfileContainer = styled.div`
   width: 100%;
@@ -67,7 +68,7 @@ const Profile = () => {
     },
     {
       name: "Organization Details",
-      //   component: <OrganizationDetail />,
+      component: <OrganizationDetail />,
     },
   ]);
 
@@ -76,7 +77,7 @@ const Profile = () => {
       <ProfileContainer>
         <Grid container>
           <Grid item xs={4}>
-            <ProfileSide />
+            <ProfileSide setCurrentPage={setCurrentPage} />
           </Grid>
 
           <Grid item xs={8}>
