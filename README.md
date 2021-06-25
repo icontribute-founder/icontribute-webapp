@@ -13,5 +13,3 @@ REACT_APP_AUTH_SERVER_URL=${AUTH_SERVER_URL}
 ```
 
 4. Run the program using `npm start`
-# react-snippets
-# react-snippets
