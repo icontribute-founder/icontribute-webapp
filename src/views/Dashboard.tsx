@@ -30,7 +30,7 @@ const Dashboard = () => {
         email: "jiachengzhang1@email.arizona.edu",
         password: "password",
         type: "organization",
-      };
+};
 
     const context = useContext(dashboardContext);
     const {
