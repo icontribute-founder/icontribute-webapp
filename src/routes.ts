@@ -2,7 +2,9 @@
 
 import Dashboard from "./views/Dashboard";
 import NewOpportunity from "./views/NewOpportunity";
-import Profile from "./views/Profile"
+import Profile from "./views/Profile";
+import Confirmation1 from "./views/Confirmation1";
+import Confirmation2 from "./views/Confirmation2";
 
 export const routes = [
     { path: "/", exact: true, component: Dashboard },
@@ -11,5 +13,8 @@ export const routes = [
         exact: true,
         component: NewOpportunity,
     },
-    { path: "/profile", exact: true, component: Profile }
+    { path: "/profile", exact: true, component: Profile },
+    { path: "/confirmation1", exact: true, component: Confirmation1},
+    { path: "/confirmation2", exact: true, component: Confirmation2},
+
 ];

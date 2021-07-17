@@ -31,6 +31,9 @@ const FilterBar = () => {
     const handleCreateOpportunityClick = () => {
         history.push("/new-opportunity");
     };
+    const handleConfirmationClick = () => {
+        history.push("/confirmation1");
+    };
 
     return (
         <Toolbar>
@@ -38,6 +41,11 @@ const FilterBar = () => {
                 text="Create Opportunity"
                 onClick={handleCreateOpportunityClick}
             />
+            <ThemeButton
+                text="Confirmation"
+                onClick={handleConfirmationClick}
+            />
+            
             <FlexGrow />
             <ToolbarContainer>
                 <FilterMenu
