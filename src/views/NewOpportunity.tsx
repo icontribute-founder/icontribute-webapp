@@ -1,8 +1,7 @@
 import { clone } from "lodash";
-import React from "react";
 import { useState } from "react";
 import styled from "styled-components";
-import ApplicationDetails from "../components/ApplicationDetail/ApplicationDetail";
+import ApplicationDetails from "./ApplicationDetail";
 import OpportunityDetails from "./OpportunityDetails";
 import Stepper from "../components/common/Stepper";
 import { Grid } from "@material-ui/core";

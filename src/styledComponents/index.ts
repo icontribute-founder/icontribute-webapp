@@ -1,2 +1,2 @@
 export * from "./Cards";
-export * from "./Typography";
+export * from "./Typographies";

@@ -5,7 +5,6 @@ export const ICCard = styled.div`
     font-family: Source Sans Pro;
     border-radius: 12px;
     padding: 24px;
-    // width: 100%;
     background: #ffffff;
     box-shadow: 0px 4px 20px rgba(80, 80, 80, 0.06);
     border-radius: 24px;
