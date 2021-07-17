@@ -1,72 +1,50 @@
-import React, { useState } from "react";
-import { makeStyles, Theme, createStyles } from "@material-ui/core/styles";
-import Card from "@material-ui/core/Card";
-import CardMedia from "@material-ui/core/CardMedia";
-import CardContent from "@material-ui/core/CardContent";
-import CardActions from "@material-ui/core/CardActions";
-import Typography from "@material-ui/core/Typography";
-import ApplicationCard from "./ApplicationCard";
-
-const useStyles = makeStyles((theme: Theme) =>
-    createStyles({
-        root: {
-            width: "80%",
-        },
-        cardContainer: {
-            display: "flex",
-        },
-        header: {
-            // margin: "15px"
-        },
-        title: {
-            font: "50px",
-        },
-        details: {
-            font: "16px",
-            color: "grey",
-        },
-    })
-);
+import { useState } from "react";
+import InternalCard from "./InternalCard";
+import ExternalCard from "./ExternalCard";
+import { Grid } from "@material-ui/core";
+import { H1, Subtitle1 } from "../../styledComponents";
 
 const ApplicationDetails = () => {
-    const classes = useStyles();
-    const [contents, setContents] = useState([
-        {
-            header: "iContribute",
-            details:
-                "Choose to recieve applications throught iContribute, and we'll store all the opportunity details and provide applicants your email address.",
-            button: "Host on iContribute",
-            link: false,
-        },
-        {
-            header: "External Website",
-            details:
-                "Have a volunteer opportunity on your website? Provide a link and we'll redirect applicants to your organization's website directly to apply",
-            button: "Add Your Site Link",
-            link: true,
-        },
-    ]);
+    const intitalState = { externalUrl: "", external: false, internal: false };
+    const [selection, setSelection] = useState(intitalState);
+
+    const setExternalUrl = (externalUrl: string) => {
+        setSelection({ ...selection, externalUrl });
+    };
+
+    const setExternal = (external: boolean) => {
+        setSelection({ ...selection, external });
+    };
+
+    const setInternal = (internal: boolean) => {
+        setSelection({ ...selection, internal });
+    };
 
     return (
-        <div className={classes.root}>
-            <div className={classes.header}>
-                <Typography
-                    component="h4"
-                    variant="h4"
-                    className={classes.title}
-                >
-                    How to Apply
-                </Typography>
-                <Typography variant="subtitle1" className={classes.details}>
-                    Choose to receive applications through iContribute or
-                    redirect volunteers to an external link
-                </Typography>
-            </div>
-            <div className={classes.cardContainer}>
-                {contents.map((c) => (
-                    <ApplicationCard content={c} />
-                ))}
-            </div>
+        <div>
+            <H1>How to Apply</H1>
+            <Subtitle1>
+                Choose to receive applications through iContribute or redirect
+                volunteers to an external link
+            </Subtitle1>
+            <Grid container spacing={2}>
+                <Grid item md={6}>
+                    <InternalCard
+                        selected={selection["internal"]}
+                        disabled={selection["external"]}
+                        setInternal={setInternal}
+                    />
+                </Grid>
+                <Grid item md={6}>
+                    <ExternalCard
+                        selected={selection["external"]}
+                        disabled={selection["internal"]}
+                        url={selection["externalUrl"]}
+                        setUrl={setExternalUrl}
+                        setExternal={setExternal}
+                    />
+                </Grid>
+            </Grid>
         </div>
     );
 };
