@@ -1,21 +1,19 @@
 import { clone } from "lodash";
-import React from "react";
 import { useState } from "react";
 import styled from "styled-components";
-import ApplicationDetails from "../components/ApplicationDetail/ApplicationDetail";
+import ApplicationDetails from "./ApplicationDetail";
 import OpportunityDetails from "./OpportunityDetails";
 import Stepper from "../components/common/Stepper";
 import { Grid } from "@material-ui/core";
 
 const NewOpportunityContainer = styled.div`
-    margin-top: 30px;
     width: 100%;
     height: 100%;
 `;
 
 const NewOpportunitySide = styled.div`
     position: fixed;
-    margin-top: 20px;
+    margin-top: 100px;
     margin-left: 20px;
 `;
 
@@ -23,8 +21,8 @@ const NewOpportunityContent = styled.div`
     width: auto;
     height: 100%;
     position: relative;
-    // left: 300px;
     padding-bottom: 80px;
+    margin-top: -20px;
 `;
 
 const NewOpportunityControl = styled.div`
@@ -172,8 +170,8 @@ const NewOpportunity = () => {
 
                 <NewOpportunityContent>
                     <Grid container>
-                        <Grid item xs={2}></Grid>
-                        <Grid item xs={10}>
+                        <Grid item md={2}></Grid>
+                        <Grid item md={10}>
                             {content}
                         </Grid>
                     </Grid>
