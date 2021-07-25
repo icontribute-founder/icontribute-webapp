@@ -3,8 +3,22 @@ import Radio from "@material-ui/core/Radio";
 import RadioGroup from "@material-ui/core/RadioGroup";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import FormControl from "@material-ui/core/FormControl";
-import FormLabel from "@material-ui/core/FormLabel";
 import { ICCard, ICCardTitle, ICCardContent } from "../styledComponents";
+import InputField from "../components/common/InputField";
+import styled from "styled-components";
+
+const StyledH4 = styled.h4`
+    font-weight: normal;
+    margin: 0px;
+`;
+
+const StyledLabel = styled.span`
+    font-family: Source Sans Pro;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 14px;
+    line-height: 120%;
+`;
 
 const WhereCard = () => {
     const [value, setValue] = useState("female");
@@ -17,39 +31,32 @@ const WhereCard = () => {
         <ICCard>
             <ICCardTitle>Where</ICCardTitle>
             <ICCardContent>
-                <h4>Opportunity Type</h4>
                 <FormControl component="fieldset">
-                    <FormLabel component="legend">Gender</FormLabel>
+                    <StyledH4>Opportunity Type</StyledH4>
                     <RadioGroup
-                        aria-label="gender"
-                        name="gender1"
+                        aria-label="opportunityType"
+                        name="opportunityType"
                         value={value}
+                        row
                         onChange={handleChange}
                     >
                         <FormControlLabel
-                            value="female"
-                            control={<Radio />}
-                            label="Female"
+                            value="virtual"
+                            control={<Radio color="primary" />}
+                            label={<StyledLabel>Virtual</StyledLabel>}
                         />
                         <FormControlLabel
-                            value="male"
-                            control={<Radio />}
-                            label="Male"
-                        />
-                        <FormControlLabel
-                            value="other"
-                            control={<Radio />}
-                            label="Other"
-                        />
-                        <FormControlLabel
-                            value="disabled"
-                            disabled
-                            control={<Radio />}
-                            label="(Disabled option)"
+                            value="inPerson"
+                            control={<Radio color="primary" />}
+                            label={<StyledLabel>In Person</StyledLabel>}
                         />
                     </RadioGroup>
                 </FormControl>
             </ICCardContent>
+            <InputField
+                label="Where will it take place?"
+                placeholder="Choose Place"
+            />
         </ICCard>
     );
 };

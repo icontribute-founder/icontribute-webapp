@@ -24,7 +24,7 @@ export const StyledCard = styled(Card)`
     padding: 18px;
     margin: auto;
     width: 100%;
-    box-shadow: 0px 4px 20px rgba(80, 80, 80, 0.1);
+    box-shadow: 0px 4px 20px rgba(80, 80, 80, 0.06);
 `;
 
 export const StyledCardMedia = styled(CardMedia)`
