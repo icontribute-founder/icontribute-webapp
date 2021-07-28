@@ -21,7 +21,7 @@ export const Circle = styled.div<{ active: boolean }>`
 
 export const Step = styled.li<{ completed: boolean }>`
     position: relative;
-    height: 137px;
+    height: 237px;
 
     font-family: Source Sans Pro;
     font-style: normal;
@@ -46,19 +46,19 @@ export const Step = styled.li<{ completed: boolean }>`
         border-radius: 50%;
         background-color: ${(props) =>
             props.completed ? " #026896" : "#cdcdcd"};
-        z-index: ;
-        // margin-top: 137px;
+        z-index: 1;
     }
+
     &:after {
         position: absolute;
         left: 0;
-        top: 15%;
+        top: 9.2%;
         content: "";
         border-left: 5px solid
             ${(props) => (props.completed ? " #026896" : "#cdcdcd")};
         margin-left: 8px;
-        height: 85%;
-        margin-top: -137px;
+        height: 93%;
+        margin-top: -238px;
     }
 
     &:first-of-type:after {
@@ -69,5 +69,5 @@ export const Step = styled.li<{ completed: boolean }>`
 export const StepName = styled.p`
     margin: 0px;
     margin-left: 12px;
-    top: -51px;
+    top: -55px;
 `;

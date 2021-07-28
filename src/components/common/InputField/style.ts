@@ -11,4 +11,5 @@ export const StyledInput = styled.input`
     ::placeholder {
         color: #cdcdcd;
     }
+    margin: 0px;
 `;

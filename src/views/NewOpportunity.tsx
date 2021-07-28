@@ -99,12 +99,6 @@ const NewOpportunity = () => {
             component: <ApplicationDetails />,
         },
         {
-            name: "Basic Details",
-            active: false,
-            completed: false,
-            component: <div>Basic Details</div>,
-        },
-        {
             name: "Opportunity Details",
             active: false,
             completed: false,

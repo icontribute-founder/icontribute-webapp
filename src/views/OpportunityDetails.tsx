@@ -6,6 +6,8 @@ import InputField from "../components/common/InputField";
 import ShiftCard from "../components/ShiftCard";
 import TextareaField from "../components/common/TextareaField";
 import WidgetPaper from "../components/WidgetPaper";
+import WhereCard from "../components/WhereCard";
+import WhenCard from "../components/WhenCard";
 
 const StyledHeader2 = styled.h2`
     font-family: Source Sans Pro;
@@ -105,6 +107,16 @@ const OpportunityDetails = () => {
                                 placeholder="Enter custom requirement tags"
                             />
                         </WidgetPaper>
+                    </Grid>
+                    <Grid item xs={12}>
+                        <Grid container spacing={2}>
+                            <Grid item md={6}>
+                                <WhenCard />
+                            </Grid>
+                            <Grid item md={6}>
+                                <WhereCard />
+                            </Grid>
+                        </Grid>
                     </Grid>
                     <Grid item xs={12}>
                         <Grid container spacing={2}>
