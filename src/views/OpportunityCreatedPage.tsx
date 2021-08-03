@@ -1,12 +1,9 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { Grid } from "@material-ui/core";
-import LoginDetail from "../components/Profile/LoginDetail";
-import ProfileSide from "../components/Profile/ProfileSide";
 import OrganizationDetail from "../components/Profile/OrganizationDetail";
 import { StyledButton, StyledShareButton } from "../components/OpportunityCard/style";
 import { Link, useHistory } from "react-router-dom";
-import img from "../assets/images/defaultAvatar.png";
 
 const OpportunityCreatedPage = () => {
 
@@ -93,6 +90,7 @@ const h2Style: React.CSSProperties = {
 }
 const buttonStyle: React.CSSProperties = {
   marginLeft: '22px',
+  fontFamily: 'Source Sans Pro',
 }
 
 const centerStyle: React.CSSProperties = {
