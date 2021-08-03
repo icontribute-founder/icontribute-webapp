@@ -29,7 +29,8 @@ const FilterBar = () => {
     };
 
     const handleCreateOpportunityClick = () => {
-        history.push("/new-opportunity");
+        history.push("/newOpportunityCreated");
+        //history.push("/new-opportunity");
     };
     const handleConfirmationClick = () => {
         history.push("/confirmation1");

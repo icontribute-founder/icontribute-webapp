@@ -24,11 +24,11 @@ const Confirmation1 = () => {
         <h2 style = {h2Style}>If you don't see this email within <strong>72</strong> hours, please contact support team for assistance.</h2>
         <h2></h2>
 
-        <StyledButton onClick={handleNextClick}
-            style = {buttonStyle}
+        <StyledButton 
+          onClick={handleNextClick}
+          style = {buttonStyle}
         >
             Next
-            
         </StyledButton>
 
         <br></br>

@@ -2,18 +2,34 @@ import styled from "styled-components";
 import { Button, Card, CardMedia } from "@material-ui/core";
 
 export const StyledButton = styled(Button)`
-    background-color: #026896;
-    border-radius: 24px;
+    background-color: #2836D1;
+    border-radius: 8px;
     &:hover {
-        background-color: #026896;
+        background-color: #2836D1;
     }
-    font-family: Source Sans Pro;
-    font-style: normal;
-    font-weight: 600;
-    font-size: 18px;
+    font-family: DM Sans;
+    font-style: bold;
+    font-weight: 700;
+    font-size: 24px;
     text-align: center;
     color: #ffffff;
-    padding: 9px 32px;
+    padding: 16px 25px;
+    text-transform: capitalize;
+`;
+
+export const StyledShareButton = styled(Button)`
+    background-color: #EDECFF;
+    border-radius: 8px;
+    &:hover {
+        background-color: #EDECFF;
+    }
+    font-family: DM Sans;
+    font-style: bold;
+    font-weight: 700;
+    font-size: 24px;
+    text-align: center;
+    color: #2836D1;
+    padding: 16px 90px;
     text-transform: capitalize;
 `;
 
