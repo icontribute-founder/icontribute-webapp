@@ -23,12 +23,12 @@ const OpportunityCreatedPage = () => {
           width: 1000,
           height: 500,
           alignItems: "center",
-          justifyContent: "center",
+          justifyContent: "center"
         }}>
         <h1 style = {h1Style}>Your opportunity has been created!</h1>
         {/* Image */}
         <div style={centerStyle}>
-          <svg width="643" height="379" viewBox="0 0 643 379" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <svg width="495" height="291.5" viewBox="0 0 643 379" fill="none" xmlns="http://www.w3.org/2000/svg">
           <ellipse cx="406.797" cy="225.149" rx="59.9883" ry="60.0396" fill="#2AB036"/>
           <path fill-rule="evenodd" clip-rule="evenodd" d="M398.788 245.787C397.753 245.787 396.763 245.377 396.055 244.654L377.822 226.03C376.401 224.584 376.48 222.308 377.987 220.949C379.498 219.589 381.871 219.661 383.285 221.107L398.751 236.898L430.274 203.806C431.677 202.335 434.046 202.238 435.576 203.576C437.102 204.913 437.207 207.19 435.812 208.653L401.555 244.615C400.854 245.356 399.857 245.78 398.814 245.787H398.788Z" fill="#FEFEFF"/>
           <path fill-rule="evenodd" clip-rule="evenodd" d="M298.84 61.5213C295.644 56.7921 293.608 51.178 294.311 45.1754C296.337 27.8803 318.285 33.847 322.134 43.0464C325.983 52.2458 324.306 74.4763 318.656 75.5086C316.403 75.9203 311.752 73.93 307.104 70.2912L308.903 93.9671L291.06 92.2445L298.84 61.5213Z" fill="#915B3C"/>
@@ -51,6 +51,7 @@ const OpportunityCreatedPage = () => {
         <h1 style = {h1Style}>Research Assistant</h1>
         <h2 style = {h2Style}>Canadian Cancer Society</h2>
         <h2 style = {h2Style}>The details can be found on your opportunities page.</h2>
+        <br></br>
         <br></br>
 
         <div style={centerStyle}>
