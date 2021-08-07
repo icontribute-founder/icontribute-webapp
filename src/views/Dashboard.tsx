@@ -18,6 +18,7 @@ import {
 import OpportunityCard from "../components/OpportunityCard";
 import { dashboardContext } from "../context/dashboardContext";
 import DashboardCalendar from "../components/DashboardCalendar";
+import Steppers from "../newDesign/components/NewOpportunity";
 
 const Dashboard = () => {
     const [loading, setLoading] = useState(true);
@@ -30,7 +31,7 @@ const Dashboard = () => {
         email: "jiachengzhang1@email.arizona.edu",
         password: "password",
         type: "organization",
-};
+    };
 
     const context = useContext(dashboardContext);
     const {
@@ -62,9 +63,10 @@ const Dashboard = () => {
     }, [context]);
     // delete later block end
 
-    const daysHaveOpportunities = events.map(({ start }) =>
-        new Date(start).toDateString()
-    );
+    const daysHaveOpportunities = [new Date().toDateString()];
+    // const daysHaveOpportunities = events.map(({ start }) =>
+    //     new Date(start).toDateString()
+    // );
 
     const handleSelectDate = (date: Date) => {
         console.log(date);
@@ -72,6 +74,7 @@ const Dashboard = () => {
 
     return (
         <div>
+            <Steppers />
             <MuiPickersUtilsProvider utils={MomentUtils}>
                 <Grid container>
                     <Grid item lg={4}>
@@ -100,13 +103,14 @@ const Dashboard = () => {
                             {loading ? (
                                 <LinearProgress />
                             ) : (
-                                events.map((opportunity) => (
-                                    <ListItem key={uniqueId()}>
-                                        <OpportunityCard
-                                            opportunity={opportunity}
-                                        />
-                                    </ListItem>
-                                ))
+                                <LinearProgress />
+                                // events.map((opportunity) => (
+                                //     <ListItem key={uniqueId()}>
+                                //         <OpportunityCard
+                                //             opportunity={opportunity}
+                                //         />
+                                //     </ListItem>
+                                // ))
                             )}
                         </List>
                     </Grid>

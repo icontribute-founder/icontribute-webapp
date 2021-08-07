@@ -8,6 +8,7 @@ import { dashboardContext, intialDashboard } from "../context/dashboardContext";
 import Header from "./Header";
 import { routes } from "../routes";
 import { theme } from "../themes";
+import NewOpportunity from "../newDesign/components/NewOpportunity";
 
 const StyledApp = styled.div`
     height: fit-content;
@@ -40,15 +41,16 @@ const App = () => {
             </Container>
         </Router>
     );
-    return (
-        <StylesProvider injectFirst>
-            <ThemeProvider theme={theme}>
-                <dashboardContext.Provider value={{ dashboard, setDashboard }}>
-                    <StyledApp>{router}</StyledApp>
-                </dashboardContext.Provider>
-            </ThemeProvider>
-        </StylesProvider>
-    );
+    // return (
+    //     <StylesProvider injectFirst>
+    //         <ThemeProvider theme={theme}>
+    //             <dashboardContext.Provider value={{ dashboard, setDashboard }}>
+    //                 <StyledApp>{router}</StyledApp>
+    //             </dashboardContext.Provider>
+    //         </ThemeProvider>
+    //     </StylesProvider>
+    // );
+    return <NewOpportunity />;
 };
 
 export default App;
