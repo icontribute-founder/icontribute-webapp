@@ -5,16 +5,18 @@ import { FlexGrow, StyledAppBar } from "./style";
 import NavBar from "./NavBar";
 import FilterBar from "./FilterBar";
 
+
 const Header = () => {
     const location = useLocation();
-
-    const showFilter = location.pathname === "/";
+    
+    const showFilter = location.pathname === "/Dashboard";
+    const showNavbar = location.pathname != "/" && location.pathname !="/SignUp";
 
     return (
         <FlexGrow>
             <StyledAppBar>
                 <Container fixed>
-                    <NavBar />
+                    {showNavbar ? <NavBar /> : ""}
                     {showFilter ? <FilterBar /> : ""}
                 </Container>
             </StyledAppBar>

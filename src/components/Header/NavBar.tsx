@@ -4,11 +4,12 @@ import { Toolbar } from "@material-ui/core";
 import { FlexGrow, ToolbarContainer, H1, H3, Logo, StyledLink } from "./style";
 import SearchBar from "./SearchBar";
 import Avatar from "./Avatar";
+import { StyledButton } from "../OpportunityCard/style";
 
 const NavBar = () => {
   const history = useHistory();
   const handleLogoClick = () => {
-    history.push("/");
+    history.push("/Dashboard");
   };
 
   const handleProfileClick = () => {
@@ -61,6 +62,11 @@ const NavBar = () => {
     </Toolbar>
   );
 };
+const buttonStyle: React.CSSProperties = {
+  width: '70px',
+  height: '40px',
+  fontSize: '12px',
+}
 
 const logoContainerStyle: React.CSSProperties = {
   marginLeft: "0%",

@@ -1,9 +1,4 @@
 import React, { useState } from "react";
-import styled from "styled-components";
-import { Grid } from "@material-ui/core";
-import LoginDetail from "../components/Profile/LoginDetail";
-import ProfileSide from "../components/Profile/ProfileSide";
-import OrganizationDetail from "../components/Profile/OrganizationDetail";
 import { StyledButton } from "../components/OpportunityCard/style";
 import { Link, useHistory } from "react-router-dom";
 import img from "../assets/images/defaultAvatar.png";
@@ -12,7 +7,7 @@ const Confirmation2 = () => {
 
     const history = useHistory();
     const handleReturnClick = () => {
-        history.push("/");
+        history.push("/Dashboard");
     };
     
   return (
