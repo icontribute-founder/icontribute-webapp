@@ -62,9 +62,10 @@ const Dashboard = () => {
     }, [context]);
     // delete later block end
 
-    const daysHaveOpportunities = events.map(({ start }) =>
+    const daysHaveOpportunities = new Date().toDateString()
+    /*const daysHaveOpportunities = events.map(({ start }) =>
         new Date(start).toDateString()
-    );
+    );*/
 
     const handleSelectDate = (date: Date) => {
         console.log(date);
@@ -100,13 +101,14 @@ const Dashboard = () => {
                             {loading ? (
                                 <LinearProgress />
                             ) : (
-                                events.map((opportunity) => (
+                                <LinearProgress />
+                                /*events.map((opportunity) => (
                                     <ListItem key={uniqueId()}>
                                         <OpportunityCard
                                             opportunity={opportunity}
                                         />
                                     </ListItem>
-                                ))
+                                ))*/
                             )}
                         </List>
                     </Grid>
