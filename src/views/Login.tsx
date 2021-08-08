@@ -1,146 +1,102 @@
-import React, { useState } from "react";
-import { Grid, Paper } from "@material-ui/core";
-import InputField from "../components/common/InputField";
-import { StyledButton } from "../components/OpportunityCard/style";
+import styled from "styled-components";
 import { Link, useHistory } from "react-router-dom";
-import Carousel from "../assets/images/carousel";
+import { LightBlueButton } from "../components/styles";
+import Slides from "../components/Slides";
+
+const InputField = styled.div`
+    font-family: Source Sans Pro;
+    display: flex;
+    flex-direction: column;
+    width: 70%;
+`;
+
+const TextField = styled.input`
+    background: #ffffff;
+    border: 2px solid #c4c4c4;
+    box-sizing: border-box;
+    border-radius: 8px;
+    height: 48px;
+    width: 100%;
+    margin-top: 8px;
+    padding: 10px;
+`;
+
+const Left = styled.div`
+    background-color: #2836d1;
+    flex: 1;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+`;
+
+const Right = styled.div`
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    flex: 1;
+    height: 100%;
+    width: 100%;
+`;
+
+const Container = styled.div`
+    display: flex;
+    height: 100%;
+    width: 100%;
+`;
+
+const LoginButton = styled(LightBlueButton)`
+    background: #ffbc3b;
+    width: 197px;
+    height: 40px;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.05);
+    font-size: 16px;
+    line-height: 24px;
+    color: #fefeff;
+`;
 
 const Login = () => {
-  const history = useHistory();
-  const handleSignUpClick = () => {
-      history.push("/SignUp");
-  };
-  const handleDashboardClick = () => {
-      history.push("/Dashboard");
-  };
+    const history = useHistory();
+    const handleSignUpClick = () => {
+        history.push("/SignUp");
+    };
+    const handleDashboardClick = () => {
+        history.push("/Dashboard");
+    };
 
-  return (
-    
-    <div>
-       
-        <Paper>
-        <Grid container style = {indent}>
-
-            <Grid item xs={6} >
-                <Paper style = {darkBlue}>
-                
-                    
-                <h1 style = {h1Style}>&nbsp;</h1>
-                <Carousel></Carousel>
-
-
-                
-                <br></br>
-                <br></br>
-                </Paper>
-
-            </Grid>
-            <Grid style = {indent} item xs={5} >
-                
-                <h1 style = {h1Style}>&nbsp;</h1>
-                <h1 style = {h1Style}>Login to iContribute</h1>
-                <br></br>
-                
-
-                <h4 style = {h4StyleLeft}>Organization E-mail</h4>
-                
-                <InputField 
-                     
-                     placeholder = "E-mail"
-                />
-
-                <h4 style = {h4StyleLeft}>Password</h4>
-                <h4 style = {h4StyleRight}>Forgot Password</h4>
-                <InputField 
-                   
-                    placeholder = "Password"
-                />
-                
-                <StyledButton onClick = {handleDashboardClick} style = {buttonStyle}>Login</StyledButton>
-
-                <br></br>
-                <h4 style = {h4Style}>Don't have an account yet? <a style = {blue} onClick={handleSignUpClick}>Sign up here!</a></h4>
-
-
-                <h4 style = {h4Style}>Or</h4>
-
-                <StyledButton style = {buttonStyle2}>Continue with Google</StyledButton>
-                <StyledButton style = {buttonStyle2}>Continue with LinkedIn</StyledButton>
-                <StyledButton style = {buttonStyle2}>Continue with Facebook</StyledButton>
-               
-                </Grid> 
-              
-
-        </Grid>
-        <br></br>
-
-        </Paper>
-
-        <br></br>
-        <br></br>
-        
-    </div>
-  );
+    return (
+        <Container>
+            <Left>
+                <Slides />
+            </Left>
+            <Right>
+                <h1>Login to iContribute</h1>
+                <InputField>
+                    <label htmlFor="loginEmail">Email</label>
+                    <TextField
+                        type="text"
+                        id="loginEmail"
+                        placeholder="Please enter your email address"
+                    />
+                </InputField>
+                <InputField>
+                    <label htmlFor="loginPassword">Password</label>
+                    <TextField
+                        type="password"
+                        id="loginPassword"
+                        placeholder="Password"
+                    />
+                    <a href="#">Forget password?</a>
+                </InputField>
+                <LoginButton>Login</LoginButton>
+                <p>
+                    Dont’t have an account yet? <a href="#">Sign up here!</a>
+                </p>
+            </Right>
+        </Container>
+    );
 };
 
-const h4StyleLeft: React.CSSProperties = {
-    fontWeight: 400,
-    fontFamily: 'Source Sans Pro',
-    fontSize: '14px',
-    lineHeight: '0.1',
-    float: 'left',
-}
-const h4StyleRight: React.CSSProperties = {
-    fontWeight: 400,
-    fontFamily: 'Source Sans Pro',
-    fontSize: '14px',
-    lineHeight: '0.1',
-    float: 'right',
-}
-const h4Style: React.CSSProperties = {
-  fontWeight: 400,
-  fontFamily: 'Source Sans Pro',
-  fontSize: '14px',
-  textAlign: 'center',
-}
-const h1Style: React.CSSProperties = {
-    fontWeight: 600,
-    fontFamily: 'Source Sans Pro',
-    fontSize: '36px',
-    lineHeight: '0.5',
-    textAlign: 'center',
-}
-const indent: React.CSSProperties = {
-    marginLeft: '30px',
-    marginRight: '30px',
-}
-const blue: React.CSSProperties = {
-    color: '#0000EE',
-    cursor: 'pointer',
-}
-const buttonStyle: React.CSSProperties = {
-    display: 'block',
-    margin: '0 auto',
-    width: '50%',
-    textAlign: 'center',
-
-}
-const buttonStyle2: React.CSSProperties = {
-    display: 'block',
-    margin: '0 auto',
-    width: '70%',
-    textAlign: 'center',
-    marginTop: '10px',
-    marginBottom: '10px',
-}
-const darkBlue: React.CSSProperties = {
-    backgroundColor: '#2836D1',
-}
-const center: React.CSSProperties = {
-    alignItems: "center",
-}
-
-
-
 export default Login;
-
