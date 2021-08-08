@@ -1,18 +1,7 @@
-import React, { useState } from "react";
-import { Container } from "@material-ui/core";
-import { StylesProvider } from "@material-ui/core/styles";
-import { ThemeProvider } from "styled-components";
-import styled from "styled-components";
 import { Route, BrowserRouter as Router, Switch } from "react-router-dom";
-import { dashboardContext, intialDashboard } from "../context/dashboardContext";
-import Header from "./Header";
+import Header from "../components/Header";
 import { routes } from "../routes";
-import { theme } from "../themes";
-import NewOpportunity from "../newDesign/components/NewOpportunity";
-
-const StyledApp = styled.div`
-    height: fit-content;
-`;
+import Login from "../views/Login";
 
 const RouteWithSubRoutes = (route: any) => {
     return (
@@ -27,30 +16,22 @@ const RouteWithSubRoutes = (route: any) => {
 };
 
 const App = () => {
-    const [dashboard, setDashboard] = useState(intialDashboard);
+    const hasLogin = false;
 
-    const router = (
+    const layout = hasLogin ? (
         <Router>
             <Header />
-            <Container fixed>
-                <Switch>
-                    {routes.map((route, i) => (
-                        <RouteWithSubRoutes key={`route-${i}`} {...route} />
-                    ))}
-                </Switch>
-            </Container>
+            <Switch>
+                {routes.map((route, i) => (
+                    <RouteWithSubRoutes key={`route-${i}`} {...route} />
+                ))}
+            </Switch>
         </Router>
+    ) : (
+        <Login />
     );
-    // return (
-    //     <StylesProvider injectFirst>
-    //         <ThemeProvider theme={theme}>
-    //             <dashboardContext.Provider value={{ dashboard, setDashboard }}>
-    //                 <StyledApp>{router}</StyledApp>
-    //             </dashboardContext.Provider>
-    //         </ThemeProvider>
-    //     </StylesProvider>
-    // );
-    return <NewOpportunity />;
+
+    return layout;
 };
 
 export default App;
