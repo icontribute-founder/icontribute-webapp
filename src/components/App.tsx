@@ -1,6 +1,8 @@
+import { useSelector } from "react-redux";
 import { Route, BrowserRouter as Router, Switch } from "react-router-dom";
 import Header from "../components/Header";
 import { routes } from "../routes";
+import { RootState } from "../store";
 import Login from "../views/Login";
 
 const RouteWithSubRoutes = (route: any) => {
@@ -16,7 +18,9 @@ const RouteWithSubRoutes = (route: any) => {
 };
 
 const App = () => {
-    const hasLogin = false;
+    const { hasLogin } = useSelector(
+        (state: RootState) => state.authentication
+    );
 
     const layout = hasLogin ? (
         <Router>

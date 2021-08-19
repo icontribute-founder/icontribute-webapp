@@ -3,7 +3,6 @@ import Confirmation1 from "./views/Confirmation1";
 import Confirmation2 from "./views/Confirmation2";
 // import Profile from "./views/Profile";
 // import SignUp from "./views/SignUp";
-import Login from "./views/Login";
 import OpportunityCreatedPage from "./views/OpportunityCreatedPage";
 
 export const routes = [
