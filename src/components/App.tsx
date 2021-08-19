@@ -2,6 +2,7 @@ import { Route, BrowserRouter as Router, Switch } from "react-router-dom";
 import Header from "../components/Header";
 import { routes } from "../routes";
 import Login from "../views/Login";
+import SignUp2 from "../views/SignUp2";
 
 const RouteWithSubRoutes = (route: any) => {
     return (
@@ -18,13 +19,14 @@ const RouteWithSubRoutes = (route: any) => {
 const App = () => {
     const hasLogin = false;
 
-    const layout = hasLogin ? (
+    const layout = !hasLogin ? (
         <Router>
             <Header />
             <Switch>
                 {routes.map((route, i) => (
                     <RouteWithSubRoutes key={`route-${i}`} {...route} />
                 ))}
+                <Route path="signup" component={SignUp2} />
             </Switch>
         </Router>
     ) : (
