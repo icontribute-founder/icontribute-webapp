@@ -15,7 +15,7 @@ const SignUp2 = () => {
     const backArrow = "<"
 
     return (
-        <div style={{ height: "200%" }}>
+        <div>
             <BackButton>
                 <a href="/" onClick={handleBackClick}><span>{backArrow}</span> Go back </a>
             </BackButton>
