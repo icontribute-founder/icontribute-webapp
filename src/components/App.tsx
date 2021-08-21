@@ -26,7 +26,6 @@ const App = () => {
                 {routes.map((route, i) => (
                     <RouteWithSubRoutes key={`route-${i}`} {...route} />
                 ))}
-                <Route path="signup" component={SignUp2} />
             </Switch>
         </Router>
     ) : (
