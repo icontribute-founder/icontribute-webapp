@@ -44,7 +44,7 @@ const Login = () => {
 
                         <Button onClick={handleLoginClick} style={buttonStyle}>
                             Sign up
-                        </Button>
+                        </Button>   
 
                         <br></br>
                         <h4 style={h4Style}>

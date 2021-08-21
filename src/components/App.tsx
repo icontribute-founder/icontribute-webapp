@@ -16,7 +16,7 @@ const RouteWithSubRoutes = (route: any) => {
 };
 
 const App = () => {
-    const hasLogin = false;
+    const hasLogin = true;
 
     const layout = hasLogin ? (
         <Router>
