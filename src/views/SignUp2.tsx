@@ -6,6 +6,7 @@ import InputField from '../components/FormElements/InputField';
 import TextareaField from '../components/FormElements/TextareaField';
 import ImageDropzone from '../components/FormElements/ImageDropzone';
 import signupLogo from "../assets/images/signup-image.png";
+import GreyButton from '../components/Buttons/GreyButton';
 
 const SignUp2 = () => {
 
@@ -15,7 +16,8 @@ const SignUp2 = () => {
         history.goBack()
     }
 
-    const backArrow = "<"
+    const backArrow: string = "<"
+    const saveButtonText: string = "Save & Submit"
 
     return (
         <div>
@@ -24,7 +26,7 @@ const SignUp2 = () => {
             </BackButton>
             <SignupContainer>
                 <Grid container>
-                    <Grid item lg={6}>
+                    <Grid item xs={6}>
                         <HeaderOne>Let's create your profile</HeaderOne>
                         <SubHeader>Tell us a little about your organization</SubHeader>
                         <HeaderTwo>Login details</HeaderTwo>
@@ -60,6 +62,11 @@ const SignUp2 = () => {
                     </Grid>
                     <Grid item xs={8}>
                         <ImageDropzone />
+                    </Grid>
+                    <Grid item xs={12}>
+                        <SaveButtonContainer>
+                            <GreyButton text={saveButtonText} />
+                        </SaveButtonContainer>
                     </Grid>
                 </Grid>
             </SignupContainer>
@@ -139,5 +146,9 @@ SignupImage.defaultProps = {
 }
 
 const ImageContainer = styled.div`
+    text-align: right;
+`
+
+const SaveButtonContainer = styled.div`
     text-align: right;
 `

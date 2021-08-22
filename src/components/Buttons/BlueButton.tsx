@@ -14,11 +14,12 @@ const StyledButton = styled.button`
     letter-spacing: 1px;
     line-height: 24px;
     box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.05);
+    cursor: pointer;
 `
 
-const BlueButton = ({ text }: any) => {
+const BlueButton = ({ onClick, text }: any) => {
     return (
-        <StyledButton>{text}</StyledButton>
+        <StyledButton onClick={onClick}>{text}</StyledButton>
     )
 }
 
