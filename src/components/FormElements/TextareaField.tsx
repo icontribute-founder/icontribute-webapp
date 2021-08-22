@@ -35,11 +35,11 @@ const TextareaField = ({
     onChange,
 }: any) => {
     const [num, setNum] = useState(numChar);
-    const onChange1 = (e: any) => {
-        const text = e.target.value;
-        const count = text.split(" ").filter((s: string) => s !== "").length;
-        setNum(count);
-    };
+    // const onChange1 = (e: any) => {
+    //     const text = e.target.value;
+    //     const count = text.split(" ").filter((s: string) => s !== "").length;
+    //     setNum(count);
+    // };
     return (
         <Field>
             <Label htmlFor={id}>{label}</Label>
@@ -48,7 +48,7 @@ const TextareaField = ({
                 id={id}
                 rows={rows}
                 placeholder={placeholder}
-                onChange={onChange1}
+                onChange={onChange}
             />
         </Field>
     );

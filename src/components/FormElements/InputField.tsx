@@ -26,7 +26,7 @@ const InputField = ({ label, value, placeholder, name, id, onChange }: any) => {
     return (
         <Field>
             <Label htmlFor={id}>{label}</Label>
-            <StyledInput name={name} id={id} placeholder={placeholder} />
+            <StyledInput name={name} id={id} placeholder={placeholder} onChange={onChange} />
         </Field>
     );
 };

@@ -2,8 +2,9 @@ import React, { useState } from 'react';
 import { Link, useHistory } from "react-router-dom";
 import styled from 'styled-components';
 import { Grid, Container, Radio, RadioGroup, FormControlLabel } from '@material-ui/core';
-import InputField from '../components/InputField';
-import TextareaField from '../components/TextareaField';
+import InputField from '../components/FormElements/InputField';
+import TextareaField from '../components/FormElements/TextareaField';
+import ImageDropzone from '../components/FormElements/ImageDropzone';
 import signupLogo from "../assets/images/signup-image.png";
 
 const SignUp2 = () => {
@@ -21,9 +22,9 @@ const SignUp2 = () => {
             <BackButton>
                 <a href="/" onClick={handleBackClick}><span>{backArrow}</span> Go back </a>
             </BackButton>
-            <Grid container>
-                <Grid item lg={6}>
-                    <SignupContainer>
+            <SignupContainer>
+                <Grid container>
+                    <Grid item lg={6}>
                         <HeaderOne>Let's create your profile</HeaderOne>
                         <SubHeader>Tell us a little about your organization</SubHeader>
                         <HeaderTwo>Login details</HeaderTwo>
@@ -51,20 +52,30 @@ const SignUp2 = () => {
                             placeholder="ie.We connect people who are looking for local volunteer opportunities to nonprofits who are actively recruiting"
                             rows={8} />
                         <HeaderThree>Upload an accoutn photo or logo</HeaderThree>
-                    </SignupContainer>
+                    </Grid>
+                    <Grid item xs={6}>
+                        <ImageContainer>
+                            <SignupImage />
+                        </ImageContainer>
+                    </Grid>
+                    <Grid item xs={8}>
+                        <ImageDropzone />
+                    </Grid>
                 </Grid>
-                <Grid item xs={6}>
-                    <SignupImage></SignupImage>
-                </Grid>
-                <Grid item xs={12}>
-                    <h2>Image form</h2>
-                </Grid>
-            </Grid>
+            </SignupContainer>
         </div>
     )
 }
 
 export default SignUp2
+
+const SignupContainer = styled.div`
+    font-family: Source Sans Pro;
+    letter-spacing: 1px;
+    padding: 50px 160px 50px 160px;
+    height: 100%;
+    padding-bottom: 150px;
+`
 
 const BackButton = styled.div`
     margin-top: 35px;
@@ -79,13 +90,6 @@ const BackButton = styled.div`
             font-size: 12px;
         }
     }
-`
-
-const SignupContainer = styled.div`
-    font-family: Source Sans Pro;
-    letter-spacing: 1px;
-    padding: 50px 160px 50px 160px;
-    height: 100%;
 `
 
 const HeaderOne = styled.p`
@@ -107,7 +111,7 @@ const HeaderThree = styled.p`
     font-weight: bold;
     line-height: 32px;
     color: #192226;
-    margin: 50px 0 0 0;
+    margin: 50px 0 24px 0;
 `
 
 const SubHeader = styled.p`
@@ -126,10 +130,14 @@ const Paragraph = styled.p`
 `
 
 const SignupImage = styled.img`
-    margin-top: 135px;
-    width: 65%;
+    margin-top: 95px;
+    width: 600px;
 `
 
 SignupImage.defaultProps = {
     src: signupLogo
 }
+
+const ImageContainer = styled.div`
+    text-align: right;
+`
