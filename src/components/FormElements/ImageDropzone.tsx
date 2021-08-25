@@ -10,9 +10,11 @@ import BlueButton from "../Buttons/BlueButton";
 const ImageDropzone = () => {
 
     const [files, setFiles] = useState<File[]>([])
+    const [currentFile, setCurrentFile] = useState<any>(null)
 
     const onDrop = useCallback(acceptedFiles => {
         setFiles(prevState => [...prevState, acceptedFiles[0]])
+        setCurrentFile(URL.createObjectURL(acceptedFiles[0]))
     }, [])
     const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop })
 
@@ -23,7 +25,10 @@ const ImageDropzone = () => {
     }
 
     const handleFileUploaderChange = (e: any) => {
-        setFiles(prevState => [...prevState, e.target.files[0]])
+        let uploadedFile = e.target.files[0]
+        uploadedFile.path = uploadedFile.name
+        setFiles(prevState => [...prevState, uploadedFile])
+        setCurrentFile(URL.createObjectURL(uploadedFile))
     }
 
     console.log(files)
@@ -44,7 +49,10 @@ const ImageDropzone = () => {
                 <Grid container>
                     <Grid item xs={8}>
                         {files.map((image) => (
-                            <p key={image.name}>{image.name}</p>
+                            <div key={image.name}>
+                                <p>{image.name}</p>
+                                <img src={currentFile} />
+                            </div>
                         ))}
                     </Grid>
                     <Grid item xs={4}>
