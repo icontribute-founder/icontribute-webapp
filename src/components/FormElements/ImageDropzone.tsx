@@ -1,20 +1,21 @@
-import { Button } from "@material-ui/core";
-import { FilterSharp } from "@material-ui/icons";
 import React, { useState, useCallback } from "react";
-import { Grid, Container } from '@material-ui/core';
+import { Grid } from '@material-ui/core';
 import { useDropzone } from 'react-dropzone'
 import styled from "styled-components";
 import DropIcon from "../../assets/images/image-drop.png";
 import BlueButton from "../Buttons/BlueButton";
 
-const ImageDropzone = () => {
+interface ImageDropzoneProps {
+    setOrgImage: Function
+}
+
+const ImageDropzone: React.FC<ImageDropzoneProps> = ({ setOrgImage }) => {
 
     const [files, setFiles] = useState<File[]>([])
-    const [currentFile, setCurrentFile] = useState<any>(null)
 
     const onDrop = useCallback(acceptedFiles => {
-        setFiles(prevState => [...prevState, acceptedFiles[0]])
-        setCurrentFile(URL.createObjectURL(acceptedFiles[0]))
+        setFiles([acceptedFiles[0]])
+        setOrgImage([acceptedFiles[0]])
     }, [])
     const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop })
 
@@ -27,11 +28,11 @@ const ImageDropzone = () => {
     const handleFileUploaderChange = (e: any) => {
         let uploadedFile = e.target.files[0]
         uploadedFile.path = uploadedFile.name
-        setFiles(prevState => [...prevState, uploadedFile])
-        setCurrentFile(URL.createObjectURL(uploadedFile))
+        setFiles([uploadedFile])
+        setOrgImage([uploadedFile])
     }
 
-    console.log(files)
+    // console.log(files)
 
     if (files.length === 0) {
         return (
@@ -47,17 +48,15 @@ const ImageDropzone = () => {
         return (
             <ImageDroper {...getRootProps()}>
                 <Grid container>
-                    <Grid container item xs={8} style={{ paddingLeft: "40px", maxWidth: "570px" }} >
+                    <Grid container item xs={12} lg={8} style={{ paddingLeft: "20px", paddingRight: "20px" }} >
                         {files.map((image) => (
-                            <Grid xs={6}>
-                                <ImageContainer key={image.name}>
-                                    <button>x</button>
-                                    <ImagePreview src={URL.createObjectURL(image)} />
-                                </ImageContainer>
-                            </Grid>
+                            <ImageContainer key={image.name}>
+                                <button>x</button>
+                                <ImagePreview src={URL.createObjectURL(image)} />
+                            </ImageContainer>
                         ))}
                     </Grid>
-                    <Grid item xs={4}>
+                    <Grid item xs={12} lg={4}>
                         <ImageDropIcon />
                         <p>Drag photo here</p>
                         <p>or</p>
@@ -98,8 +97,8 @@ ImageDropIcon.defaultProps = {
 
 const ImageContainer = styled.div`
     position: relative;
-    width: 211px;
-    height: 118px;
+    width: 100%;
+    height: auto;
     margin-bottom: 40px;
     button {
         position: absolute;
@@ -118,7 +117,7 @@ const ImageContainer = styled.div`
 const ImagePreview = styled.img.attrs(props => ({
     src: props.src
 }))`
-    width: 211px;
-    height: 118px;
+    width: 100%;
+    height: auto;
     border-radius: 8px;
 `

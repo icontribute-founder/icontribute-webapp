@@ -16,8 +16,12 @@ const SignUp2 = () => {
         history.goBack()
     }
 
+    const [orgImage, setOrgImage] = useState<File>()
+
     const backArrow: string = "<"
     const saveButtonText: string = "Save & Submit"
+
+    console.log(orgImage)
 
     return (
         <div>
@@ -61,7 +65,7 @@ const SignUp2 = () => {
                         </ImageContainer>
                     </Grid>
                     <Grid item xs={8}>
-                        <ImageDropzone />
+                        <ImageDropzone setOrgImage={setOrgImage} />
                     </Grid>
                     <Grid item xs={12}>
                         <SaveButtonContainer>
