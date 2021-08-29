@@ -6,6 +6,8 @@ import Confirmation2 from "./views/Confirmation2";
 import Login from "./views/Login";
 import OpportunityCreatedPage from "./views/OpportunityCreatedPage";
 import AccountSettings from "./views/AccountSettings";
+import Notifications from "./views/Notifications";
+
 
 export const routes = [
     // { path: "/dashboard", exact: true, component: Dashboard },
@@ -33,6 +35,12 @@ export const routes = [
         path: "/account-settings",
         exact: true,
         component: AccountSettings,
+    },
+    {
+        path: "/notifications",
+        exact: true,
+        component: Notifications,
+
     },
 
 ];
