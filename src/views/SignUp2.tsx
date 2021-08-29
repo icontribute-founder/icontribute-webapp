@@ -53,7 +53,7 @@ const SignUp2 = () => {
                         <TextareaField label="Description"
                             placeholder="ie.We connect people who are looking for local volunteer opportunities to nonprofits who are actively recruiting"
                             rows={8} />
-                        <HeaderThree>Upload an accoutn photo or logo</HeaderThree>
+                        <HeaderThree>Upload an account photo or logo</HeaderThree>
                     </Grid>
                     <Grid item xs={6}>
                         <ImageContainer>

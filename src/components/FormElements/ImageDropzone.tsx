@@ -47,12 +47,14 @@ const ImageDropzone = () => {
         return (
             <ImageDroper {...getRootProps()}>
                 <Grid container>
-                    <Grid item xs={8}>
+                    <Grid container item xs={8} style={{ paddingLeft: "40px", maxWidth: "570px" }} >
                         {files.map((image) => (
-                            <div key={image.name}>
-                                <p>{image.name}</p>
-                                <img src={currentFile} />
-                            </div>
+                            <Grid xs={6}>
+                                <ImageContainer key={image.name}>
+                                    <button>x</button>
+                                    <ImagePreview src={URL.createObjectURL(image)} />
+                                </ImageContainer>
+                            </Grid>
                         ))}
                     </Grid>
                     <Grid item xs={4}>
@@ -63,7 +65,7 @@ const ImageDropzone = () => {
                         <BlueButton onClick={handleUploadClick} text="Upload from computer" />
                     </Grid>
                 </Grid>
-            </ImageDroper>
+            </ImageDroper >
         )
     }
 
@@ -73,7 +75,7 @@ export default ImageDropzone;
 
 const ImageDroper = styled.div`
     border: 2px dashed black;
-    height: 345px;
+    min-height: 345px;
     width: 100%;
     text-align: center;
     padding: 75px 0;
@@ -93,3 +95,30 @@ const ImageDropIcon = styled.img`
 ImageDropIcon.defaultProps = {
     src: DropIcon
 }
+
+const ImageContainer = styled.div`
+    position: relative;
+    width: 211px;
+    height: 118px;
+    margin-bottom: 40px;
+    button {
+        position: absolute;
+        right: -10px;
+        top: -10px;
+        border-radius: 50%;
+        background-color: #BABCBD;
+        border: none;
+        outline: none;
+        color: white;
+        width: 25px;
+        height: 25px;
+    }
+`
+
+const ImagePreview = styled.img.attrs(props => ({
+    src: props.src
+}))`
+    width: 211px;
+    height: 118px;
+    border-radius: 8px;
+`
