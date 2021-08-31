@@ -32,6 +32,11 @@ const ImageDropzone: React.FC<ImageDropzoneProps> = ({ setOrgImage }) => {
         setOrgImage([uploadedFile])
     }
 
+    const handleDeleteImage = () => {
+        setFiles([])
+        setOrgImage([])
+    }
+
     // console.log(files)
 
     if (files.length === 0) {
@@ -51,7 +56,7 @@ const ImageDropzone: React.FC<ImageDropzoneProps> = ({ setOrgImage }) => {
                     <Grid container item xs={12} lg={8} style={{ paddingLeft: "20px", paddingRight: "20px" }} >
                         {files.map((image) => (
                             <ImageContainer key={image.name}>
-                                <button>x</button>
+                                <button onClick={handleDeleteImage}>x</button>
                                 <ImagePreview src={URL.createObjectURL(image)} />
                             </ImageContainer>
                         ))}
@@ -111,6 +116,7 @@ const ImageContainer = styled.div`
         color: white;
         width: 25px;
         height: 25px;
+        cursor: pointer;
     }
 `
 

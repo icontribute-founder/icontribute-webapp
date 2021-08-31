@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
-import { Link, useHistory } from "react-router-dom";
+import { useState } from 'react';
+import { useHistory } from "react-router-dom";
 import styled from 'styled-components';
-import { Grid, Container, Radio, RadioGroup, FormControlLabel } from '@material-ui/core';
+import { Grid, Radio, RadioGroup, FormControlLabel } from '@material-ui/core';
 import InputField from '../components/FormElements/InputField';
 import TextareaField from '../components/FormElements/TextareaField';
 import ImageDropzone from '../components/FormElements/ImageDropzone';
@@ -18,10 +18,24 @@ const SignUp2 = () => {
 
     const [orgImage, setOrgImage] = useState<File>()
 
+    const [passwordCheckMark, setPasswordCheckMark] = useState("none")
+    const [passwordConfirmCheckMark, setPasswordConfirmCheckMark] = useState("none")
+    const [password, setPassword] = useState("")
+    const [confirmPassword, setConfirmPassword] = useState("")
+
     const backArrow: string = "<"
     const saveButtonText: string = "Save & Submit"
 
-    console.log(orgImage)
+    const onPasswordChange = (e: any) => {
+        setPassword(e.target.value)
+        setPasswordCheckMark(e.target.value.length !== 0 ? "block" : "none")
+        setPasswordConfirmCheckMark(confirmPassword === "" ? "none" : e.target.value === confirmPassword ? "block" : "none")
+    }
+
+    const onConfirmPasswordChange = (e: any) => {
+        setConfirmPassword(e.target.value)
+        setPasswordConfirmCheckMark(e.target.value === "" ? "none" : e.target.value === password ? "block" : "none")
+    }
 
     return (
         <div>
@@ -35,8 +49,10 @@ const SignUp2 = () => {
                         <SubHeader>Tell us a little about your organization</SubHeader>
                         <HeaderTwo>Login details</HeaderTwo>
                         <InputField label="Email" placeholder="Enter your organization email" name="org-email" id="org-email" />
-                        <InputField label="Create a Password" placeholder="Enter a password" name="password" id="password" />
-                        <InputField label="Confirm Password" placeholder="Re-enter the same password" name="confirm-password" id="confirm-password" />
+                        <InputField label="Create a Password" placeholder="Enter a password" name="password"
+                            id="password" checkMarkVisible={passwordCheckMark} onChange={onPasswordChange} />
+                        <InputField label="Confirm Password" placeholder="Re-enter the same password" name="confirm-password"
+                            id="confirm-password" checkMarkVisible={passwordConfirmCheckMark} onChange={onConfirmPasswordChange} />
                         <HeaderTwo>Organization details</HeaderTwo>
                         <Paragraph>Are you registered as a charity or non-profit organization on the Canada Revenue Agency's website?</Paragraph>
                         <div>

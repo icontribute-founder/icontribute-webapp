@@ -7,6 +7,7 @@ const StyledField = styled.div`
     textarea {
         margin-top: 8px;
     }
+    position: relative;
 `;
 
 interface props {

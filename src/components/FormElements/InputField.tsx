@@ -1,7 +1,23 @@
-import React from "react";
 import styled from "styled-components";
 import Field from "./Field";
 import Label from "./Label";
+import InputIcon from "../../assets/images/check-mark.png";
+import { useState } from "react";
+
+const InputField = ({ label, value, placeholder, name, id, onChange, checkMarkVisible, onDisplayError }: any) => {
+
+    return (
+        <Field>
+            <Label htmlFor={id}>{label}</Label>
+            <StyledInput name={name} id={id} placeholder={placeholder} onChange={onChange} />
+            <div style={{ display: checkMarkVisible ?? "none" }}>
+                <StyledFormIcon />
+            </div>
+        </Field >
+    );
+};
+
+export default InputField;
 
 const StyledInput = styled.input`
     width: 100%;
@@ -22,13 +38,12 @@ const StyledInput = styled.input`
     }
 `;
 
-const InputField = ({ label, value, placeholder, name, id, onChange }: any) => {
-    return (
-        <Field>
-            <Label htmlFor={id}>{label}</Label>
-            <StyledInput name={name} id={id} placeholder={placeholder} onChange={onChange} />
-        </Field>
-    );
-};
+const StyledFormIcon = styled.img`
+    position: absolute;
+    right: 24px;
+    top: 30px;
+`
 
-export default InputField;
+StyledFormIcon.defaultProps = {
+    src: InputIcon
+}
