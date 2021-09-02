@@ -22,6 +22,7 @@ const SignUp2 = () => {
     const [passwordConfirmCheckMark, setPasswordConfirmCheckMark] = useState("none")
     const [password, setPassword] = useState("")
     const [confirmPassword, setConfirmPassword] = useState("")
+    const [errorVisible, setErrorVisible] = useState("block")
 
     const backArrow: string = "<"
     const saveButtonText: string = "Save & Submit"
@@ -30,11 +31,13 @@ const SignUp2 = () => {
         setPassword(e.target.value)
         setPasswordCheckMark(e.target.value.length !== 0 ? "block" : "none")
         setPasswordConfirmCheckMark(confirmPassword === "" ? "none" : e.target.value === confirmPassword ? "block" : "none")
+        setErrorVisible(confirmPassword === "" ? "none" : e.target.value === confirmPassword ? "none" : "block")
     }
 
     const onConfirmPasswordChange = (e: any) => {
         setConfirmPassword(e.target.value)
         setPasswordConfirmCheckMark(e.target.value === "" ? "none" : e.target.value === password ? "block" : "none")
+        setErrorVisible(e.target.value === "" ? "none" : e.target.value === password ? "none" : "block")
     }
 
     return (
@@ -52,7 +55,7 @@ const SignUp2 = () => {
                         <InputField label="Create a Password" placeholder="Enter a password" name="password"
                             id="password" checkMarkVisible={passwordCheckMark} onChange={onPasswordChange} />
                         <InputField label="Confirm Password" placeholder="Re-enter the same password" name="confirm-password"
-                            id="confirm-password" checkMarkVisible={passwordConfirmCheckMark} onChange={onConfirmPasswordChange} />
+                            id="confirm-password" checkMarkVisible={passwordConfirmCheckMark} errorVisible={errorVisible} onChange={onConfirmPasswordChange} />
                         <HeaderTwo>Organization details</HeaderTwo>
                         <Paragraph>Are you registered as a charity or non-profit organization on the Canada Revenue Agency's website?</Paragraph>
                         <div>

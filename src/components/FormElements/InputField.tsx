@@ -4,7 +4,7 @@ import Label from "./Label";
 import InputIcon from "../../assets/images/check-mark.png";
 import { useState } from "react";
 
-const InputField = ({ label, value, placeholder, name, id, onChange, checkMarkVisible, onDisplayError }: any) => {
+const InputField = ({ label, value, placeholder, name, id, onChange, checkMarkVisible, errorVisible }: any) => {
 
     return (
         <Field>
@@ -12,6 +12,9 @@ const InputField = ({ label, value, placeholder, name, id, onChange, checkMarkVi
             <StyledInput name={name} id={id} placeholder={placeholder} onChange={onChange} />
             <div style={{ display: checkMarkVisible ?? "none" }}>
                 <StyledFormIcon />
+            </div>
+            <div style={{ display: errorVisible ?? "none" }}>
+                <StyledError>Passwords don't match</StyledError>
             </div>
         </Field >
     );
@@ -47,3 +50,13 @@ const StyledFormIcon = styled.img`
 StyledFormIcon.defaultProps = {
     src: InputIcon
 }
+
+const StyledError = styled.span`
+    position: absolute;
+    right: 24px;
+    top: 28px;
+    color: #D63334;
+    font-size: 12px;
+    line-height: 18px;
+
+`
