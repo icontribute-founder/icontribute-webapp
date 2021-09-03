@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useHistory } from "react-router-dom";
 import styled from 'styled-components';
 import { Grid, Radio, RadioGroup, FormControlLabel } from '@material-ui/core';
@@ -6,7 +6,18 @@ import InputField from '../components/FormElements/InputField';
 import TextareaField from '../components/FormElements/TextareaField';
 import ImageDropzone from '../components/FormElements/ImageDropzone';
 import signupLogo from "../assets/images/signup-image.png";
-import GreyButton from '../components/Buttons/GreyButton';
+import InteractiveButton from '../components/Buttons/InteractiveButton';
+
+interface SingupDetails {
+    email: string,
+    password: string,
+    isRegisteredCRA: string,
+    organizationName: string,
+    website: string,
+    postalCode: string,
+    description: string,
+    orgImageUrl: string
+}
 
 const SignUp2 = () => {
 
@@ -17,12 +28,32 @@ const SignUp2 = () => {
     }
 
     const [orgImage, setOrgImage] = useState<File>()
-
     const [passwordCheckMark, setPasswordCheckMark] = useState("none")
     const [passwordConfirmCheckMark, setPasswordConfirmCheckMark] = useState("none")
     const [password, setPassword] = useState("")
     const [confirmPassword, setConfirmPassword] = useState("")
-    const [errorVisible, setErrorVisible] = useState("block")
+    const [errorVisible, setErrorVisible] = useState("none")
+    const [submitDisabled, setSubmitDisabled] = useState(true)
+    const [signupDetails, setSignupDetails] = useState<SingupDetails>({
+        email: "",
+        password: "",
+        isRegisteredCRA: "",
+        organizationName: "",
+        website: "",
+        postalCode: "",
+        description: "",
+        orgImageUrl: ""
+    })
+
+    useEffect(() => {
+        if (signupDetails.description === "" || signupDetails.password === "" || signupDetails.email === "" || signupDetails.postalCode === ""
+            || signupDetails.isRegisteredCRA === "" || signupDetails.organizationName === "" || signupDetails.website === "" || orgImage === null) {
+            setSubmitDisabled(true)
+        } else {
+            setSubmitDisabled(false)
+        }
+        return () => { }
+    }, [signupDetails, orgImage])
 
     const backArrow: string = "<"
     const saveButtonText: string = "Save & Submit"
@@ -31,13 +62,28 @@ const SignUp2 = () => {
         setPassword(e.target.value)
         setPasswordCheckMark(e.target.value.length !== 0 ? "block" : "none")
         setPasswordConfirmCheckMark(confirmPassword === "" ? "none" : e.target.value === confirmPassword ? "block" : "none")
-        setErrorVisible(confirmPassword === "" ? "none" : e.target.value === confirmPassword ? "none" : "block")
+        setErrorVisible(confirmPassword === "" ? "none" : e.target.value === "" ? "none" : e.target.value === confirmPassword ? "none" : "block")
     }
 
     const onConfirmPasswordChange = (e: any) => {
         setConfirmPassword(e.target.value)
         setPasswordConfirmCheckMark(e.target.value === "" ? "none" : e.target.value === password ? "block" : "none")
-        setErrorVisible(e.target.value === "" ? "none" : e.target.value === password ? "none" : "block")
+        setErrorVisible(e.target.value === "" ? "none" : password === "" ? "none" : e.target.value === password ? "none" : "block")
+    }
+
+    const handleFormChange = (e: any) => {
+        setSignupDetails(prevState => ({ ...prevState, [e.target.name]: e.target.value }))
+    }
+
+    console.log(signupDetails)
+
+    const passwordChange = (e: any) => {
+        handleFormChange(e)
+        onPasswordChange(e)
+    }
+
+    const submitSignupDetails = () => {
+        console.log("submitting")
     }
 
     return (
@@ -51,15 +97,15 @@ const SignUp2 = () => {
                         <HeaderOne>Let's create your profile</HeaderOne>
                         <SubHeader>Tell us a little about your organization</SubHeader>
                         <HeaderTwo>Login details</HeaderTwo>
-                        <InputField label="Email" placeholder="Enter your organization email" name="org-email" id="org-email" />
-                        <InputField label="Create a Password" placeholder="Enter a password" name="password"
-                            id="password" checkMarkVisible={passwordCheckMark} onChange={onPasswordChange} />
-                        <InputField label="Confirm Password" placeholder="Re-enter the same password" name="confirm-password"
+                        <InputField label="Email" placeholder="Enter your organization email" name="email" id="email" onChange={handleFormChange} />
+                        <InputField label="Create a Password" type="password" placeholder="Enter a password" name="password"
+                            id="password" checkMarkVisible={passwordCheckMark} onChange={passwordChange} />
+                        <InputField label="Confirm Password" type="password" placeholder="Re-enter the same password" name="confirm-password"
                             id="confirm-password" checkMarkVisible={passwordConfirmCheckMark} errorVisible={errorVisible} onChange={onConfirmPasswordChange} />
                         <HeaderTwo>Organization details</HeaderTwo>
                         <Paragraph>Are you registered as a charity or non-profit organization on the Canada Revenue Agency's website?</Paragraph>
                         <div>
-                            <RadioGroup>
+                            <RadioGroup name="isRegisteredCRA" id="isRegisteredCRA" onChange={handleFormChange}>
                                 <Grid container>
                                     <Grid item xs={6}>
                                         <FormControlLabel value="yes" control={<Radio color="primary" />} label="Yes" labelPlacement="end" />
@@ -70,10 +116,10 @@ const SignUp2 = () => {
                                 </Grid>
                             </RadioGroup>
                         </div>
-                        <InputField label="Organization Name" placeholder="ie. iContribute" name="org-name" id="org-name" />
-                        <InputField label="Website" placeholder="ie. https://icontribute.community" name="website" id="website" />
-                        <InputField label="Postal Code" placeholder="ie. A2H B4P" name="postal-code" id="postal-code" />
-                        <TextareaField label="Description"
+                        <InputField label="Organization Name" placeholder="ie. iContribute" name="organizationName" id="organizationName" onChange={handleFormChange} />
+                        <InputField label="Website" placeholder="ie. https://icontribute.community" name="website" id="website" onChange={handleFormChange} />
+                        <InputField label="Postal Code" placeholder="ie. A2H B4P" name="postalCode" id="postalCode" onChange={handleFormChange} />
+                        <TextareaField label="Description" name="description" id="description" onChange={handleFormChange}
                             placeholder="ie.We connect people who are looking for local volunteer opportunities to nonprofits who are actively recruiting"
                             rows={8} />
                         <HeaderThree>Upload an account photo or logo</HeaderThree>
@@ -88,7 +134,7 @@ const SignUp2 = () => {
                     </Grid>
                     <Grid item xs={12}>
                         <SaveButtonContainer>
-                            <GreyButton text={saveButtonText} />
+                            <InteractiveButton disabled={submitDisabled} text={saveButtonText} onClick={submitSignupDetails} />
                         </SaveButtonContainer>
                     </Grid>
                 </Grid>

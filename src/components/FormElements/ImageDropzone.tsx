@@ -3,7 +3,7 @@ import { Grid } from '@material-ui/core';
 import { useDropzone } from 'react-dropzone'
 import styled from "styled-components";
 import DropIcon from "../../assets/images/image-drop.png";
-import BlueButton from "../Buttons/BlueButton";
+import StaticButton from "../Buttons/StaticButton";
 
 interface ImageDropzoneProps {
     setOrgImage: Function
@@ -34,7 +34,7 @@ const ImageDropzone: React.FC<ImageDropzoneProps> = ({ setOrgImage }) => {
 
     const handleDeleteImage = () => {
         setFiles([])
-        setOrgImage([])
+        setOrgImage(null)
     }
 
     // console.log(files)
@@ -46,7 +46,7 @@ const ImageDropzone: React.FC<ImageDropzoneProps> = ({ setOrgImage }) => {
                 <p>Drag photo here</p>
                 <p>or</p>
                 <input {...getInputProps()} type="file" style={{ display: "none" }} ref={hiddenFileUploader} onChange={handleFileUploaderChange} />
-                <BlueButton onClick={handleUploadClick} text="Upload from computer" />
+                <StaticButton onClick={handleUploadClick} text="Upload from computer" />
             </ImageDroper>
         )
     } else {
@@ -66,7 +66,7 @@ const ImageDropzone: React.FC<ImageDropzoneProps> = ({ setOrgImage }) => {
                         <p>Drag photo here</p>
                         <p>or</p>
                         <input {...getInputProps()} type="file" style={{ display: "none" }} ref={hiddenFileUploader} onChange={handleFileUploaderChange} />
-                        <BlueButton onClick={handleUploadClick} text="Upload from computer" />
+                        <StaticButton onClick={handleUploadClick} text="Upload from computer" />
                     </Grid>
                 </Grid>
             </ImageDroper >

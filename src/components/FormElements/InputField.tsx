@@ -4,12 +4,12 @@ import Label from "./Label";
 import InputIcon from "../../assets/images/check-mark.png";
 import { useState } from "react";
 
-const InputField = ({ label, value, placeholder, name, id, onChange, checkMarkVisible, errorVisible }: any) => {
+const InputField = ({ label, value, placeholder, name, id, onChange, checkMarkVisible, errorVisible, type }: any) => {
 
     return (
         <Field>
             <Label htmlFor={id}>{label}</Label>
-            <StyledInput name={name} id={id} placeholder={placeholder} onChange={onChange} />
+            <StyledInput name={name} id={id} placeholder={placeholder} onChange={onChange} type={type} />
             <div style={{ display: checkMarkVisible ?? "none" }}>
                 <StyledFormIcon />
             </div>
