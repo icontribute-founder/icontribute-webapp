@@ -98,13 +98,14 @@ const SignUp = () => {
         })
             .then(res => {
                 setSignupDetails(prevState => ({ ...prevState, orgImageUrl: res.data.imagePath }))
-                /* ============================================================================================================================== */
-                /* This section will be used to call an API and send the sign up details to, currently this object is just logged in the console. */
-                console.log(signupDetails)
-                /* ============================================================================================================================== */
             })
             .catch(err => console.log(err))
     }
+
+    /* ============================================================================================================================== */
+    /* This section will be used to call an API and send the sign up details to, currently this object is just logged in the console. */
+    console.log(signupDetails)
+    /* ============================================================================================================================== */
 
     return (
         <div>

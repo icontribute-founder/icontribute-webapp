@@ -20,7 +20,7 @@ const RouteWithSubRoutes = (route: any) => {
 const App = () => {
     const hasLogin = false;
 
-    const layout = !hasLogin ? (
+    const layout = hasLogin ? (
         <Router>
             <Header />
             <Switch>
