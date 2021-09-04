@@ -3,6 +3,7 @@ import Header from "../components/Header";
 import { routes } from "../routes";
 import Login from "../views/Login";
 import SignUp2 from "../views/SignUp2";
+import SignUp from "../views/SignUp"
 
 const RouteWithSubRoutes = (route: any) => {
     return (
@@ -33,6 +34,5 @@ const App = () => {
     );
 
     return layout;
-};
-
+}
 export default App;

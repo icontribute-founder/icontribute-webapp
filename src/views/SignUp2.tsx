@@ -1,223 +1,104 @@
-import { useState, useEffect } from 'react';
-import { useHistory } from "react-router-dom";
-import styled from 'styled-components';
-import { Grid, Radio, RadioGroup, FormControlLabel } from '@material-ui/core';
-import InputField from '../components/FormElements/InputField';
-import TextareaField from '../components/FormElements/TextareaField';
-import ImageDropzone from '../components/FormElements/ImageDropzone';
-import signupLogo from "../assets/images/signup-image.png";
-import InteractiveButton from '../components/Buttons/InteractiveButton';
+import React, { useState } from "react";
+import { Grid, Paper, TextField, Button } from "@material-ui/core";
+// import InputField from "../components1/common/InputField";
+// import { StyledButton } from "../components1/OpportunityCard/style";
+import { Link, useHistory } from "react-router-dom";
+import Carousel from "../assets/images/carousel";
 
-interface SingupDetails {
-    email: string,
-    password: string,
-    isRegisteredCRA: string,
-    organizationName: string,
-    website: string,
-    postalCode: string,
-    description: string,
-    orgImageUrl: string
-}
-
-const SignUp2 = () => {
-
+const Login = () => {
     const history = useHistory();
-
-    const handleBackClick = () => {
-        history.goBack()
-    }
-
-    const [orgImage, setOrgImage] = useState<File>()
-    const [passwordCheckMark, setPasswordCheckMark] = useState("none")
-    const [passwordConfirmCheckMark, setPasswordConfirmCheckMark] = useState("none")
-    const [password, setPassword] = useState("")
-    const [confirmPassword, setConfirmPassword] = useState("")
-    const [errorVisible, setErrorVisible] = useState("none")
-    const [submitDisabled, setSubmitDisabled] = useState(true)
-    const [signupDetails, setSignupDetails] = useState<SingupDetails>({
-        email: "",
-        password: "",
-        isRegisteredCRA: "",
-        organizationName: "",
-        website: "",
-        postalCode: "",
-        description: "",
-        orgImageUrl: ""
-    })
-
-    useEffect(() => {
-        if (signupDetails.description === "" || signupDetails.password === "" || signupDetails.email === "" || signupDetails.postalCode === ""
-            || signupDetails.isRegisteredCRA === "" || signupDetails.organizationName === "" || signupDetails.website === "" || orgImage === null) {
-            setSubmitDisabled(true)
-        } else {
-            setSubmitDisabled(false)
-        }
-        return () => { }
-    }, [signupDetails, orgImage])
-
-    const backArrow: string = "<"
-    const saveButtonText: string = "Save & Submit"
-
-    const onPasswordChange = (e: any) => {
-        setPassword(e.target.value)
-        setPasswordCheckMark(e.target.value.length !== 0 ? "block" : "none")
-        setPasswordConfirmCheckMark(confirmPassword === "" ? "none" : e.target.value === confirmPassword ? "block" : "none")
-        setErrorVisible(confirmPassword === "" ? "none" : e.target.value === "" ? "none" : e.target.value === confirmPassword ? "none" : "block")
-    }
-
-    const onConfirmPasswordChange = (e: any) => {
-        setConfirmPassword(e.target.value)
-        setPasswordConfirmCheckMark(e.target.value === "" ? "none" : e.target.value === password ? "block" : "none")
-        setErrorVisible(e.target.value === "" ? "none" : password === "" ? "none" : e.target.value === password ? "none" : "block")
-    }
-
-    const handleFormChange = (e: any) => {
-        setSignupDetails(prevState => ({ ...prevState, [e.target.name]: e.target.value }))
-    }
-
-    console.log(signupDetails)
-
-    const passwordChange = (e: any) => {
-        handleFormChange(e)
-        onPasswordChange(e)
-    }
-
-    const submitSignupDetails = () => {
-        console.log("submitting")
-    }
+    const handleLoginClick = () => {
+        history.push("/");
+    };
 
     return (
         <div>
-            <BackButton>
-                <a href="/" onClick={handleBackClick}><span>{backArrow}</span> Go back </a>
-            </BackButton>
-            <SignupContainer>
-                <Grid container>
+            <Paper>
+                <Grid container style={indent}>
                     <Grid item xs={6}>
-                        <HeaderOne>Let's create your profile</HeaderOne>
-                        <SubHeader>Tell us a little about your organization</SubHeader>
-                        <HeaderTwo>Login details</HeaderTwo>
-                        <InputField label="Email" placeholder="Enter your organization email" name="email" id="email" onChange={handleFormChange} />
-                        <InputField label="Create a Password" type="password" placeholder="Enter a password" name="password"
-                            id="password" checkMarkVisible={passwordCheckMark} onChange={passwordChange} />
-                        <InputField label="Confirm Password" type="password" placeholder="Re-enter the same password" name="confirm-password"
-                            id="confirm-password" checkMarkVisible={passwordConfirmCheckMark} errorVisible={errorVisible} onChange={onConfirmPasswordChange} />
-                        <HeaderTwo>Organization details</HeaderTwo>
-                        <Paragraph>Are you registered as a charity or non-profit organization on the Canada Revenue Agency's website?</Paragraph>
-                        <div>
-                            <RadioGroup name="isRegisteredCRA" id="isRegisteredCRA" onChange={handleFormChange}>
-                                <Grid container>
-                                    <Grid item xs={6}>
-                                        <FormControlLabel value="yes" control={<Radio color="primary" />} label="Yes" labelPlacement="end" />
-                                    </Grid>
-                                    <Grid item xs={6}>
-                                        <FormControlLabel value="no" control={<Radio color="primary" />} label="No" labelPlacement="end" />
-                                    </Grid>
-                                </Grid>
-                            </RadioGroup>
-                        </div>
-                        <InputField label="Organization Name" placeholder="ie. iContribute" name="organizationName" id="organizationName" onChange={handleFormChange} />
-                        <InputField label="Website" placeholder="ie. https://icontribute.community" name="website" id="website" onChange={handleFormChange} />
-                        <InputField label="Postal Code" placeholder="ie. A2H B4P" name="postalCode" id="postalCode" onChange={handleFormChange} />
-                        <TextareaField label="Description" name="description" id="description" onChange={handleFormChange}
-                            placeholder="ie.We connect people who are looking for local volunteer opportunities to nonprofits who are actively recruiting"
-                            rows={8} />
-                        <HeaderThree>Upload an account photo or logo</HeaderThree>
+                        <Paper style={darkBlue}>
+                            <h1 style={h1Style}>&nbsp;</h1>
+                            <Carousel></Carousel>
+
+                            <br></br>
+                            <br></br>
+                        </Paper>
                     </Grid>
-                    <Grid item xs={6}>
-                        <ImageContainer>
-                            <SignupImage />
-                        </ImageContainer>
-                    </Grid>
-                    <Grid item xs={8}>
-                        <ImageDropzone setOrgImage={setOrgImage} />
-                    </Grid>
-                    <Grid item xs={12}>
-                        <SaveButtonContainer>
-                            <InteractiveButton disabled={submitDisabled} text={saveButtonText} onClick={submitSignupDetails} />
-                        </SaveButtonContainer>
+
+                    <Grid style={indent} item xs={5}>
+                        <h1 style={h1Style}>&nbsp;</h1>
+                        <h1 style={h1Style}>Sign up to iContribute</h1>
+                        <br></br>
+
+                        <h4 style={h4StyleLeft}>Organization E-mail</h4>
+
+                        <TextField placeholder="E-mail" />
+
+                        <h4 style={h4StyleLeft}>Password</h4>
+
+                        <TextField placeholder="Password" />
+
+                        <h4 style={h4StyleLeft}>Re-enter Password</h4>
+
+                        <TextField placeholder="Re-enter Password" />
+
+                        <Button onClick={handleLoginClick} style={buttonStyle}>
+                            Sign up
+                        </Button>
+
+                        <br></br>
+                        <h4 style={h4Style}>
+                            Have an account?{" "}
+                            <a style={blue} onClick={handleLoginClick}>
+                                Login
+                            </a>
+                        </h4>
                     </Grid>
                 </Grid>
-            </SignupContainer>
+                <br></br>
+            </Paper>
+
+            <br></br>
+            <br></br>
         </div>
-    )
-}
+    );
+};
 
-export default SignUp2
+const h4StyleLeft: React.CSSProperties = {
+    fontWeight: 400,
+    fontFamily: "Source Sans Pro",
+    fontSize: "14px",
+    lineHeight: "0.1",
+    float: "left",
+};
+const h4Style: React.CSSProperties = {
+    fontWeight: 400,
+    fontFamily: "Source Sans Pro",
+    fontSize: "14px",
+    textAlign: "center",
+};
+const h1Style: React.CSSProperties = {
+    fontWeight: 600,
+    fontFamily: "Source Sans Pro",
+    fontSize: "36px",
+    textAlign: "center",
+    lineHeight: "0.5",
+};
+const indent: React.CSSProperties = {
+    marginLeft: "30px",
+};
+const blue: React.CSSProperties = {
+    color: "#0000EE",
+    cursor: "pointer",
+};
+const buttonStyle: React.CSSProperties = {
+    display: "block",
+    margin: "0 auto",
+    width: "50%",
+    textAlign: "center",
+};
+const darkBlue: React.CSSProperties = {
+    backgroundColor: "#2836D1",
+};
 
-const SignupContainer = styled.div`
-    font-family: Source Sans Pro;
-    letter-spacing: 1px;
-    padding: 50px 160px 50px 160px;
-    height: 100%;
-    padding-bottom: 150px;
-`
-
-const BackButton = styled.div`
-    margin-top: 35px;
-    margin-left: 29px;
-    a {
-        font-size: 12px;
-        font-family: sans-serif;
-        font-weight: bold;
-        text-decoration: none;
-        color: black;
-        span {
-            font-size: 12px;
-        }
-    }
-`
-
-const HeaderOne = styled.p`
-    font-size: 40px;
-    font-weight: bold;
-    margin: 0;  
-`
-
-const HeaderTwo = styled.p`
-    font-size: 24px;
-    font-weight: bold;
-    line-height: 32px;
-    color: #192226;
-    margin: 75px 0 0 0;
-`
-
-const HeaderThree = styled.p`
-    font-size: 20px;
-    font-weight: bold;
-    line-height: 32px;
-    color: #192226;
-    margin: 50px 0 24px 0;
-`
-
-const SubHeader = styled.p`
-    font-size: 14px;
-    font-weight: 400;
-    color: #736B6B;
-    margin: 9px 0 0 0;
-`
-
-const Paragraph = styled.p`
-    font-size: 15px;
-    font-weight: 400;
-    color: #192226;
-    margin-bottom: 24px;
-    margin-top: 20px;
-`
-
-const SignupImage = styled.img`
-    margin-top: 95px;
-    width: 600px;
-`
-
-SignupImage.defaultProps = {
-    src: signupLogo
-}
-
-const ImageContainer = styled.div`
-    text-align: right;
-`
-
-const SaveButtonContainer = styled.div`
-    text-align: right;
-`
+export default Login;
