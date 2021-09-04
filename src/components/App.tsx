@@ -18,10 +18,10 @@ const RouteWithSubRoutes = (route: any) => {
 };
 
 const App = () => {
-    const { hasLogin } = useSelector(
-        (state: RootState) => state.authentication
-    );
-
+    // const { hasLogin } = useSelector(
+    //     (state: RootState) => state.authentication
+    // );
+    const hasLogin = true;
     const layout = hasLogin ? (
         <Router>
             <Header />

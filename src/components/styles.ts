@@ -51,3 +51,12 @@ export const BlueButton = styled(LightBlueButton)`
     background: #2836d1;
     color: #fefeff;
 `;
+
+export const Subtitle = styled.p`
+    font-family: Source Sans Pro;
+    font-weight: normal;
+    // font-size: 14px;
+    line-height: 143%;
+    color: #676767;
+    margin-top: 0px;
+`;
