@@ -121,7 +121,7 @@ const Login = () => {
                 </InputField>
                 <LoginButton onClick={handleLogin}>Login</LoginButton>
                 <p>
-                    Dont’t have an account yet? <a href="#">Sign up here!</a>
+                    Dont’t have an account yet? <a href="/signup" onClick={handleSignUpClick}>Sign up here!</a>
                 </p>
             </Right>
         </Container>
