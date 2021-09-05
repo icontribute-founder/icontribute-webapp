@@ -1,35 +1,30 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-import { Opportunity, Shift, HostingType } from "../models/opportunity";
+import {
+    Opportunity,
+    Shift,
+    HostingType,
+    OpportunityCategory,
+    OpportunityType,
+} from "../models/opportunity";
 
-export const shift: Shift = {
-    start: new Date(),
-    end: new Date(),
-};
+export interface EditShiftProp {
+    index: number;
+    shift: Shift;
+}
 
 const initialState: Opportunity = {
-    eventName: "Research Assistant",
+    eventName: "",
     companyName: "",
-    eventImageURL: "https://material-ui.com/static/images/grid/complex.jpg",
-    shifts: [shift],
+    eventImageURL: "",
+    shifts: [],
     categories: [],
-    description: `Your primary roles include attending development
-        classes, taking metrics, providing support to the class
-        members in and out of class, provide support during
-        interactive activities and by calling class members when
-        support is needed. This role also involves preparation
-        for Development Course facilitation includ ... Your
-        primary roles include attending development classes,
-        taking metrics, providing support to the class members
-        in and out of class, provide support during interactive
-        activities and by calling class members when support is
-        needed. This role also involves preparation for
-        Development Course facilitation include.`,
+    description: "",
     email: "test@email.com",
     address: "",
-    type: undefined,
-    date: undefined,
-    deadline: undefined,
+    type: OpportunityType.Inperson,
+    date: Date.now(),
+    deadline: Date.now(),
     role: "",
     requirements: "",
     url: "opportunityurl.com",
@@ -41,8 +36,50 @@ export const newOpportunitySlice = createSlice({
     name: "newOpportunity",
     initialState,
     reducers: {
+        updateCategories: (
+            state,
+            action: PayloadAction<OpportunityCategory>
+        ) => {
+            const category = action.payload;
+            if (state.categories.includes(category)) {
+                const index = state.categories.indexOf(category);
+                if (index > -1) state.categories.splice(index, 1);
+            } else if (state.categories.length < 3) {
+                state.categories.push(category);
+            }
+        },
+        updateTitle: (state, action: PayloadAction<string>) => {
+            state.eventName = action.payload;
+        },
+        updateLocation: (state, action: PayloadAction<string>) => {
+            state.address = action.payload;
+        },
+        updateDescription: (state, action: PayloadAction<string>) => {
+            state.description = action.payload;
+        },
+        updateHostingType: (state, action: PayloadAction<HostingType>) => {
+            state.hostingType = action.payload;
+        },
+        updateType: (state, action: PayloadAction<OpportunityType>) => {
+            state.type = action.payload;
+        },
+        updateDeadline: (state, action: PayloadAction<number>) => {
+            state.deadline = action.payload;
+        },
+        newShift: (state, action: PayloadAction<Shift>) => {
+            state.shifts.push(action.payload);
+        },
+        removeShift: (state, action: PayloadAction<number>) => {
+            const index = action.payload;
+            console.log(index);
+            state.shifts.splice(index, 1);
+        },
+        editShift: (state, action: PayloadAction<EditShiftProp>) => {
+            const { index, shift } = action.payload;
+            state.shifts[index] = shift;
+        },
         save: (state) => {
-            console.log("save", state.eventName);
+            console.log("save", state);
         },
         publish: (state) => {
             console.log("post", state.eventName);
@@ -50,6 +87,19 @@ export const newOpportunitySlice = createSlice({
     },
 });
 
-export const { save, publish } = newOpportunitySlice.actions;
+export const {
+    save,
+    publish,
+    updateTitle,
+    updateDescription,
+    updateLocation,
+    updateCategories,
+    updateHostingType,
+    updateType,
+    updateDeadline,
+    newShift,
+    editShift,
+    removeShift,
+} = newOpportunitySlice.actions;
 
 export default newOpportunitySlice.reducer;

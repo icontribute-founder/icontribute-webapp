@@ -2,6 +2,12 @@ import styled from "styled-components";
 import { Link, useHistory } from "react-router-dom";
 import { LightBlueButton } from "../components/styles";
 import Slides from "../components/Slides";
+import { authApiclient } from "../AuthApiClient";
+import { useState } from "react";
+import { AuthUser } from "../models/auth";
+import { useDispatch, useSelector } from "react-redux";
+import { login } from "../features/authentication";
+import { RootState } from "../store";
 
 const InputField = styled.div`
     font-family: Source Sans Pro;
@@ -58,12 +64,29 @@ const LoginButton = styled(LightBlueButton)`
 `;
 
 const Login = () => {
+    const dispatch = useDispatch();
+
+    const [user, setUser] = useState<AuthUser>({
+        email: "",
+        password: "",
+        type: "organization",
+    });
+
     const history = useHistory();
     const handleSignUpClick = () => {
         history.push("/SignUp");
     };
     const handleAccountSettingsClick = () => {
         history.push("/account-settings");
+    };
+
+    const handleLogin = async () => {
+        // await authApiclient.login(user);
+        dispatch(login(user));
+    };
+
+    const handleInputOnChange = (event: any) => {
+        setUser({ ...user, [event.target.name]: event.target.value });
     };
 
     return (
@@ -79,6 +102,9 @@ const Login = () => {
                         type="text"
                         id="loginEmail"
                         placeholder="Please enter your email address"
+                        name="email"
+                        onChange={handleInputOnChange}
+                        value={user.email}
                     />
                 </InputField>
                 <InputField>
@@ -87,12 +113,15 @@ const Login = () => {
                         type="password"
                         id="loginPassword"
                         placeholder="Password"
+                        name="password"
+                        onChange={handleInputOnChange}
+                        value={user.password}
                     />
                     <a href="#">Forget password?</a>
                 </InputField>
-                <LoginButton>Login</LoginButton>
-                <p style = {font}>
-                    Dont’t have an account yet? <a href="#">Sign up here!</a>
+                <LoginButton onClick={handleLogin}>Login</LoginButton>
+                <p>
+                    Dont’t have an account yet? <a href="/signup" onClick={handleSignUpClick}>Sign up here!</a>
                 </p>
                 
             </Right>

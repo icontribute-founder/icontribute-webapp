@@ -3,18 +3,30 @@ export interface Opportunity {
     companyName: string;
     eventImageURL: string;
     shifts: Shift[];
-    categories: string[];
+    categories: OpportunityCategory[];
     description: string;
     email: string;
     address: string;
-    type?: OpportunityType | undefined;
-    date?: Date | undefined;
-    deadline?: Date | undefined;
+    type: OpportunityType;
+    date: number;
+    deadline: number;
     role: string;
     requirements: string;
     url: string;
     hostingType: HostingType;
     notes: string;
+}
+
+export enum OpportunityCategory {
+    Education = "Education",
+    Animal = "Animal",
+    Art = "Art",
+    Sports = "Sports",
+    Healthcare = "Healthcare",
+    Environment = "Environment",
+    Charity = "Charity",
+    Tutoring = "Tutoring",
+    Other = "Other",
 }
 
 export enum OpportunityType {
@@ -28,6 +40,7 @@ export enum HostingType {
 }
 
 export interface Shift {
-    start: Date;
-    end: Date;
+    start: number;
+    end: number;
+    recurrence: string;
 }
