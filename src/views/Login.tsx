@@ -76,8 +76,8 @@ const Login = () => {
     const handleSignUpClick = () => {
         history.push("/SignUp");
     };
-    const handleDashboardClick = () => {
-        history.push("/Dashboard");
+    const handleAccountSettingsClick = () => {
+        history.push("/account-settings");
     };
 
     const handleLogin = async () => {
@@ -95,7 +95,7 @@ const Login = () => {
                 <Slides />
             </Left>
             <Right>
-                <h1>Login to iContribute</h1>
+                <h1 style = {font}>Login to iContribute</h1>
                 <InputField>
                     <label htmlFor="loginEmail">Email</label>
                     <TextField
@@ -123,9 +123,16 @@ const Login = () => {
                 <p>
                     Dont’t have an account yet? <a href="/signup" onClick={handleSignUpClick}>Sign up here!</a>
                 </p>
+                
             </Right>
+          
+
         </Container>
+
     );
 };
+const font: React.CSSProperties = {
+    fontFamily : "Source Sans Pro",
+}
 
 export default Login;
