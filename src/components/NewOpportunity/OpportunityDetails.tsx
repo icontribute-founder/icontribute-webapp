@@ -1,4 +1,5 @@
 import { Grid, TextField } from "@material-ui/core";
+import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
     updateDescription,
@@ -7,43 +8,20 @@ import {
 } from "../../features/newOpportunity";
 import { Shift } from "../../models/opportunity";
 import { RootState } from "../../store";
+import ImageDropzone from "../FormElements/ImageDropzone";
+import InputField from "../FormElements/InputField";
+import TextareaField from "../FormElements/TextareaField";
 import ShiftCard from "../ShiftCard";
 import { Subtitle } from "../styles";
-
-const CustomTextField = ({
-    id,
-    rows = 1,
-    value,
-    onChange,
-    label,
-    placeholder,
-}: any) => {
-    const isMultiLine = rows > 1;
-    return (
-        <TextField
-            id={id}
-            label={label}
-            variant="outlined"
-            required
-            fullWidth
-            placeholder={placeholder}
-            InputLabelProps={{
-                shrink: true,
-            }}
-            multiline={isMultiLine}
-            rows={rows}
-            value={value}
-            onChange={onChange}
-            margin="normal"
-        />
-    );
-};
+import Section from "./Section";
 
 const OpportunityDetails = () => {
     const dispatch = useDispatch();
     const { eventName, address, description, shifts } = useSelector(
         (state: RootState) => state.newOpportunity
     );
+
+    const [orgImage, setOrgImage] = useState<any>();
 
     const handleTitleOnChange = (e: any) => {
         dispatch(updateTitle(e.target.value));
@@ -57,37 +35,40 @@ const OpportunityDetails = () => {
         dispatch(updateDescription(e.target.value));
     };
 
-    console.log(shifts);
-
-    return (
-        <div>
-            <h2>Opportunity Details</h2>
-            <Subtitle>
-                Let the applicants know more about the open role and their
-                primary responsibilities.
-            </Subtitle>
-            <CustomTextField
-                label="Title"
-                id="opportunity-details-title"
+    const content = (
+        <>
+            <InputField
+                label="Title *"
+                type="text"
                 placeholder="Enter the opportunity name"
+                name="opportunity-details-title"
+                id="opportunity-details-title"
                 value={eventName}
+                // checkMarkVisible={passwordConfirmCheckMark}
+                // errorVisible={errorVisible}
                 onChange={handleTitleOnChange}
             />
-            <CustomTextField
-                id="opportunity-details-location"
-                label="Location"
+            <InputField
+                label="Location *"
+                type="text"
                 placeholder="Enter organization’s address"
+                name="opportunity-details-location"
+                id="opportunity-details-location"
                 value={address}
+                // checkMarkVisible={passwordConfirmCheckMark}
+                // errorVisible={errorVisible}
                 onChange={handleLocationOnChange}
             />
-            <CustomTextField
-                id="opportunity-details-description"
+            <TextareaField
                 label="Description"
-                placeholder="Enter position’s primary duties and responsibilities"
-                value={description}
+                name="opportunity-details-description"
+                id="opportunity-details-description"
                 onChange={handleDescriptionOnChange}
+                value={description}
+                placeholder="Enter position’s primary duties and responsibilities"
                 rows={8}
             />
+
             <h3>Shift</h3>
             <Grid container spacing={2}>
                 {shifts.map((shift: Shift, i: number) => (
@@ -100,7 +81,17 @@ const OpportunityDetails = () => {
                 </Grid>
             </Grid>
             <h4>Upload Photo (Optional)</h4>
-        </div>
+            <ImageDropzone setOrgImage={setOrgImage} />
+        </>
+    );
+
+    return (
+        <Section
+            title="Opportunity Details"
+            subtitle="Let the applicants know more about the open role and their
+            primary responsibilities."
+            content={content}
+        />
     );
 };
 

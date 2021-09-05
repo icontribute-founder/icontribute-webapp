@@ -1,6 +1,7 @@
 import { useState } from "react";
 import ShiftDialog from "./ShiftDialog";
 import { Shift } from "../models/opportunity";
+import StaticButton from "./Buttons/StaticButton";
 import { CardBase, LightBlueButton, BlueButton } from "./styles";
 import styled from "styled-components";
 
@@ -26,14 +27,6 @@ const StyledLightBlueButton = styled(LightBlueButton)`
     right: 14px;
 `;
 
-const StyledBlueButton = styled(BlueButton)`
-    width: fit-content;
-    font-style: normal;
-    font-weight: bold;
-    font-size: 16px;
-    line-height: 24px;
-`;
-
 const ShiftCard = ({ shift, index = -1 }: ShiftCardProps) => {
     const [openNew, setOpenNew] = useState(false);
     const [openEdit, setOpenEdit] = useState(false);
@@ -56,9 +49,7 @@ const ShiftCard = ({ shift, index = -1 }: ShiftCardProps) => {
     const createShift =
         index === -1 ? (
             <NewCard>
-                <StyledBlueButton onClick={handleClickOpenNew}>
-                    Create New
-                </StyledBlueButton>
+                <StaticButton onClick={handleClickOpenNew} text="Create New" />
                 <ShiftDialog
                     open={openNew}
                     onClose={handleCloseNew}

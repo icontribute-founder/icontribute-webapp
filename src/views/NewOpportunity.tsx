@@ -2,8 +2,29 @@ import { Button, Container } from "@material-ui/core";
 import HowToApply from "../components/NewOpportunity/HowToApply";
 import BasicDetails from "../components/NewOpportunity/BasicDetails";
 import OpportunityDetails from "../components/NewOpportunity/OpportunityDetails";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { save } from "../features/newOpportunity";
+import InteractiveButton from "../components/Buttons/InteractiveButton";
+import styled from "styled-components";
+import { RootState } from "../store";
+import { BackButton, HeaderOne } from "./SignUp";
+import { Subtitle } from "../components/styles";
+
+const SaveButtonContainer = styled.div`
+    text-align: right;
+    margin-top: -120px;
+    margin-right: -200px;
+`;
+
+const NewOpportunityContainer = styled(Container)`
+    padding-bottom: 40px;
+    font-family: Source Sans Pro;
+    // letter-spacing: 1px;
+`;
+
+const ContentContainer = styled.div`
+    margin-top: 60px;
+`;
 
 const NewOpportunity = () => {
     const dispatch = useDispatch();
@@ -13,13 +34,43 @@ const NewOpportunity = () => {
         dispatch(save());
     };
 
+    const { eventName, address } = useSelector(
+        (state: RootState) => state.newOpportunity
+    );
+
+    const handleBackClick = () => {};
+
+    const canSubmit = eventName !== "" && address !== "";
+
+    const backArrow: string = "<";
+
     return (
-        <Container fixed maxWidth="md">
-            <HowToApply />
-            <BasicDetails />
-            <OpportunityDetails />
-            <Button onClick={handleOnClick}>Save & Preview</Button>
-        </Container>
+        <div>
+            <BackButton>
+                <a href="/" onClick={handleBackClick}>
+                    <span>{backArrow}</span> Back to dashboard
+                </a>
+            </BackButton>
+            <NewOpportunityContainer fixed maxWidth="md">
+                <HeaderOne>Create an opportunity</HeaderOne>
+                <Subtitle>
+                    Tell us what you’re looking for with easy-to-use opportunity
+                    templates to find relevant and qualified candidates.
+                </Subtitle>
+                <ContentContainer>
+                    <HowToApply />
+                    <BasicDetails />
+                    <OpportunityDetails />
+                    <SaveButtonContainer>
+                        <InteractiveButton
+                            disabled={!canSubmit}
+                            text="Save & Preview"
+                            onClick={handleOnClick}
+                        />
+                    </SaveButtonContainer>
+                </ContentContainer>
+            </NewOpportunityContainer>
+        </div>
     );
 };
 

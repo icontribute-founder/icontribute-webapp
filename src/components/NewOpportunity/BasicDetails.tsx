@@ -7,6 +7,7 @@ import { FormControlLabel, Radio, RadioGroup } from "@material-ui/core";
 import { DatePicker, MuiPickersUtilsProvider } from "@material-ui/pickers";
 import { updateType, updateDeadline } from "../../features/newOpportunity";
 import { OpportunityType } from "../../models/opportunity";
+import Section from "./Section";
 
 const BasicDetails = () => {
     const dispatch = useDispatch();
@@ -31,13 +32,8 @@ const BasicDetails = () => {
         }
     };
 
-    return (
-        <div>
-            <h2>Basic details</h2>
-            <Subtitle>
-                Let the applicants know more about the open role and their
-                primary responsibilities.
-            </Subtitle>
+    const content = (
+        <>
             <MuiPickersUtilsProvider utils={MomentUtils}>
                 <DatePicker
                     disableToolbar
@@ -73,7 +69,16 @@ const BasicDetails = () => {
             <h3>Which category do your opportunity fall under?</h3>
             <Subtitle>Select up to 3 categories</Subtitle>
             <CategoryGroup />
-        </div>
+        </>
+    );
+
+    return (
+        <Section
+            title="Basic details"
+            subtitle="Let the applicants know more about the open role and their
+                primary responsibilities."
+            content={content}
+        />
     );
 };
 
