@@ -2,6 +2,7 @@ export interface Authentication {
     email: string;
     type: string;
     tokens: Tokens;
+    loading: boolean;
     hasLogin: boolean;
 }
 

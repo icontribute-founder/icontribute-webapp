@@ -72,8 +72,8 @@ const ShiftCard = ({ start, end, i }: any) => {
     return (
         <EditableCard>
             <H4>Shift{i + 1}</H4>
-            <p>Start: {start.toDateString()}</p>
-            <p>End: {end.toDateString()}</p>
+            <p>Start: {new Date(start).toDateString()}</p>
+            <p>End: {new Date(end).toDateString()}</p>
             <p>Does not repeat</p>
         </EditableCard>
     );

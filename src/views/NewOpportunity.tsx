@@ -1,43 +1,76 @@
+import { Button, Container } from "@material-ui/core";
+import HowToApply from "../components/NewOpportunity/HowToApply";
+import BasicDetails from "../components/NewOpportunity/BasicDetails";
+import OpportunityDetails from "../components/NewOpportunity/OpportunityDetails";
+import { useDispatch, useSelector } from "react-redux";
+import { save } from "../features/newOpportunity";
+import InteractiveButton from "../components/Buttons/InteractiveButton";
 import styled from "styled-components";
-import { Container } from "@material-ui/core";
-import OpportunityReview from "../components/OpportunityReview";
-import Footer from "../components/Footer";
+import { RootState } from "../store";
+import { BackButton, HeaderOne } from "./SignUp";
+import { Subtitle } from "../components/styles";
 
-const Title = styled.h1`
-    width: 100%;
-    font-family: Source Sans Pro;
-    font-weight: bold;
-    font-size: 40px;
-    line-height: 110%;
-    margin: 0px;
+const SaveButtonContainer = styled.div`
+    text-align: right;
+    margin-top: -120px;
+    margin-right: -200px;
 `;
 
-const Subtitle = styled.p`
-    width: 100%;
+const NewOpportunityContainer = styled(Container)`
+    padding-bottom: 40px;
     font-family: Source Sans Pro;
-    font-size: 14px;
-    color: #676767;
+    // letter-spacing: 1px;
 `;
 
-const Content = styled.div`
-    margin-top: 16px;
-    margin-bottom: 16px;
+const ContentContainer = styled.div`
+    margin-top: 60px;
 `;
 
 const NewOpportunity = () => {
+    const dispatch = useDispatch();
+
+    const handleOnClick = (e: any) => {
+        e.preventDefault();
+        dispatch(save());
+    };
+
+    const { eventName, address } = useSelector(
+        (state: RootState) => state.newOpportunity
+    );
+
+    const handleBackClick = () => {};
+
+    const canSubmit = eventName !== "" && address !== "";
+
+    const backArrow: string = "<";
+
     return (
-        <Container fixed maxWidth="md">
-            <Title>Opportunity Review</Title>
-            <Subtitle>
-                Scroll through to see if we got all the important information.
-                If everything looks good, you are all set to post the event or
-                save it as a draft!
-            </Subtitle>
-            <Content>
-                <OpportunityReview />
-            </Content>
-            <Footer />
-        </Container>
+        <div>
+            <BackButton>
+                <a href="/" onClick={handleBackClick}>
+                    <span>{backArrow}</span> Back to dashboard
+                </a>
+            </BackButton>
+            <NewOpportunityContainer fixed maxWidth="md">
+                <HeaderOne>Create an opportunity</HeaderOne>
+                <Subtitle>
+                    Tell us what you’re looking for with easy-to-use opportunity
+                    templates to find relevant and qualified candidates.
+                </Subtitle>
+                <ContentContainer>
+                    <HowToApply />
+                    <BasicDetails />
+                    <OpportunityDetails />
+                    <SaveButtonContainer>
+                        <InteractiveButton
+                            disabled={!canSubmit}
+                            text="Save & Preview"
+                            onClick={handleOnClick}
+                        />
+                    </SaveButtonContainer>
+                </ContentContainer>
+            </NewOpportunityContainer>
+        </div>
     );
 };
 

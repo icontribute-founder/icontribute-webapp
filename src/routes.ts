@@ -25,6 +25,6 @@ export const routes = [
     {
         path: "/signup",
         exact: true,
-        component: SignUp
-    }
+        component: SignUp,
+    },
 ];

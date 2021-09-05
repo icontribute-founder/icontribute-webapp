@@ -53,6 +53,6 @@ export const newOrganizationSlice = createSlice({
     },
 });
 
-export const { updateEmail } = newOrganizationSlice.actions;
+export const { updateEmail, updateCategories } = newOrganizationSlice.actions;
 
 export default newOrganizationSlice.reducer;
