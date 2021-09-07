@@ -66,6 +66,9 @@ export const newOpportunitySlice = createSlice({
         updateDeadline: (state, action: PayloadAction<number>) => {
             state.deadline = action.payload;
         },
+        updateImageUrl: (state, action: PayloadAction<string>) => {
+            state.eventImageURL = action.payload;
+        },
         newShift: (state, action: PayloadAction<Shift>) => {
             state.shifts.push(action.payload);
         },
@@ -97,6 +100,7 @@ export const {
     updateHostingType,
     updateType,
     updateDeadline,
+    updateImageUrl,
     newShift,
     editShift,
     removeShift,

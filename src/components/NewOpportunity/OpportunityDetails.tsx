@@ -3,9 +3,11 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
     updateDescription,
+    updateImageUrl,
     updateLocation,
     updateTitle,
 } from "../../features/newOpportunity";
+import { upload } from "../../imageUploader";
 import { Shift } from "../../models/opportunity";
 import { RootState } from "../../store";
 import ImageDropzone from "../FormElements/ImageDropzone";
@@ -15,13 +17,33 @@ import ShiftCard from "../ShiftCard";
 import { Subtitle } from "../styles";
 import Section from "./Section";
 
-const OpportunityDetails = () => {
+const OpportunityDetails = ({ setImageUploading }: any) => {
     const dispatch = useDispatch();
     const { eventName, address, description, shifts } = useSelector(
         (state: RootState) => state.newOpportunity
     );
 
     const [orgImage, setOrgImage] = useState<any>();
+
+    const handleImageOnChange = async (files: File[]) => {
+        if (files === null) {
+            console.log(orgImage);
+            return;
+        }
+
+        if (files.length < 1) return;
+
+        try {
+            setOrgImage(files[0]);
+            setImageUploading(true);
+            const imagePath = await upload(files[0]);
+            dispatch(updateImageUrl(imagePath));
+            console.log(imagePath);
+        } catch (error) {
+            console.log(error);
+        }
+        setImageUploading(false);
+    };
 
     const handleTitleOnChange = (e: any) => {
         dispatch(updateTitle(e.target.value));
@@ -81,7 +103,7 @@ const OpportunityDetails = () => {
                 </Grid>
             </Grid>
             <h4>Upload Photo (Optional)</h4>
-            <ImageDropzone setOrgImage={setOrgImage} />
+            <ImageDropzone setOrgImage={handleImageOnChange} />
         </>
     );
 

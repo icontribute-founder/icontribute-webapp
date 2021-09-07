@@ -10,6 +10,7 @@ import { RootState } from "../store";
 import { BackButton, HeaderOne } from "./SignUp";
 import { Subtitle } from "../components/styles";
 import { useHistory } from "react-router";
+import { useState } from "react";
 
 const SaveButtonContainer = styled.div`
     text-align: right;
@@ -30,9 +31,12 @@ const NewOpportunity = () => {
     const dispatch = useDispatch();
     const history = useHistory();
 
+    const [imageUploading, setImageUploading] = useState(false);
+
     const handleOnClick = (e: any) => {
         e.preventDefault();
         dispatch(save());
+        history.push("/new-opportunity-review");
     };
 
     const { eventName, address } = useSelector(
@@ -43,7 +47,7 @@ const NewOpportunity = () => {
         history.push("/");
     };
 
-    const canSubmit = eventName !== "" && address !== "";
+    const canSubmit = eventName !== "" && address !== "" && !imageUploading;
 
     return (
         <div>
@@ -59,7 +63,7 @@ const NewOpportunity = () => {
                 <ContentContainer>
                     <HowToApply />
                     <BasicDetails />
-                    <OpportunityDetails />
+                    <OpportunityDetails setImageUploading={setImageUploading} />
                     <SaveButtonContainer>
                         <InteractiveButton
                             disabled={!canSubmit}

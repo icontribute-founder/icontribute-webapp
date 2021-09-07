@@ -35,13 +35,13 @@ const ButtonGroup = styled.div`
     flex-direction: row;
 `;
 
-const OpportunityCreatedPage = () => {
+const OpportunityConfirmPage = () => {
     const history = useHistory();
     const handleDashboardClick = () => {
-        history.push("/dashboard");
+        history.push("/");
     };
     const handleShareClick = () => {
-        history.push("/dashboard");
+        history.push("/");
     };
 
     return (
@@ -70,4 +70,4 @@ const OpportunityCreatedPage = () => {
     );
 };
 
-export default OpportunityCreatedPage;
+export default OpportunityConfirmPage;

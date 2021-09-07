@@ -60,21 +60,28 @@ const TimeText = styled.div`
 `;
 
 const Deadline = () => {
+    const { deadline } = useSelector(
+        (state: RootState) => state.newOpportunity
+    );
+    const date = new Date(deadline);
+    const day = date.getDate();
+    const month = date.getMonth() + 1;
+    const year = date.getFullYear();
     return (
         <div>
             <DeadlineLabel>Application Deadline:</DeadlineLabel>
-            <DeadlineValue>May 30, 2021</DeadlineValue>
+            <DeadlineValue>{`${month} ${day}, ${year}`}</DeadlineValue>
         </div>
     );
 };
 
-const ShiftCard = ({ start, end, i }: any) => {
+const ShiftCard = ({ start, end, recurrence, i }: any) => {
     return (
         <EditableCard>
             <H4>Shift{i + 1}</H4>
             <p>Start: {new Date(start).toDateString()}</p>
             <p>End: {new Date(end).toDateString()}</p>
-            <p>Does not repeat</p>
+            <p>{recurrence}</p>
         </EditableCard>
     );
 };
@@ -92,7 +99,7 @@ const Summary = () => {
                         width="211px"
                         height="118px"
                         alt="complex"
-                        src={eventImageURL}
+                        src={`https://${eventImageURL}`}
                         style={{ borderRadius: "8px" }}
                     />
                 </Grid>
@@ -124,9 +131,14 @@ const Summary = () => {
                 <Grid item xs={12}>
                     <H4>Location</H4>
                 </Grid>
-                {shifts.map(({ start, end }, i) => (
+                {shifts.map(({ start, end, recurrence }, i) => (
                     <Grid item xs={6} key={`shift-card-${i}`}>
-                        <ShiftCard start={start} end={end} i={i} />
+                        <ShiftCard
+                            start={start}
+                            end={end}
+                            i={i}
+                            recurrence={recurrence}
+                        />
                     </Grid>
                 ))}
             </Grid>

@@ -17,6 +17,7 @@ const SaveButton = styled(LightBlueButton)`
 
 const Footer = ({ lastStep, handleFinish }: any) => {
     const dispatch = useDispatch();
+    const history = useHistory();
     // const { hostingType } = useSelector(
     //     (state: RootState) => state.newOpportunity
     // );

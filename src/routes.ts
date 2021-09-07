@@ -4,11 +4,12 @@ import Confirmation2 from "./views/Confirmation2";
 // import Profile from "./views/Profile";
 import SignUp from "./views/SignUp";
 import Login from "./views/Login";
-import OpportunityCreatedPage from "./views/OpportunityCreatedPage";
+import OpportunityConfirmPage from "./views/OpportunityConfirmPage";
 import AccountSettings from "./views/AccountSettings";
 import Notifications from "./views/Notifications";
 import Dashboard from "./views/Dashboard";
 import Profile from "./views/Profile";
+import ReviewOpportunity from "./views/ReviewOpportunity";
 
 export const routes = [
     // { path: "/dashboard", exact: true, component: Dashboard },
@@ -27,9 +28,14 @@ export const routes = [
     { path: "/confirmation2", exact: true, component: Confirmation2 },
     // { path: "/", exact: true, component: Login },
     {
-        path: "/new-opportunity-created",
+        path: "/new-opportunity-review",
         exact: true,
-        component: OpportunityCreatedPage,
+        component: ReviewOpportunity,
+    },
+    {
+        path: "/new-opportunity-confirm",
+        exact: true,
+        component: OpportunityConfirmPage,
     },
     {
         path: "/account-settings",
