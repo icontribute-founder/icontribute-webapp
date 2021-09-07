@@ -1,9 +1,10 @@
+import { useHistory } from "react-router";
 import styled from "styled-components";
 
 const StyledHeader = styled.header`
     position: sticky;
-    top 0px;
-    background-color: #2836D1;
+    top: 0px;
+    background-color: #2836d1;
     width: 100%;
     height: 65px;
     color: white;
@@ -44,10 +45,19 @@ const ToolButton = styled.button`
 `;
 
 const Header = () => {
+    const history = useHistory();
+
+    const handleOnClick = (route: string) => {
+        history.push(route);
+    };
+
     return (
         <StyledHeader>
-            {/* <Button color="inherit">Login</Button> */}
-            <HeaderText>
+            <HeaderText
+                onClick={() => {
+                    handleOnClick("/");
+                }}
+            >
                 <svg
                     width="209"
                     height="50"
@@ -67,7 +77,11 @@ const Header = () => {
             </HeaderText>
 
             <Tools>
-                <ToolButton>
+                <ToolButton
+                    onClick={() => {
+                        handleOnClick("/");
+                    }}
+                >
                     <svg
                         width="73"
                         height="46"
@@ -86,7 +100,11 @@ const Header = () => {
                         />
                     </svg>
                 </ToolButton>
-                <ToolButton>
+                <ToolButton
+                    onClick={() => {
+                        handleOnClick("/notifications");
+                    }}
+                >
                     <svg
                         width="86"
                         height="47"
@@ -106,7 +124,11 @@ const Header = () => {
                         />
                     </svg>
                 </ToolButton>
-                <ToolButton>
+                <ToolButton
+                    onClick={() => {
+                        handleOnClick("/profile");
+                    }}
+                >
                     <svg
                         width="50"
                         height="47"

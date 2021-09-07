@@ -1,14 +1,20 @@
 import { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import styled from "styled-components";
-import { Grid, Radio, RadioGroup, FormControlLabel } from "@material-ui/core";
+import {
+    Grid,
+    Radio,
+    RadioGroup,
+    FormControlLabel,
+    Container,
+} from "@material-ui/core";
 import InputField from "../components/FormElements/InputField";
 import TextareaField from "../components/FormElements/TextareaField";
 import ImageDropzone from "../components/FormElements/ImageDropzone";
-import signupLogo from "../assets/images/signup-image.png";
 import InteractiveButton from "../components/Buttons/InteractiveButton";
 import axios from "axios";
 import FormData from "form-data";
+import SignupGraphic from "../components/Svgs/SignupGraphic";
 
 interface SingupDetails {
     email: string;
@@ -127,10 +133,7 @@ const SignUp = () => {
         const url = "https://icontribute-api-dev-server.herokuapp.com/images/";
         let formData = new FormData();
         formData.append("photo", orgImage[0], "image.jpg");
-        const headers = {
-            "content-type": "multipart/form-data",
-        };
-        const uploadImageRequest = await axios
+        await axios
             .post(url, formData, {
                 headers: {
                     "Content-Type": "multipart/form-data",
@@ -258,7 +261,7 @@ const SignUp = () => {
                     </Grid>
                     <Grid item xs={6}>
                         <ImageContainer>
-                            <SignupImage />
+                            <SignupGraphic />
                         </ImageContainer>
                     </Grid>
                     <Grid item xs={8}>
@@ -281,10 +284,8 @@ const SignUp = () => {
 
 export default SignUp;
 
-const SignupContainer = styled.div`
+const SignupContainer = styled(Container)`
     font-family: Source Sans Pro;
-    letter-spacing: 1px;
-    padding: 50px 160px 50px 160px;
     height: 100%;
     padding-bottom: 150px;
 `;
@@ -340,15 +341,6 @@ export const Paragraph = styled.p`
     margin-bottom: 24px;
     margin-top: 20px;
 `;
-
-export const SignupImage = styled.img`
-    margin-top: 95px;
-    width: 600px;
-`;
-
-SignupImage.defaultProps = {
-    src: signupLogo,
-};
 
 const ImageContainer = styled.div`
     text-align: right;

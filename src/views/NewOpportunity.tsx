@@ -9,6 +9,7 @@ import styled from "styled-components";
 import { RootState } from "../store";
 import { BackButton, HeaderOne } from "./SignUp";
 import { Subtitle } from "../components/styles";
+import { useHistory } from "react-router";
 
 const SaveButtonContainer = styled.div`
     text-align: right;
@@ -19,7 +20,6 @@ const SaveButtonContainer = styled.div`
 const NewOpportunityContainer = styled(Container)`
     padding-bottom: 40px;
     font-family: Source Sans Pro;
-    // letter-spacing: 1px;
 `;
 
 const ContentContainer = styled.div`
@@ -28,6 +28,7 @@ const ContentContainer = styled.div`
 
 const NewOpportunity = () => {
     const dispatch = useDispatch();
+    const history = useHistory();
 
     const handleOnClick = (e: any) => {
         e.preventDefault();
@@ -38,18 +39,16 @@ const NewOpportunity = () => {
         (state: RootState) => state.newOpportunity
     );
 
-    const handleBackClick = () => {};
+    const handleBackClick = () => {
+        history.push("/");
+    };
 
     const canSubmit = eventName !== "" && address !== "";
-
-    const backArrow: string = "<";
 
     return (
         <div>
             <BackButton>
-                <a href="/" onClick={handleBackClick}>
-                    <span>{backArrow}</span> Back to dashboard
-                </a>
+                <Button onClick={handleBackClick}>Back to dashboard</Button>
             </BackButton>
             <NewOpportunityContainer fixed maxWidth="md">
                 <HeaderOne>Create an opportunity</HeaderOne>

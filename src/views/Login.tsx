@@ -48,9 +48,11 @@ const Right = styled.div`
 `;
 
 const Container = styled.div`
+    font-family: "Source Sans Pro";
     display: flex;
     height: 100%;
     width: 100%;
+    marign: 0px;
 `;
 
 const LoginButton = styled(LightBlueButton)`
@@ -95,7 +97,7 @@ const Login = () => {
                 <Slides />
             </Left>
             <Right>
-                <h1 style = {font}>Login to iContribute</h1>
+                <h1>Login to iContribute</h1>
                 <InputField>
                     <label htmlFor="loginEmail">Email</label>
                     <TextField
@@ -121,18 +123,14 @@ const Login = () => {
                 </InputField>
                 <LoginButton onClick={handleLogin}>Login</LoginButton>
                 <p>
-                    Dont’t have an account yet? <a href="/signup" onClick={handleSignUpClick}>Sign up here!</a>
+                    Dont’t have an account yet?{" "}
+                    <a href="/signup" onClick={handleSignUpClick}>
+                        Sign up here!
+                    </a>
                 </p>
-                
             </Right>
-          
-
         </Container>
-
     );
 };
-const font: React.CSSProperties = {
-    fontFamily : "Source Sans Pro",
-}
 
 export default Login;
