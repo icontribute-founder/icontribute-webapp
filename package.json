@@ -43,6 +43,7 @@
     "scripts": {
         "start": "NODE_ENV=dev react-scripts start",
         "build": "react-scripts build",
+        "build:dev": "CI=false npm run build",
         "deploy:firebase": "npm run build && firebase login && firebase deploy",
         "test": "react-scripts test",
         "eject": "react-scripts eject"
