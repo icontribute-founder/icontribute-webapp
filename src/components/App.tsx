@@ -35,7 +35,7 @@ const App = () => {
         return <div>loading</div>;
     }
 
-    const layout = !!user ? (
+    const layout = true ? (
         <Router>
             <Header />
             <Switch>
