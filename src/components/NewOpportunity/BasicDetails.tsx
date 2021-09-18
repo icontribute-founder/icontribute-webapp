@@ -5,8 +5,7 @@ import CategoryGroup from "../CategoryGroup";
 import { Subtitle } from "../styles";
 import { FormControlLabel, Radio, RadioGroup } from "@material-ui/core";
 import { DatePicker, MuiPickersUtilsProvider } from "@material-ui/pickers";
-import { updateType, updateDeadline } from "../../features/newOpportunity";
-import { OpportunityType } from "../../models/opportunity";
+import { updateDeadline, updateVirtual } from "../../features/newOpportunity";
 import Section from "./Section";
 
 const BasicDetails = () => {
@@ -16,7 +15,7 @@ const BasicDetails = () => {
     );
 
     const handleDeadlineOnChange = (date: any) => {
-        dispatch(updateDeadline(new Date(date).getTime()));
+        dispatch(updateDeadline(new Date(date)));
     };
 
     const handleOpportunityTypeOnChange = (
@@ -24,9 +23,9 @@ const BasicDetails = () => {
     ) => {
         switch ((e.target as HTMLInputElement).value) {
             case "IN_PERSON":
-                return dispatch(updateType(OpportunityType.Inperson));
+                return dispatch(updateVirtual(false));
             case "VIRTUAL":
-                return dispatch(updateType(OpportunityType.Virtual));
+                return dispatch(updateVirtual(true));
             default:
                 return;
         }

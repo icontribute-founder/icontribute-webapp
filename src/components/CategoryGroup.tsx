@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../store";
 import styled from "styled-components";
-import { OpportunityCategory } from "../models/opportunity";
+import { EventCategory } from "../firebase-access/models/Event";
 import { updateCategories } from "../features/newOpportunity";
 import EducationIcon from "./Svgs/EducationIcon";
 import CharityIcon from "./Svgs/CharityIcon";
@@ -56,21 +56,21 @@ const ClickableCategoryCard = ({
 };
 
 interface Category {
-    category: OpportunityCategory;
+    category: EventCategory;
     svg: any;
 }
 
 const CategoryGroup = () => {
     const categoriesSvgs: Category[] = [
-        { category: OpportunityCategory.Education, svg: <EducationIcon /> },
-        { category: OpportunityCategory.Charity, svg: <CharityIcon /> },
-        { category: OpportunityCategory.Art, svg: <ArtIcon /> },
-        { category: OpportunityCategory.Sports, svg: <SportsIcon /> },
-        { category: OpportunityCategory.Healthcare, svg: <HealthcareIcon /> },
-        { category: OpportunityCategory.Environment, svg: <EnvironmentIcon /> },
-        { category: OpportunityCategory.Tutoring, svg: <TutoringIcon /> },
-        { category: OpportunityCategory.Animal, svg: <AnimalIcon /> },
-        { category: OpportunityCategory.Other, svg: <OtherIcon /> },
+        { category: EventCategory.Education, svg: <EducationIcon /> },
+        { category: EventCategory.Charity, svg: <CharityIcon /> },
+        { category: EventCategory.Art, svg: <ArtIcon /> },
+        { category: EventCategory.Sports, svg: <SportsIcon /> },
+        { category: EventCategory.Healthcare, svg: <HealthcareIcon /> },
+        { category: EventCategory.Environment, svg: <EnvironmentIcon /> },
+        { category: EventCategory.Tutoring, svg: <TutoringIcon /> },
+        { category: EventCategory.Animal, svg: <AnimalIcon /> },
+        { category: EventCategory.Other, svg: <OtherIcon /> },
     ];
     const { categories } = useSelector(
         (state: RootState) => state.newOpportunity
@@ -78,7 +78,7 @@ const CategoryGroup = () => {
 
     const dispatch = useDispatch();
 
-    const addCategory = (category: OpportunityCategory) => {
+    const addCategory = (category: EventCategory) => {
         dispatch(updateCategories(category));
     };
 

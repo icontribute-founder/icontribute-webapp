@@ -1,6 +1,6 @@
 import { useState } from "react";
 import ShiftDialog from "./ShiftDialog";
-import { Shift } from "../models/opportunity";
+import Shift from "../firebase-access/models/Shift";
 import StaticButton from "./Buttons/StaticButton";
 import { CardBase, LightBlueButton, BlueButton } from "./styles";
 import styled from "styled-components";
@@ -75,7 +75,7 @@ const ShiftCard = ({ shift, index = -1 }: ShiftCardProps) => {
                 <h4 style={{ margin: "0px" }}>Shift {index + 1}</h4>
                 <p>Start: {toDateString(shift?.start)}</p>
                 <p>End: {toDateString(shift?.end)}</p>
-                <p>{shift?.recurrence}</p>
+                <p>{shift?.recurring}</p>
             </Card>
         ) : (
             ""

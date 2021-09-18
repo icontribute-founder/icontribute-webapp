@@ -10,8 +10,9 @@ import styled from "styled-components";
 import { Subtitle } from "../styles";
 import { RootState } from "../../store";
 import { updateHostingType } from "../../features/newOpportunity";
-import { HostingType } from "../../models/opportunity";
+
 import Section from "./Section";
+import { HostingType } from "../../firebase-access/models/Event";
 
 const HostingTypeDescription = styled.p`
     font-style: normal;
@@ -48,7 +49,7 @@ const PrimaryRadio = <Radio color="primary" />;
 
 const HowToApply = () => {
     const dispatch = useDispatch();
-    const { hostingType } = useSelector(
+    const { type: hostingType } = useSelector(
         (state: RootState) => state.newOpportunity
     );
 

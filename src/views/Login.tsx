@@ -2,11 +2,10 @@ import styled from "styled-components";
 import { Link, useHistory } from "react-router-dom";
 import { LightBlueButton } from "../components/styles";
 import Slides from "../components/Slides";
-import { authApiclient } from "../AuthApiClient";
 import { useState } from "react";
-import { AuthUser } from "../models/auth";
 import { useDispatch, useSelector } from "react-redux";
-import { login } from "../features/authentication";
+import { addUser } from "../features/authentication";
+import { icFirebase } from "../configure";
 import { RootState } from "../store";
 
 const InputField = styled.div`
@@ -25,6 +24,10 @@ const TextField = styled.input`
     width: 100%;
     margin-top: 8px;
     padding: 10px;
+`;
+
+const ErrorMessage = styled.span`
+    color: red;
 `;
 
 const Left = styled.div`
@@ -65,14 +68,19 @@ const LoginButton = styled(LightBlueButton)`
     color: #fefeff;
 `;
 
+interface AuthUser {
+    email: string;
+    password: string;
+}
+
 const Login = () => {
     const dispatch = useDispatch();
 
-    const [user, setUser] = useState<AuthUser>({
+    const [credential, setCredential] = useState<AuthUser>({
         email: "",
         password: "",
-        type: "organization",
     });
+    const [loginError, setLoginError] = useState("");
 
     const history = useHistory();
     const handleSignUpClick = () => {
@@ -83,12 +91,24 @@ const Login = () => {
     };
 
     const handleLogin = async () => {
-        // await authApiclient.login(user);
-        dispatch(login(user));
+        try {
+            const { user } = await icFirebase.loginWithEmailAndPassword(
+                credential.email,
+                credential.password
+            );
+            setLoginError("");
+            dispatch(addUser(user));
+        } catch (error: any) {
+            setLoginError("Authentication failed.");
+            console.log(error.code);
+        }
     };
 
     const handleInputOnChange = (event: any) => {
-        setUser({ ...user, [event.target.name]: event.target.value });
+        setCredential({
+            ...credential,
+            [event.target.name]: event.target.value,
+        });
     };
 
     return (
@@ -106,7 +126,7 @@ const Login = () => {
                         placeholder="Please enter your email address"
                         name="email"
                         onChange={handleInputOnChange}
-                        value={user.email}
+                        value={credential.email}
                     />
                 </InputField>
                 <InputField>
@@ -117,9 +137,10 @@ const Login = () => {
                         placeholder="Password"
                         name="password"
                         onChange={handleInputOnChange}
-                        value={user.password}
+                        value={credential.password}
                     />
                     <a href="#">Forget password?</a>
+                    <ErrorMessage>{loginError}</ErrorMessage>
                 </InputField>
                 <LoginButton onClick={handleLogin}>Login</LoginButton>
                 <p>

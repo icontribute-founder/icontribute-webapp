@@ -1,33 +1,22 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { Organization, OrganizationCategory } from "../models/organization";
-
-const initialState: Organization = {
-    email: "",
-    password: "",
-    registered: false,
-    name: "",
-    website: "",
-    postalCode: "",
-    description: "",
-    categories: [],
-    profilePictureURL: "",
-};
+import { defaultCompany } from "../firebase-access/models";
+import { OrganizationCategory } from "../firebase-access/models/User";
 
 export const newOrganizationSlice = createSlice({
     name: "newOrganization",
-    initialState,
+    initialState: defaultCompany,
     reducers: {
         updateEmail: (state, action: PayloadAction<string>) => {
             state.email = action.payload;
         },
         updatePassword: (state, action: PayloadAction<string>) => {
-            state.password = action.payload;
+            // state.password = action.payload;
         },
         updateRegistered: (state, action: PayloadAction<boolean>) => {
-            state.registered = action.payload;
+            // state.registered = action.payload;
         },
         updateName: (state, action: PayloadAction<string>) => {
-            state.name = action.payload;
+            state.companyName = action.payload;
         },
         updateWebsite: (state, action: PayloadAction<string>) => {
             state.website = action.payload;
@@ -45,7 +34,7 @@ export const newOrganizationSlice = createSlice({
             state.categories.push(action.payload);
         },
         updateProfilePictureURL: (state, action: PayloadAction<string>) => {
-            state.profilePictureURL = action.payload;
+            state.profilePicture = action.payload;
         },
         sumbit: (state) => {
             console.log("submit", state);

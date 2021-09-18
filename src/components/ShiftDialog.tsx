@@ -22,10 +22,12 @@ import MuiDialogTitle from "@material-ui/core/DialogTitle";
 import IconButton from "@material-ui/core/IconButton";
 import CloseIcon from "@material-ui/icons/Close";
 import Typography from "@material-ui/core/Typography";
-import { Shift } from "../models/opportunity";
+
 import { useDispatch, useSelector } from "react-redux";
 import { editShift, newShift, removeShift } from "../features/newOpportunity";
 import { RootState } from "../store";
+import Shift from "../firebase-access/models/Shift";
+import { defaultShift } from "../firebase-access/models";
 
 const styles = (theme: Theme) =>
     createStyles({
@@ -82,26 +84,20 @@ const ShiftDialog = ({
     const { shifts } = useSelector((state: RootState) => state.newOpportunity);
 
     const initialShift: Shift =
-        edit && index !== -1
-            ? { ...shifts[index] }
-            : {
-                  start: Date.now(),
-                  end: Date.now(),
-                  recurrence: "DOES_NOT_REPEAT",
-              };
+        edit && index !== -1 ? { ...shifts[index] } : defaultShift;
 
     const [shift, setShift] = useState(initialShift);
 
     const handleStartOnChange = (e: any) => {
-        setShift({ ...shift, start: new Date(e).getTime() });
+        setShift({ ...shift, start: new Date(e) });
     };
 
     const handleEndOnChange = (e: any) => {
-        setShift({ ...shift, end: new Date(e).getTime() });
+        setShift({ ...shift, end: new Date(e) });
     };
 
     const handleRecurrenceOnChange = (e: any) => {
-        setShift({ ...shift, recurrence: e.target.value });
+        setShift({ ...shift, recurring: e.target.value });
     };
 
     const handleOnSave = () => {
@@ -167,7 +163,7 @@ const ShiftDialog = ({
                                 >
                                     Recurrence
                                 </InputLabel>
-                                <Select
+                                {/* <Select
                                     labelId={`recurrence-select-label-${index}`}
                                     id={`recurrence-select-${index}`}
                                     value={shift.recurrence}
@@ -184,7 +180,7 @@ const ShiftDialog = ({
                                     <MenuItem value="EVERY_WEEKDAY">
                                         Every weekday (Monday to Friday)
                                     </MenuItem>
-                                </Select>
+                                </Select> */}
                             </FormControl>
                         </Grid>
                     </Grid>

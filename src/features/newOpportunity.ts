@@ -1,45 +1,18 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-
-import {
-    Opportunity,
-    Shift,
-    HostingType,
-    OpportunityCategory,
-    OpportunityType,
-} from "../models/opportunity";
+import { defaultEvent } from "../firebase-access/models";
+import { EventCategory, HostingType } from "../firebase-access/models/Event";
+import Shift from "../firebase-access/models/Shift";
 
 export interface EditShiftProp {
     index: number;
     shift: Shift;
 }
 
-const initialState: Opportunity = {
-    eventName: "",
-    companyName: "",
-    eventImageURL: "",
-    shifts: [],
-    categories: [],
-    description: "",
-    email: "test@email.com",
-    address: "",
-    type: OpportunityType.Inperson,
-    date: Date.now(),
-    deadline: Date.now(),
-    role: "",
-    requirements: "",
-    url: "opportunityurl.com",
-    hostingType: HostingType.Internal,
-    notes: "",
-};
-
 export const newOpportunitySlice = createSlice({
     name: "newOpportunity",
-    initialState,
+    initialState: defaultEvent,
     reducers: {
-        updateCategories: (
-            state,
-            action: PayloadAction<OpportunityCategory>
-        ) => {
+        updateCategories: (state, action: PayloadAction<EventCategory>) => {
             const category = action.payload;
             if (state.categories.includes(category)) {
                 const index = state.categories.indexOf(category);
@@ -58,16 +31,16 @@ export const newOpportunitySlice = createSlice({
             state.description = action.payload;
         },
         updateHostingType: (state, action: PayloadAction<HostingType>) => {
-            state.hostingType = action.payload;
-        },
-        updateType: (state, action: PayloadAction<OpportunityType>) => {
             state.type = action.payload;
         },
-        updateDeadline: (state, action: PayloadAction<number>) => {
+        updateVirtual: (state, action: PayloadAction<boolean>) => {
+            state.virtual = action.payload;
+        },
+        updateDeadline: (state, action: PayloadAction<Date>) => {
             state.deadline = action.payload;
         },
         updateImageUrl: (state, action: PayloadAction<string>) => {
-            state.eventImageURL = action.payload;
+            state.eventImage = action.payload;
         },
         newShift: (state, action: PayloadAction<Shift>) => {
             state.shifts.push(action.payload);
@@ -98,7 +71,7 @@ export const {
     updateLocation,
     updateCategories,
     updateHostingType,
-    updateType,
+    updateVirtual,
     updateDeadline,
     updateImageUrl,
     newShift,

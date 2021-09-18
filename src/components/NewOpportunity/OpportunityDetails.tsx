@@ -7,8 +7,8 @@ import {
     updateLocation,
     updateTitle,
 } from "../../features/newOpportunity";
+import Shift from "../../firebase-access/models/Shift";
 import { upload } from "../../imageUploader";
-import { Shift } from "../../models/opportunity";
 import { RootState } from "../../store";
 import ImageDropzone from "../FormElements/ImageDropzone";
 import InputField from "../FormElements/InputField";

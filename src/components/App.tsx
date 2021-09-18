@@ -1,6 +1,9 @@
-import { useSelector } from "react-redux";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Route, BrowserRouter as Router, Switch } from "react-router-dom";
 import Header from "../components/Header";
+import { icFirebase } from "../configure";
+import { addUser } from "../features/authentication";
 import { routes } from "../routes";
 import { RootState } from "../store";
 import Login from "../views/Login";
@@ -19,11 +22,20 @@ const RouteWithSubRoutes = (route: any) => {
 };
 
 const App = () => {
-    // const { hasLogin } = useSelector(
-    //     (state: RootState) => state.authentication
-    // );
-    const hasLogin = true;
-    const layout = hasLogin ? (
+    const { user } = useSelector((state: RootState) => state.authentication);
+    const [loadingAuth, setLoadingAuth] = useState<boolean>(true);
+    const dispatch = useDispatch();
+
+    icFirebase.isUserLogin((user) => {
+        dispatch(addUser(user));
+        setLoadingAuth(false);
+    });
+
+    if (loadingAuth) {
+        return <div>loading</div>;
+    }
+
+    const layout = !!user ? (
         <Router>
             <Header />
             <Switch>
