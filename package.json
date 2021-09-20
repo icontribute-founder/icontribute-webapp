@@ -41,7 +41,7 @@
         "web-vitals": "^0.2.4"
     },
     "scripts": {
-        "start": "NODE_ENV=dev react-scripts start",
+        "start": "react-scripts start",
         "build": "react-scripts build",
         "build:dev": "CI=false npm run build",
         "deploy:firebase": "npm run build && firebase login && firebase deploy",
