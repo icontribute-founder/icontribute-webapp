@@ -55,7 +55,7 @@ jobs:
                         issue_number: context.issue.number,
                         owner: context.repo.owner,
                         repo: context.repo.repo,
-                        body: "Firebase hosting deploy has succeeded! ✅"
+                        body: "Firebase hosting deploy has succeeded! ✅ </br>URL: [ic-jiachengzhang1.web.app](https://ic-jiachengzhang1.web.app)"
                       })
             - name: Message failure
               if: ${{ failure() }}
