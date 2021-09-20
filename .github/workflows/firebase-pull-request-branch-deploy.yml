@@ -47,7 +47,7 @@ jobs:
                   firebaseServiceAccount: "${{ secrets.FIREBASE_SERVICE_ACCOUNT_ICONTRIBUTE_DEV }}"
                   channelId: live
                   projectId: icontribute-dev
-                  target: ic-${{ USER_LOW }}
+                  target: ic-${ USER_LOW }
 
             - name: Firebase hosting deploy has succeeded
               if: ${{ success() }}
