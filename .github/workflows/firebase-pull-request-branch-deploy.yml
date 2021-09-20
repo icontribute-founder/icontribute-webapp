@@ -38,7 +38,7 @@ jobs:
                   
             - name: Lowercase user name
               run: |
-                  echo "USER_LOW=echo ${{ github.actor }} | tr '[:upper:]' '[:lower:]'" >>${GITHUB_ENV}
+                  echo "USER_LOW=$(${{ github.actor }} | tr '[:upper:]' '[:lower:]')" >>${GITHUB_ENV}
                   
             - name: Deploy to Firebase Hosting - ic-${{ github.actor }}
               uses: FirebaseExtended/action-hosting-deploy@v0
