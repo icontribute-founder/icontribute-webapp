@@ -35,7 +35,11 @@ jobs:
                   REACT_APP_FIRESTORE_MESSAGING_SENDER_ID: ${{ secrets.REACT_APP_FIRESTORE_MESSAGING_SENDER_ID }}
                   REACT_APP_FIRESTORE_APP_ID: ${{ secrets.REACT_APP_FIRESTORE_APP_ID }}
                   REACT_APP_FIRESTORE_MEASUREMENT_ID: ${{ secrets.REACT_APP_FIRESTORE_MEASUREMENT_ID }}
-
+                  
+            - name: Lowercase user name
+              run: |
+                  echo "USER_LOW=${github.actor,,}" >>${GITHUB_ENV}
+                  
             - name: Deploy to Firebase Hosting - ic-${{ github.actor }}
               uses: FirebaseExtended/action-hosting-deploy@v0
               with:
@@ -43,7 +47,7 @@ jobs:
                   firebaseServiceAccount: "${{ secrets.FIREBASE_SERVICE_ACCOUNT_ICONTRIBUTE_DEV }}"
                   channelId: live
                   projectId: icontribute-dev
-                  target: ic-${{ github.actor }}
+                  target: ic-${{ USER_LOW }}
 
             - name: Firebase hosting deploy has succeeded
               if: ${{ success() }}
@@ -55,7 +59,7 @@ jobs:
                         issue_number: context.issue.number,
                         owner: context.repo.owner,
                         repo: context.repo.repo,
-                        body: "Firebase hosting deploy has succeeded! ✅ </br>URL: [ic-jiachengzhang1.web.app](https://ic-jiachengzhang1.web.app)"
+                        body: "Firebase hosting branch deploy has succeeded to [ic-jiachengzhang1.web.app](https://ic-jiachengzhang1.web.app)! ✅"
                       })
             - name: Message failure
               if: ${{ failure() }}
@@ -66,5 +70,5 @@ jobs:
                         issue_number: context.issue.number,
                         owner: context.repo.owner,
                         repo: context.repo.repo,
-                        body: "Firebase hosting deploy has failed! ❌"
+                        body: "Firebase hosting branch deploy has failed! ❌"
                       })
