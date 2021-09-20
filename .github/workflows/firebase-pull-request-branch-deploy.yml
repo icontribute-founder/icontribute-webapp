@@ -47,7 +47,7 @@ jobs:
                   firebaseServiceAccount: "${{ secrets.FIREBASE_SERVICE_ACCOUNT_ICONTRIBUTE_DEV }}"
                   channelId: live
                   projectId: icontribute-dev
-                  target: "$ic-${{ env.USER_LOW }}"
+                  target: "ic-${{ env.USER_LOW }}"
 
             - name: Firebase hosting deploy has succeeded
               if: ${{ success() }}
@@ -59,7 +59,7 @@ jobs:
                         issue_number: context.issue.number,
                         owner: context.repo.owner,
                         repo: context.repo.repo,
-                        body: "Firebase hosting branch deploy has succeeded to [ic-jiachengzhang1.web.app](https://ic-jiachengzhang1.web.app)! ✅"
+                        body: "Firebase hosting branch deploy has succeeded to [ic-${{ env.USER_LOW }}.web.app](https://ic-${{ env.USER_LOW }}.web.app)! ✅"
                       })
             - name: Message failure
               if: ${{ failure() }}
