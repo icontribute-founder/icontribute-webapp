@@ -1,13 +1,13 @@
 name: Deploy to Firebase Hosting
 
 "on":
-    pull_request_review_comment:
+    issue_comment:
         types: [created]
 
 jobs:
     build_and_deploy:
         runs-on: ubuntu-latest
-        if: ${{ github.event.comment.body == "/deploy" }}
+        if: ${{ github.event.issue.pull_request && github.event.comment.body == "/deploy" }}
 
         strategy:
             matrix:
