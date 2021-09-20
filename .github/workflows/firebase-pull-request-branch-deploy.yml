@@ -36,14 +36,14 @@ jobs:
                   REACT_APP_FIRESTORE_APP_ID: ${{ secrets.REACT_APP_FIRESTORE_APP_ID }}
                   REACT_APP_FIRESTORE_MEASUREMENT_ID: ${{ secrets.REACT_APP_FIRESTORE_MEASUREMENT_ID }}
 
-            - name: Deploy to Firebase Hosting - "ic-${{ github.actor }}"
+            - name: Deploy to Firebase Hosting - ic-${{ github.actor }}
               uses: FirebaseExtended/action-hosting-deploy@v0
               with:
                   repoToken: "${{ secrets.GITHUB_TOKEN }}"
                   firebaseServiceAccount: "${{ secrets.FIREBASE_SERVICE_ACCOUNT_ICONTRIBUTE_DEV }}"
                   channelId: live
                   projectId: icontribute-dev
-                  target: "ic-${{ github.actor }}"
+                  target: ic-${{ github.actor }}
 
             - name: Firebase hosting deploy has succeeded
               if: ${{ success() }}
@@ -67,4 +67,4 @@ jobs:
                         owner: context.repo.owner,
                         repo: context.repo.repo,
                         body: "Firebase hosting deploy has failed! ❌"
-                      });
+                      })
