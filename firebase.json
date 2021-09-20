@@ -2,6 +2,7 @@
     "hosting": [
         {
             "public": "build",
+            "site": "icontribute-dev",
             "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
             "rewrites": [
                 {
