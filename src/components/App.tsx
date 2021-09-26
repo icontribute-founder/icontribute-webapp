@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { ThemeProvider } from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
 import { Route, BrowserRouter as Router, Switch } from "react-router-dom";
 import Header from "../components/Header";
@@ -8,6 +9,7 @@ import { routes } from "../routes";
 import { RootState } from "../store";
 import Login from "../views/Login";
 import SignUp from "../views/SignUp";
+import defaultTheme from "../themes";
 
 const RouteWithSubRoutes = (route: any) => {
     return (
@@ -48,6 +50,6 @@ const App = () => {
         <Login />
     );
 
-    return layout;
+    return <ThemeProvider theme={defaultTheme}>{layout}</ThemeProvider>;
 };
 export default App;
