@@ -31,10 +31,11 @@ const Input = styled.input<InputProps>(
         font-size: 16px;
         color: ${input.color};
         background-color: ${input.backgroundColor.default};
+        margin: 30px 0px;
 
-        &:hover {
-            background-color: ${input.backgroundColor.hover};
-        }
+        // &:hover {
+        //     background-color: ${input.backgroundColor.hover};
+        // }
 
         &:focus {
             outline: none;
@@ -46,8 +47,9 @@ const Input = styled.input<InputProps>(
 const TextArea = styled.textarea<InputProps>(
     ({
         fullWidth = false,
+        hasError = false,
         theme: {
-            main: { fontFamily, input },
+            main: { fontFamily, input, label },
         },
     }) => `
         display: block;
@@ -63,14 +65,15 @@ const TextArea = styled.textarea<InputProps>(
         font-size: 16px;
         color: ${input.color};
         background-color: ${input.backgroundColor.default};
+        margin: 30px 0px;
 
-        &:hover {
-            background-color: ${input.backgroundColor.hover};
-        }
+        // &:hover {
+        //     background-color: ${input.backgroundColor.hover};
+        // }
 
         &:focus {
             outline: none;
-            border-color: #2836d1;
+            border-color: ${hasError ? label.color.error : "#2836d1"};
         }
     `
 );
@@ -116,11 +119,13 @@ const Label = styled.label<LabelProps>(
             ${getFocusStyle(hasError ? label.color.error : label.color.focus)}
         }
 
+        ${TextArea}:focus ~ & {
+            ${getFocusStyle(hasError ? label.color.error : label.color.focus)}
+        }
+
         ${
             hasContent
-                ? getFocusStyle(
-                      hasError ? label.color.error : label.color.focus
-                  )
+                ? getFocusStyle(hasError ? label.color.error : "#192226")
                 : ""
         }
     `

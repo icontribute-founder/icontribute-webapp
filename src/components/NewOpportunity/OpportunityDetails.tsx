@@ -11,11 +11,12 @@ import Shift from "../../firebase-access/models/Shift";
 import { upload } from "../../imageUploader";
 import { RootState } from "../../store";
 import ImageDropzone from "../FormElements/ImageDropzone";
-import InputField from "../FormElements/InputField";
+// import InputField from "../FormElements/InputField";
 import TextareaField from "../FormElements/TextareaField";
 import ShiftCard from "../ShiftCard";
 import { Subtitle } from "../styles";
 import Section from "./Section";
+import InputField from "../common/InputField";
 
 const OpportunityDetails = ({ setImageUploading }: any) => {
     const dispatch = useDispatch();
@@ -68,6 +69,7 @@ const OpportunityDetails = ({ setImageUploading }: any) => {
                 value={eventName}
                 // checkMarkVisible={passwordConfirmCheckMark}
                 // errorVisible={errorVisible}
+                fullWidth
                 onChange={handleTitleOnChange}
             />
             <InputField
@@ -77,17 +79,18 @@ const OpportunityDetails = ({ setImageUploading }: any) => {
                 name="opportunity-details-location"
                 id="opportunity-details-location"
                 value={address}
-                // checkMarkVisible={passwordConfirmCheckMark}
-                // errorVisible={errorVisible}
+                fullWidth
                 onChange={handleLocationOnChange}
             />
-            <TextareaField
+            <InputField
                 label="Description"
+                type="textarea"
                 name="opportunity-details-description"
                 id="opportunity-details-description"
                 onChange={handleDescriptionOnChange}
                 value={description}
                 placeholder="Enter position’s primary duties and responsibilities"
+                fullWidth
                 rows={8}
             />
 
