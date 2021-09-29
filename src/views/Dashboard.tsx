@@ -1,5 +1,5 @@
 import { useHistory } from "react-router";
-import BlueButton from "../components/Buttons/StaticButton";
+import Button from "../components/common/Button";
 
 const Dashboard = () => {
     const history = useHistory();
@@ -9,10 +9,7 @@ const Dashboard = () => {
     };
     return (
         <div>
-            <BlueButton
-                onClick={handleOnClick}
-                text="Create a new opportunity"
-            />
+            <Button onClick={handleOnClick}>Create a new opportunity</Button>
         </div>
     );
 };
