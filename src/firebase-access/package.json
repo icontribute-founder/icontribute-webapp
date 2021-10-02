@@ -1,0 +1,39 @@
+{
+    "name": "@icontribute-founder/firebase-access",
+    "version": "0.1.0",
+    "homepage": "https://icontribute.community",
+    "description": "",
+    "main": "dist/index.js",
+    "types": "dist/index.d.ts",
+    "files": [
+        "dist"
+    ],
+    "scripts": {
+        "clean": "rimraf dist",
+        "build": "npm run clean && tsc",
+        "test:base": "mocha -r ts-node/register ./tests/**/*.test.ts --exit",
+        "test:prep": "npm run build",
+        "test": "npm run test:prep && firebase emulators:exec --import=tests/data 'npm run test:base'",
+        "start:emulator": "firebase emulators:start",
+        "install-firebase-cli": "npm install -g firebase-tools"
+    },
+    "keywords": [
+        "iContribute"
+    ],
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
+        "firebase": "^9.1.1",
+        "geofire-common": "^5.2.0"
+    },
+    "devDependencies": {
+        "@types/chai": "^4.2.22",
+        "@types/mocha": "^9.0.0",
+        "@types/node": "^16.10.2",
+        "chai": "^4.3.4",
+        "mocha": "^9.1.2",
+        "rimraf": "^3.0.2",
+        "ts-node": "^10.2.1",
+        "typescript": "^4.4.3"
+    }
+}
