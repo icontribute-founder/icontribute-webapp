@@ -15,7 +15,8 @@
         "test:prep": "npm run build",
         "test": "npm run test:prep && firebase emulators:exec --import=tests/data 'npm run test:base'",
         "start:emulator": "firebase emulators:start",
-        "install-firebase-cli": "npm install -g firebase-tools"
+        "install-firebase-cli": "npm install -g firebase-tools",
+        "docs": "typedoc --options typedoc.json"
     },
     "keywords": [
         "iContribute"
@@ -34,6 +35,8 @@
         "mocha": "^9.1.2",
         "rimraf": "^3.0.2",
         "ts-node": "^10.2.1",
-        "typescript": "^4.4.3"
+        "typedoc": "^0.20.0",
+        "typedoc-neo-theme": "^1.1.0",
+        "typescript": "~4.2.0"
     }
 }
