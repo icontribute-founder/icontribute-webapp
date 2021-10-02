@@ -4,18 +4,19 @@ import config from "../firebaseConfig.json";
 import { Authentication } from "../dist";
 
 describe("Authentication", function () {
-    let auth: Authentication;
+    const auth = Authentication.create(config);
+    const email = "testcompany@email.com";
+    const password = "password";
 
     before((done) => {
-        auth = Authentication.create(config);
-        auth.useEmulator("localhost", 9099, { disableWarnings: true });
+        auth.connectAuthEmulator("localhost", 9099, { disableWarnings: true });
         done();
     });
 
     it("should login successfully", async () => {
         const userCredential = await auth.loginWithEmailAndPassword(
-            "testcompany@email.com",
-            "password"
+            email,
+            password
         );
         assert(userCredential.user);
     });

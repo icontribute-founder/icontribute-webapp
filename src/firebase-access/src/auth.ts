@@ -1,4 +1,5 @@
 import { FirebaseOptions } from "@firebase/app";
+import { initializeApp } from "firebase/app";
 import {
     getAuth,
     createUserWithEmailAndPassword,
@@ -15,13 +16,12 @@ import {
     User,
     connectAuthEmulator,
 } from "firebase/auth";
-import ICFirebaseCollection from "./collection";
 
-export class Authentication extends ICFirebaseCollection {
+export class Authentication {
     private readonly auth: Auth;
 
     constructor(options: FirebaseOptions, name?: string | undefined) {
-        super(options, name);
+        initializeApp(options, name);
         this.auth = getAuth();
     }
 
@@ -29,7 +29,7 @@ export class Authentication extends ICFirebaseCollection {
         return new Authentication(options, name);
     }
 
-    public useEmulator(
+    public connectAuthEmulator(
         host: string,
         port: number,
         options?:

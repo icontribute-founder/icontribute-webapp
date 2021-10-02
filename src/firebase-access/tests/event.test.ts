@@ -11,7 +11,7 @@ describe("Opportunity", function () {
     const eventId = "utJSlNLCImWrkTuxFpGM";
 
     before((done) => {
-        opportunityCollection.useEmulator("localhost", 8080);
+        opportunityCollection.connectFirestoreEmulator("localhost", 8080);
         done();
     });
 

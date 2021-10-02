@@ -11,17 +11,15 @@ import {
     arrayUnion,
     QueryDocumentSnapshot,
     updateDoc,
-    connectFirestoreEmulator,
-    EmulatorMockTokenOptions,
 } from "firebase/firestore";
 import { distanceBetween } from "geofire-common";
-import ICFirebaseCollection from "./collection";
+import ICFirestoreCollection from "./collection";
 import { EventQuery, EventType, Event } from "./models";
 
 /**
  *
  */
-export class OpportunityCollection extends ICFirebaseCollection {
+export class OpportunityCollection extends ICFirestoreCollection {
     /**
      *
      * @param options
@@ -39,24 +37,6 @@ export class OpportunityCollection extends ICFirebaseCollection {
      */
     static create(options: FirebaseOptions, name?: string | undefined) {
         return new OpportunityCollection(options, name);
-    }
-
-    /**
-     *
-     * @param host
-     * @param port
-     * @param options
-     */
-    public useEmulator(
-        host: string,
-        port: number,
-        options?:
-            | {
-                  mockUserToken?: string | EmulatorMockTokenOptions | undefined;
-              }
-            | undefined
-    ) {
-        connectFirestoreEmulator(this.db, host, port, options);
     }
 
     private buildOpportunityQuery(eventQuery: EventQuery) {

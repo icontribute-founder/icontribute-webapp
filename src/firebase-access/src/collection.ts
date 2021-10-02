@@ -7,10 +7,12 @@ import {
     CollectionReference,
     DocumentData,
     addDoc,
+    connectFirestoreEmulator,
+    EmulatorMockTokenOptions,
 } from "firebase/firestore";
 import { Company } from "./models/User";
 
-abstract class ICFirebaseCollection {
+class ICFirestoreCollection {
     protected readonly app: FirebaseApp;
     protected readonly db: Firestore;
     protected readonly userCollectionName: string;
@@ -28,11 +30,23 @@ abstract class ICFirebaseCollection {
         this.eventRef = collection(this.db, this.eventCollectionName);
     }
 
-    public abstract useEmulator(
+    /**
+     *
+     * @param host
+     * @param port
+     * @param options
+     */
+    public connectFirestoreEmulator(
         host: string,
         port: number,
-        options?: any
-    ): void;
+        options?:
+            | {
+                  mockUserToken?: string | EmulatorMockTokenOptions | undefined;
+              }
+            | undefined
+    ) {
+        connectFirestoreEmulator(this.db, host, port, options);
+    }
 
     public async createCompany(company: Company) {
         const companyDocRef = await addDoc(this.userRef, company);
@@ -40,4 +54,4 @@ abstract class ICFirebaseCollection {
     }
 }
 
-export default ICFirebaseCollection;
+export default ICFirestoreCollection;
