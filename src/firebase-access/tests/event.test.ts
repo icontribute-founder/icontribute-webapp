@@ -1,5 +1,5 @@
 import { before } from "mocha";
-import { assert } from "chai";
+import { assert, expect } from "chai";
 import { GeoPoint } from "firebase/firestore";
 import { defaultEvent } from "../dist";
 import { OpportunityCollection } from "../dist/opportunity";
@@ -24,7 +24,10 @@ describe("Opportunity", function () {
         const opportunity = await opportunityCollection.getOpportunityById(
             eventId
         );
-        assert(opportunity.id === eventId);
+        expect(opportunity).to.not.be.null;
+        if (opportunity !== null) {
+            assert(opportunity.id === eventId);
+        }
     });
 
     it("should create a new opportunity", async () => {
