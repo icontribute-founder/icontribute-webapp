@@ -1,12 +1,12 @@
-
+import React, { useState } from "react";
 import styled from "styled-components";
 import {
     Grid,
     Container,
 } from "@material-ui/core";
 import { useHistory } from "react-router-dom";
-import SignupGraphic from "../components/Svgs/SignupGraphic";
-import { BlueButton} from "../components/styles";
+import SignupImage from "../assets/images/signup-image.png";
+import { BlueButton } from "../components/styles";
 
 const SignUpConfirm = () => {
 
@@ -18,45 +18,46 @@ const SignUpConfirm = () => {
 
     return (
         <div>
-            <SignupContainer>
+            <SignupContainer style={SignupContainerStyle}>
                 <Grid container>
-                    
-                    <Grid item xs={6}>
+
+                    <Grid item xs={7}>
 
                         <HeaderOne>Thanks for signing up!</HeaderOne>
-                    
-                        <HeaderThree>
-                        We will review your organization and notify you when your account is approved.
-                        </HeaderThree>
+                            <p style={HeaderTwo}>
+                                We will review your organization and notify you when your account is approved.
+                            </p>
 
-                        <Paragraph>
-                        For the safety of our student volunteers, wee ensure that all organization accounts are registered under the Government of Canada before allowing you to post opportunities.
-                        </Paragraph>
+                        <div style={ParaContainer}>
+                            <p style={ParaStyleOne}>
+                                For the safety of our student volunteers, wee ensure that all organization accounts are registered under the Government of Canada before allowing you to post opportunities.
+                            </p>
 
-                        <Paragraph>
-                        For now, please help us speed up the verification process by checking your inbox to confirm your email. 
-                        </Paragraph>
+                            <p style={ParaStyleOne}>
+                                For now, please help us speed up the verification process by checking your inbox to confirm your email.
+                            </p>
 
-                        <Paragraph>
-                        If you don’t see the email within 72 hours, please contact our support team for assistance.
-                        </Paragraph>
+                            <p style={ParaStyleOne}>
+                                If you don’t see the email within 72 hours, please contact our support team for assistance.
+                            </p>
+                        </div>
 
+                        <DashboardButton onClick={handleDashboardClick}>
+                            Return to home
+                        </DashboardButton>
                     </Grid>
 
                     <Grid item xs={5}>
                         <ImageContainer>
-                            <SignupGraphic />
+                            <img src={SignupImage} alt="SignupImage" style={SignupImageStyle} />
                         </ImageContainer>
                     </Grid>
 
                 </Grid>
 
-                <DashboardButton onClick={handleDashboardClick}>
-                    Return to home
-                </DashboardButton>
 
             </SignupContainer>
-           
+
         </div>
     );
 };
@@ -66,29 +67,26 @@ export default SignUpConfirm;
 const SignupContainer = styled(Container)`
     font-family: Source Sans Pro;
     height: 100%;
-    padding-bottom: 150px;
+    padding-top: 50px;
 `;
+
+const ParaContainer: React.CSSProperties = {
+    fontSize: "0.9em",
+    width: "80%",
+    paddingLeft: "max-content"
+};
+
+const HeaderTwo: React.CSSProperties = {
+    marginBottom: "40px",
+};
+
+const ParaStyleOne: React.CSSProperties = {
+    color: "rgba(115, 107, 107, 1)"
+};
 
 export const HeaderOne = styled.h1`
-    font-size: 40px;
+    font-size: 30px;
     font-weight: bold;
-    margin: 75px 0 0 0;
-`;
-
-export const HeaderTwo = styled.h2`
-    font-size: 24px;
-    font-weight: bold;
-    line-height: 32px;
-    color: #192226;
-    margin: 75px 0 0 0;
-`;
-
-export const HeaderThree = styled.h3`
-    font-size: 20px;
-    font-weight: bold;
-    line-height: 32px;
-    color: #192226;
-    margin: 50px 0 24px 0;
 `;
 
 export const SubHeader = styled.h4`
@@ -98,15 +96,8 @@ export const SubHeader = styled.h4`
     margin: 9px 0 0 0;
 `;
 
-export const Paragraph = styled.p`
-    font-size: 15px;
-    font-weight: 400;
-    color: #192226;
-    margin-bottom: 24px;
-    margin-top: 20px;
-`;
-
 const ImageContainer = styled.div`
+    margin-top: 20px;
     text-align: right;
 `;
 
@@ -115,4 +106,14 @@ const DashboardButton = styled(BlueButton)`
     font-weight: bold;
     font-size: 16px;
     margin-right: 14px;
+    margin-top: 30px
 `;
+
+const SignupImageStyle: React.CSSProperties = {
+    width: "100%"
+};
+
+const SignupContainerStyle: React.CSSProperties = {
+    paddingLeft: "160px",
+    paddingRight: "160px"
+};
