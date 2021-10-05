@@ -85,8 +85,9 @@ const ParaStyleOne: React.CSSProperties = {
 };
 
 export const HeaderOne = styled.h1`
-    font-size: 30px;
+    font-size: 40px;
     font-weight: bold;
+    margin: 0;
 `;
 
 export const SubHeader = styled.h4`
