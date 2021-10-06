@@ -5,7 +5,7 @@ import {
     Container,
 } from "@material-ui/core";
 import { useHistory } from "react-router-dom";
-import SignupImage from "../assets/images/signup-image.png";
+import SignupImage from "../assets/images/signup-confirm-image.png";
 import { BlueButton } from "../components/styles";
 
 const SignUpConfirm = () => {
