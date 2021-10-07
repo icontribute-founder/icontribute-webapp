@@ -20,7 +20,6 @@ const Dashboard = () => {
                     <br/>
                     <Button onClick={handleOnClick}>Create my first opportunity</Button>
                 </div>
-
                 <div>
                     <img src={SignUpImage} alt="SignUpImage" />
                 </div>
@@ -40,7 +39,7 @@ const h1: React.CSSProperties = {
 };
 const h3: React.CSSProperties = {
     fontFamily: "Source Sans Pro",
-    marginTop: "10%",
+    marginTop: "5%",
     marginBottom: "5%",
     marginLeft: "0%",
     marginRight: "0%",
@@ -65,5 +64,5 @@ const leftBoxLayout: React.CSSProperties = {
     marginLeft: "5%",
     marginTop: "5%"
 };
-
+  
 export default Dashboard;

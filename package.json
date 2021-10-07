@@ -29,6 +29,7 @@
         "react-dropzone": "^11.3.4",
         "react-icons": "^4.2.0",
         "react-material-ui-carousel": "^2.2.7",
+        "react-native": "^0.66.0",
         "react-redux": "^7.2.4",
         "react-router": "^5.2.0",
         "react-router-dom": "^5.2.0",
