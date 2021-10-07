@@ -26,8 +26,8 @@ import Typography from "@material-ui/core/Typography";
 import { useDispatch, useSelector } from "react-redux";
 import { editShift, newShift, removeShift } from "../features/newOpportunity";
 import { RootState } from "../store";
-import Shift from "../firebase-access/models/Shift";
-import { defaultShift } from "../firebase-access/models";
+import Shift from "../firebase-access/src/models/Shift";
+import { defaultShift } from "../firebase-access/src";
 
 const styles = (theme: Theme) =>
     createStyles({

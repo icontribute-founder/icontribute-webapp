@@ -1,7 +1,10 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { defaultEvent } from "../firebase-access/models";
-import { EventCategory, HostingType } from "../firebase-access/models/Event";
-import Shift from "../firebase-access/models/Shift";
+import {
+    defaultEvent,
+    EventCategory,
+    HostingType,
+} from "../firebase-access/src";
+import Shift from "../firebase-access/src/models/Shift";
 
 export interface EditShiftProp {
     index: number;

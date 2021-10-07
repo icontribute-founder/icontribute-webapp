@@ -6,7 +6,7 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addUser } from "../features/authentication";
 import { RootState } from "../store";
-import { auth } from "../configure";
+// import { auth } from "../configure";
 
 const InputField = styled.div`
     font-family: Source Sans Pro;
@@ -90,19 +90,21 @@ const Login = () => {
         history.push("/account-settings");
     };
 
-    const handleLogin = async () => {
-        try {
-            const { user } = await auth.loginWithEmailAndPassword(
-                credential.email,
-                credential.password
-            );
-            setLoginError("");
-            dispatch(addUser(user));
-        } catch (error: any) {
-            setLoginError("Authentication failed.");
-            console.log(error.code);
-        }
-    };
+    const handleLogin = () => console.log("login");
+
+    // const handleLogin = async () => {
+    //     try {
+    //         const { user } = await auth.loginWithEmailAndPassword(
+    //             credential.email,
+    //             credential.password
+    //         );
+    //         setLoginError("");
+    //         dispatch(addUser(user));
+    //     } catch (error: any) {
+    //         setLoginError("Authentication failed.");
+    //         console.log(error.code);
+    //     }
+    // };
 
     const handleInputOnChange = (event: any) => {
         setCredential({

@@ -131,7 +131,7 @@ const Summary = () => {
                 <Grid item xs={12}>
                     <H4>Location</H4>
                 </Grid>
-                {shifts.map(({ start, end, recurring }, i) => (
+                {shifts.map(({ start, end, recurring }: any, i) => (
                     <Grid item xs={6} key={`shift-card-${i}`}>
                         <ShiftCard
                             start={start}
