@@ -6,13 +6,13 @@ export enum EventType {
     VIRTUAL = "virtual",
 }
 
-export interface EventQuery {
+export default interface EventQuery {
     queryText?: string;
     location?: GeoPoint;
     address?: string;
     distance?: number;
-    beginningDate?: Date;
-    endDate?: Date;
+    beginningDate: Date;
+    endDate: Date;
     interests?: string[];
     sortType: string;
     eventType: EventType;

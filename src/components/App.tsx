@@ -3,6 +3,7 @@ import { ThemeProvider } from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
 import { Route, BrowserRouter as Router, Switch } from "react-router-dom";
 import Header from "../components/Header";
+import { icFirebase } from "../configure";
 import { addUser } from "../features/authentication";
 import { routes } from "../routes";
 import { RootState } from "../store";
@@ -26,6 +27,15 @@ const App = () => {
     const { user } = useSelector((state: RootState) => state.authentication);
     const [loadingAuth, setLoadingAuth] = useState<boolean>(true);
     const dispatch = useDispatch();
+
+    icFirebase.isUserLogin((user) => {
+        dispatch(addUser(user));
+        setLoadingAuth(false);
+    });
+
+    if (loadingAuth) {
+        return <div>loading</div>;
+    }
 
     const layout = true ? (
         <Router>
