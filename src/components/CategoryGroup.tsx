@@ -1,7 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../store";
 import styled from "styled-components";
-import { EventCategory } from "../firebase-access/models/Event";
 import { updateCategories } from "../features/newOpportunity";
 import EducationIcon from "./Svgs/EducationIcon";
 import CharityIcon from "./Svgs/CharityIcon";
@@ -13,6 +12,7 @@ import TutoringIcon from "./Svgs/TutoringIcon";
 import AnimalIcon from "./Svgs/AnimalIcon";
 import OtherIcon from "./Svgs/OtherIcon";
 import { Grid } from "@material-ui/core";
+import { EventCategory } from "../firebase-access/src";
 
 interface ClickableCategoryCardProps {
     svg: any;

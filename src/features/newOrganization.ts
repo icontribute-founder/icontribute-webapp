@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { defaultCompany } from "../firebase-access/models";
-import { OrganizationCategory } from "../firebase-access/models/User";
+import { defaultCompany } from "../firebase-access/src";
+import { OrganizationCategory } from "../firebase-access/src/models/User";
 
 export const newOrganizationSlice = createSlice({
     name: "newOrganization",
