@@ -5,8 +5,8 @@ import Slides from "../components/Slides";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addUser } from "../features/authentication";
-import { icFirebase } from "../configure";
 import { RootState } from "../store";
+import { auth } from "../configure";
 
 const InputField = styled.div`
     font-family: Source Sans Pro;
@@ -92,7 +92,7 @@ const Login = () => {
 
     const handleLogin = async () => {
         try {
-            const { user } = await icFirebase.loginWithEmailAndPassword(
+            const { user } = await auth.loginWithEmailAndPassword(
                 credential.email,
                 credential.password
             );

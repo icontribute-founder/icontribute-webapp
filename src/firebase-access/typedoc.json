@@ -1,0 +1,28 @@
+{
+    "entryPoints": ["src/index.ts"],
+    "out": "docs",
+    "exclude": ["**/_test/**/*.*", "**/index.ts", "**/common.ts"],
+    "disableOutputCheck": true,
+    "excludeExternals": true,
+    "excludePrivate": true,
+    "categorizeByGroup": true,
+    "includeVersion": true,
+    "hideGenerator": true,
+    "excludeProtected": true,
+    "theme": "./node_modules/typedoc-neo-theme/bin/default",
+    "plugin": "typedoc-neo-theme",
+    "name": "iContribute Firebase Access",
+    "readme": "none",
+    "outline": [
+        {
+            "SDK": {
+                "Authentication": "classes/authentication",
+                "Opportunity": "classes/opportunitycollection"
+            },
+            "Schemas": {
+                "Event": "interfaces/event",
+                "Event Query": "interfaces/eventquery"
+            }
+        }
+    ]
+}
