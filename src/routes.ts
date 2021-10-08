@@ -10,6 +10,7 @@ import Notifications from "./views/Notifications";
 import Dashboard from "./views/Dashboard";
 import Profile from "./views/Profile";
 import ReviewOpportunity from "./views/ReviewOpportunity";
+import SignUpConfirm from "./views/SignUpConfirm";
 
 export const routes = [
     // { path: "/dashboard", exact: true, component: Dashboard },
@@ -51,5 +52,10 @@ export const routes = [
         path: "/signup",
         exact: true,
         component: SignUp,
+    },
+    {
+        path: "/signup-confirm",
+        exact: true,
+        component: SignUpConfirm,
     },
 ];
