@@ -1,9 +1,12 @@
 import { GeoPoint } from "firebase/firestore";
-import Event, { HostingType } from "./Event";
+import { Event, HostingType } from "./Event";
 import Shift from "./Shift";
 import { Student, UserType, Company } from "./User";
 
-export const defaultStudent: Student = {
+export * from "./Event";
+export * from "./EventQuery";
+
+export const defaultStudent: Readonly<Student> = {
     firstName: "",
     lastName: "",
     email: "",
@@ -18,7 +21,7 @@ export const defaultStudent: Student = {
     type: UserType.STUDENT,
 };
 
-export const defaultCompany: Company = {
+export const defaultCompany: Readonly<Company> = {
     email: "",
     postalCode: "",
     notifications: [],
@@ -36,7 +39,7 @@ export const defaultCompany: Company = {
     type: UserType.COMPANY,
 };
 
-export const defaultEvent: Event = {
+export const defaultEvent: Readonly<Event> = {
     eventID: "",
     eventName: "",
     eventImage: "",
@@ -59,6 +62,7 @@ export const defaultEvent: Event = {
     notes: "",
     reviews: [],
     virtual: false,
+    deleted: false,
 };
 
 const today = new Date();
@@ -68,7 +72,7 @@ const nextweek = new Date(
     today.getDate() + 7
 );
 
-export const defaultShift: Shift = {
+export const defaultShift: Readonly<Shift> = {
     start: today,
     end: nextweek,
     limit: 0,

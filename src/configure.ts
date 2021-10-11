@@ -1,5 +1,3 @@
-import ICFirebase from "./firebase-access";
-
 const environmentVars = [
     "REACT_APP_FIRESTORE_API_KEY",
     "REACT_APP_FIRESTORE_APP_ID",
@@ -22,7 +20,7 @@ if (missingVars !== "") {
     throw new Error(`ENV ERROR: ${missingVars}`);
 }
 
-const firebaseConfig = {
+export const firebaseConfig = {
     apiKey: process.env.REACT_APP_FIRESTORE_API_KEY,
     authDomain: process.env.REACT_APP_FIRESTORE_AUTH_DOMAIN,
     projectId: process.env.REACT_APP_FIRESTORE_PROJECT_ID,
@@ -31,5 +29,3 @@ const firebaseConfig = {
     appId: process.env.REACT_APP_FIRESTORE_APP_ID,
     measurementId: process.env.REACT_APP_FIRESTORE_MEASUREMENT_ID,
 };
-
-export const icFirebase = ICFirebase.create(firebaseConfig);

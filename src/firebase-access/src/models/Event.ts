@@ -19,7 +19,7 @@ export enum EventCategory {
     Other = "Other",
 }
 
-export default interface Event {
+export interface Event {
     eventID: string;
     eventImage: string;
     eventName: string;
@@ -42,4 +42,5 @@ export default interface Event {
     edited: boolean;
     reviews: Review[];
     virtual: boolean;
+    deleted: boolean;
 }

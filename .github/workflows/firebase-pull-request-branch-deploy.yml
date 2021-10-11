@@ -22,11 +22,16 @@ jobs:
               with:
                   node-version: ${{ matrix.node-version }}
 
-            - name: Install dependencies
+            - name: Install dependencies for Webapp
               run: npm install
+
+            - name: Install dependencies for Firbase Access
+              run: npm install
+              working-directory: ./src/firebase-access
 
             - name: Build
               run: npm run build:dev
+              working-directory: .
               env:
                   REACT_APP_FIRESTORE_API_KEY: ${{ secrets.REACT_APP_FIRESTORE_API_KEY }}
                   REACT_APP_FIRESTORE_AUTH_DOMAIN: ${{ secrets.REACT_APP_FIRESTORE_AUTH_DOMAIN }}
