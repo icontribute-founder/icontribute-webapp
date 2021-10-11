@@ -32,7 +32,7 @@ export const defaultCompany: Readonly<Company> = {
     profilePicture: "",
     companyName: "",
     event: [],
-    rating: 1,
+    rating: 0,
     reviews: [],
     description: "",
     website: "",

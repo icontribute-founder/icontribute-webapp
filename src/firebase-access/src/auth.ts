@@ -1,7 +1,4 @@
-import { FirebaseOptions } from "@firebase/app";
-import { initializeApp } from "firebase/app";
 import {
-    getAuth,
     createUserWithEmailAndPassword,
     Auth,
     signInWithEmailAndPassword,
@@ -14,31 +11,17 @@ import {
     onAuthStateChanged,
     NextOrObserver,
     User,
-    connectAuthEmulator,
 } from "firebase/auth";
 
 export class Authentication {
     private readonly auth: Auth;
 
-    constructor(options: FirebaseOptions, name?: string | undefined) {
-        initializeApp(options, name);
-        this.auth = getAuth();
+    constructor(auth: Auth) {
+        this.auth = auth;
     }
 
-    static create(options: FirebaseOptions, name?: string | undefined) {
-        return new Authentication(options, name);
-    }
-
-    public connectAuthEmulator(
-        host: string,
-        port: number,
-        options?:
-            | {
-                  disableWarnings: boolean;
-              }
-            | undefined
-    ) {
-        connectAuthEmulator(this.auth, `http://${host}:${port}`, options);
+    static create(auth: Auth) {
+        return new Authentication(auth);
     }
 
     public isUserLogin(nextOrObserver: NextOrObserver<User>) {

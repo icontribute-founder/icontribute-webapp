@@ -1,4 +1,3 @@
-import { FirebaseOptions } from "@firebase/app-types";
 import {
     getDoc,
     query,
@@ -11,7 +10,9 @@ import {
     arrayUnion,
     QueryDocumentSnapshot,
     updateDoc,
+    Firestore,
 } from "firebase/firestore";
+import { FirebaseApp } from "firebase/app";
 import { distanceBetween } from "geofire-common";
 import ICFirestoreCollection from "./collection";
 import { EventQuery, EventType, Event } from "./models";
@@ -33,15 +34,13 @@ import { EventQuery, EventType, Event } from "./models";
 export class OpportunityCollection extends ICFirestoreCollection {
     /**
      *
-     * @param options Same as `options` used by initializeApp(options, name)
-     * @param name Same as `name` used by initializeApp(options, name)
-     * @returns A `OpportunityCollection` instance
+     * @param app
+     * @param db
      *
      * See [Firebase Documentation](https://firebase.google.com/docs/reference/js/app#initializeapp) for more about initializeApp().
-     *
      */
-    constructor(options: FirebaseOptions, name?: string | undefined) {
-        super(options, name);
+    constructor(app: FirebaseApp, db: Firestore) {
+        super(app, db);
     }
 
     /**
@@ -62,8 +61,8 @@ export class OpportunityCollection extends ICFirestoreCollection {
      * ```
      *
      */
-    static create(options: FirebaseOptions, name?: string | undefined) {
-        return new OpportunityCollection(options, name);
+    static create(app: FirebaseApp, db: Firestore) {
+        return new OpportunityCollection(app, db);
     }
 
     private buildOpportunityQuery(eventQuery: EventQuery) {

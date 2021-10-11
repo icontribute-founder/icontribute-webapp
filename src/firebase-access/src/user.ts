@@ -1,25 +1,28 @@
-import { FirebaseOptions } from "@firebase/app-types";
-import { addDoc, doc, getDoc, updateDoc } from "firebase/firestore";
+import { doc, Firestore, getDoc, setDoc, updateDoc } from "firebase/firestore";
+import { FirebaseApp } from "../node_modules/firebase/app/dist/app";
 import ICFirestoreCollection from "./collection";
 import { Company, Student } from "./models";
 
 export class UserCollection extends ICFirestoreCollection {
-    constructor(options: FirebaseOptions, name?: string | undefined) {
-        super(options, name);
+    constructor(app: FirebaseApp, db: Firestore) {
+        super(app, db);
     }
 
-    static create(options: FirebaseOptions, name?: string | undefined) {
-        return new UserCollection(options, name);
+    static create(app: FirebaseApp, db: Firestore) {
+        return new UserCollection(app, db);
+    }
+
+    private async createUser(user: Company | Student) {
+        await setDoc(doc(this.db, this.userCollectionName, user.email), user);
+        return user.email;
     }
 
     public async createCompany(company: Company) {
-        const companyDocRef = await addDoc(this.userRef, company);
-        return companyDocRef.id;
+        return this.createUser(company);
     }
 
     public async createStudent(student: Student) {
-        const studentDocRef = await addDoc(this.userRef, student);
-        return studentDocRef.id;
+        return this.createUser(student);
     }
 
     private async getUser(email: string) {
