@@ -20,14 +20,13 @@ import { EventQuery, EventType, Event } from "./models";
 /**
  * A class to perform CRUD opperations for Event/Opportunity Collection on Firestore.
  *
- * **Note:** {@link connectFirestoreEmulator} is inherited for developing and testing purposes.
- * DO NOT call {@link connectFirestoreEmulator} in production.
- *
  * Example:
  *
  * ```typescript
  * const config = { apiKey: ..., authDomain: ..., ...};
- * const opportunityCollection = OpportunityCollection.create(config);
+ * const app = initializeApp(config);
+ * const db = getFirestore(app);
+ * const opportunityCollection = OpportunityCollection.create(app, db);
  * const allOpportunites = await opportunityCollection.getOpportunities();
  * ```
  */
