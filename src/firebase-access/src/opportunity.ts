@@ -34,10 +34,10 @@ import { EventQuery, EventType, Event } from "./models";
 export class OpportunityCollection extends ICFirestoreCollection {
     /**
      *
-     * @param app
-     * @param db
+     * @param app The app instance returned by [initializeApp()](https://firebase.google.com/docs/reference/js/app#initializeapp)
+     * @param db The firestore instance returned by [getFirestore()](https://firebase.google.com/docs/reference/js/firestore_.md#getfirestore)
      *
-     * See [Firebase Documentation](https://firebase.google.com/docs/reference/js/app#initializeapp) for more about initializeApp().
+     * See [Firebase Documentation](https://firebase.google.com/docs/guides) for more information.
      */
     constructor(app: FirebaseApp, db: Firestore) {
         super(app, db);
@@ -46,17 +46,19 @@ export class OpportunityCollection extends ICFirestoreCollection {
     /**
      * A static method to create a new `OpportunityCollection` instance. The instance can be used to CRUD opportunities.
      *
-     * @param options Same as `options` used by initializeApp(options, name)
-     * @param name Same as `name` used by initializeApp(options, name)
+     * @param app The app instance returned by [initializeApp()](https://firebase.google.com/docs/reference/js/app#initializeapp)
+     * @param db The firestore instance returned by [getFirestore()](https://firebase.google.com/docs/reference/js/firestore_.md#getfirestore)
      * @returns A `OpportunityCollection` instance
      *
-     * See [Firebase Documentation](https://firebase.google.com/docs/reference/js/app#initializeapp) for more about initializeApp().
+     * See [Firebase Documentation](https://firebase.google.com/docs/guides) for more information.
      *
      * Example:
      *
      * ```typescript
      * const config = { apiKey: ..., authDomain: ..., ...};
-     * const opportunityCollection = OpportunityCollection.create(config);
+     * const app = initializeApp(config);
+     * const db = getFirestore(app);
+     * const opportunityCollection = OpportunityCollection.create(app, db);
      * const allOpportunites = await opportunityCollection.getOpportunities();
      * ```
      *
