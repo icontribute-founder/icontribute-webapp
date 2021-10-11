@@ -1,32 +1,75 @@
 import { useHistory } from "react-router";
-import Button from "../components/common/Button";
 import SignUpImage from "../assets/images/signup-image.png";
+import React, { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
+import Button from "../components/common/Button";
+import InputField from "../components/common/InputField";
+import { Select, MenuItem } from "@material-ui/core";
+
 
 const Dashboard = () => {
     const history = useHistory();
+    const dispatch = useDispatch();
+    
+    let [searchQuery, setSearchQuery] = useState("");
+    let [sortBy, setSortBy] = useState("");
 
     const handleOnClick = () => {
         history.push("/new-opportunity");
     };
 
+    const handleSearchQueryChange = (e: any) => {
+        console.log("Search query: ", e);
+        //dispatch(updateSearchQuery(e.target.value));
+    };
+
+    const handleSortByChange = (e: any) => {
+        console.log("Sort By: ", e);
+        //dispatch(updateSearchQuery(e.target.value));
+    };
+
     return (
         <div>
             <HeaderContainer>
-                <HeaderOne>Your organization dashboard</HeaderOne>
-                <HeaderTwo>Here you can view the volunteer opportunities you've posted, edit them, or create a new one.</HeaderTwo>
-            </HeaderContainer>
-
-            <BottomContainer>
                 <LeftBox>
-                    <HeaderThree>You have not created any opportunities. When you do, they will show up on this page.</HeaderThree>
-                    <br/>
-                    <Button onClick={handleOnClick}>Create my first opportunity</Button>
+                    <HeaderOne>Your organization dashboard</HeaderOne>
+                    <HeaderThree>Here you can view the volunteer opportunities you've posted, edit them, or create a new one.</HeaderThree>
                 </LeftBox>
                 <RightBox>
-                    <img src={SignUpImage} alt="SignUpImage" />
+                    <Button onClick={handleOnClick}>Create a new opportunity</Button>
                 </RightBox>
-            </BottomContainer>
+            </HeaderContainer>
+
+            <FilterContainer>                
+                <LeftBox>
+                    <InputField
+                        label=" "
+                        type="text"
+                        placeholder="Search events ..."
+                        name="search-query"
+                        id="search-query"
+                        value={searchQuery}
+                        onChange={handleSearchQueryChange}
+                    />
+                </LeftBox>
+
+                <RightBox>
+                    <Select
+                        labelId="sort-by-select-label"
+                        id="sort-by-select"
+                        value={sortBy}
+                        label="Sort By"
+                        onChange={handleSortByChange}
+                    >
+                        <MenuItem value={1}>Distance (Closest)</MenuItem>
+                        <MenuItem value={2}>Date (Newest)</MenuItem>
+                    </Select>
+                </RightBox>
+
+            </FilterContainer>
+
+
         </div>
     );
 };
@@ -40,15 +83,18 @@ const HeaderContainer = styled.div`
     flex-direction: column;
     justify-content: space-between;
     border-bottom: 2px solid silver;
-    padding-left: 2%;
+    flex-direction: row;
+    width: 1;
 `;
 
-const BottomContainer = styled.div`
+const FilterContainer = styled.div`
     display: flex;
     align-items: flex-start;
+    flex-direction: column;
     justify-content: flex-start;
     flex-direction: row;
-    margin-left: 5%;
+    width: 1;
+    margin-left: 2%;
 `;
 
 const LeftBox = styled.div`
@@ -57,7 +103,7 @@ const LeftBox = styled.div`
     justify-content: flex-start;
     flex-direction: column;
     width: 0.5;
-    padding-top: 7%;
+    padding-left: 2%;
 `;
 
 const RightBox = styled.div`
@@ -66,6 +112,8 @@ const RightBox = styled.div`
     justify-content: flex-start;
     flex-direction: column;
     width: 0.5;
+    padding-top: 2%;
+    padding-right: 3%;
 `;
 
 const HeaderOne = styled.h1`
@@ -77,12 +125,13 @@ const HeaderOne = styled.h1`
 const HeaderTwo = styled.h2`
     font-family: Source Sans Pro;
     text-align: left";
-    margin-bottom: -1%;
+    margin-bottom: -2%;
     margin-bottom: 1%;
 `;
 
 const HeaderThree = styled.h3`
     font-family: Source Sans Pro;
     text-align: left";
-    margin-bottom: 2%;
+    margin-bottom: -2%;
+    margin-bottom: 1%;
 `;
