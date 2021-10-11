@@ -5,6 +5,7 @@ import { Student, UserType, Company } from "./User";
 
 export * from "./Event";
 export * from "./EventQuery";
+export * from "./User";
 
 export const defaultStudent: Readonly<Student> = {
     firstName: "",

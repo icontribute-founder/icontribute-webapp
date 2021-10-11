@@ -6,11 +6,9 @@ import {
     Firestore,
     CollectionReference,
     DocumentData,
-    addDoc,
     connectFirestoreEmulator,
     EmulatorMockTokenOptions,
 } from "firebase/firestore";
-import { Company } from "./models/User";
 
 class ICFirestoreCollection {
     protected readonly app: FirebaseApp;
@@ -46,11 +44,6 @@ class ICFirestoreCollection {
             | undefined
     ) {
         connectFirestoreEmulator(this.db, host, port, options);
-    }
-
-    public async createCompany(company: Company) {
-        const companyDocRef = await addDoc(this.userRef, company);
-        return companyDocRef.id;
     }
 }
 
