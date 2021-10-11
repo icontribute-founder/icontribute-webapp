@@ -3,7 +3,7 @@ import Button from "../components/common/Button";
 import SignUpImage from "../assets/images/signup-image.png";
 import styled from "styled-components";
 
-const Dashboard = () => {
+const Dashboard2 = () => {
     const history = useHistory();
 
     const handleOnClick = () => {
@@ -14,7 +14,6 @@ const Dashboard = () => {
         <div>
             <HeaderContainer>
                 <HeaderOne>Your organization dashboard</HeaderOne>
-                <HeaderTwo>Here you can view the volunteer opportunities you've posted, edit them, or create a new one.</HeaderTwo>
             </HeaderContainer>
 
             <BottomContainer>
@@ -31,16 +30,15 @@ const Dashboard = () => {
     );
 };
 
-export default Dashboard;
+export default Dashboard2;
 
 const HeaderContainer = styled.div`
     font-family: Source Sans Pro;
     display: flex;
-    align-items: flex-start;
-    flex-direction: column;
+    align-items: center;
     justify-content: space-between;
     border-bottom: 2px solid silver;
-    padding-left: 2%;
+    padding-left: 3%;
 `;
 
 const BottomContainer = styled.div`
@@ -70,19 +68,15 @@ const RightBox = styled.div`
 
 const HeaderOne = styled.h1`
     font-family: Source Sans Pro;
-    font-weight: bold;
     text-align: left";
-`;
-
-const HeaderTwo = styled.h2`
-    font-family: Source Sans Pro;
-    text-align: left";
-    margin-bottom: -1%;
-    margin-bottom: 1%;
+    margin-top: 0%;
+    margin-bottom: 2%;
+    margin-left: 5%;
+    margin-right: 5%;
 `;
 
 const HeaderThree = styled.h3`
     font-family: Source Sans Pro;
-    text-align: left";
-    margin-bottom: 2%;
+    margin-top: 5%;
+    margin-bottom: 5%;
 `;
