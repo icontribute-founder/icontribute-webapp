@@ -20,6 +20,7 @@
         "axios-auth-refresh": "^3.1.0",
         "date-fns": "^2.20.2",
         "form-data": "^4.0.0",
+        "geofire-common": "^5.2.0",
         "lodash": "^4.17.21",
         "moment": "^2.29.1",
         "node-sass": "^5.0.0",
@@ -40,7 +41,7 @@
         "web-vitals": "^0.2.4"
     },
     "scripts": {
-        "start": "NODE_ENV=dev react-scripts start",
+        "start": "react-scripts start",
         "build": "react-scripts build",
         "build:dev": "CI=false npm run build",
         "deploy:firebase": "npm run build && firebase login && firebase deploy",
