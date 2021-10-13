@@ -225,4 +225,26 @@ export class OpportunityCollection extends ICFirestoreCollection {
         const fields = { deleted: true };
         await this.updateOpportunity(id, fields);
     }
+
+    /**
+     *
+     * @param ids
+     * @returns
+     */
+    public async getOpportunitiesByIds(ids: [string]) {
+        const docs: QueryDocumentSnapshot<DocumentData>[] = [];
+
+        for (const id of ids) {
+            const ref = doc(this.eventRef, id);
+            const eventDoc = await getDoc(ref);
+            if (eventDoc.exists()) {
+                // const event = eventDoc.data();
+                docs.push(eventDoc);
+            }
+        }
+
+        return docs.map((doc) => {
+            return { ...doc.data(), id: doc.id };
+        });
+    }
 }

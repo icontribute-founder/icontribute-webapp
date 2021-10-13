@@ -1,7 +1,17 @@
-import { doc, Firestore, getDoc, setDoc, updateDoc } from "firebase/firestore";
+import {
+    arrayRemove,
+    arrayUnion,
+    doc,
+    Firestore,
+    getDoc,
+    increment,
+    runTransaction,
+    setDoc,
+    updateDoc,
+} from "firebase/firestore";
 import { FirebaseApp } from "../node_modules/firebase/app/dist/app";
 import ICFirestoreCollection from "./collection";
-import { Company, Student } from "./models";
+import { Company, Student, Notification } from "./models";
 
 /**
  * A class to perform CRUD opperations for User Collection on Firestore.
@@ -166,5 +176,77 @@ export class UserCollection extends ICFirestoreCollection {
     public async updateStudent(fields: Partial<Student> & { email: string }) {
         const ref = doc(this.db, this.userCollectionName, fields.email);
         await updateDoc(ref, fields);
+    }
+
+    /**
+     *
+     * @param email
+     * @param notification
+     */
+    public async markNotificationRead(
+        email: string,
+        notification: Notification
+    ) {
+        const ref = doc(this.db, this.userCollectionName, email);
+        await runTransaction(this.db, async (transaction) => {
+            const userDoc = await transaction.get(ref);
+            if (!userDoc.exists()) throw "User doc does not exist";
+
+            let notifications = userDoc.data().notifications;
+
+            notifications.forEach((elem: any) => {
+                const { date, eventID, sourceEmail } = notification;
+                if (
+                    elem.date.toDate().getTime() === date.getTime() &&
+                    elem.eventID === eventID &&
+                    elem.sourceEmail === sourceEmail
+                ) {
+                    elem.read = true;
+                }
+            });
+            transaction.update(ref, {
+                notifications,
+                numUnreadNotifications: increment(-1),
+            });
+        });
+    }
+
+    /**
+     *
+     * @param email
+     * @param notification
+     */
+    public async createNotification(email: string, notification: Notification) {
+        const ref = doc(this.db, this.userCollectionName, email);
+        await updateDoc(ref, {
+            notifications: arrayUnion(notification),
+            numUnreadNotifications: increment(1),
+        });
+    }
+
+    // public async deleteNotification() {}
+
+    /**
+     *
+     * @param email
+     * @param eventId
+     */
+    public async saveOpportunity(email: string, eventId: string) {
+        const ref = doc(this.db, this.userCollectionName, email);
+        await updateDoc(ref, {
+            savedEvents: arrayUnion(eventId),
+        });
+    }
+
+    /**
+     *
+     * @param email
+     * @param eventId
+     */
+    public async unsaveOpportunity(email: string, eventId: string) {
+        const ref = doc(this.db, this.userCollectionName, email);
+        await updateDoc(ref, {
+            savedEvents: arrayRemove(eventId),
+        });
     }
 }

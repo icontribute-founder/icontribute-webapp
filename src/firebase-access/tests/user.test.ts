@@ -6,6 +6,7 @@ import {
     OrganizationCategory,
     Student,
 } from "../dist";
+import { defaultNotification, Notification } from "../dist/models";
 
 export const userTest = function () {
     const companyEmail = "testcompany@email.com";
@@ -56,5 +57,55 @@ export const userTest = function () {
             email: companyEmail,
             companyName: "Jimmy's Company",
         });
+    });
+
+    it("should create a new notification and mark it as read", async function () {
+        const newEventId = "3o6Zd35nstzvC48Xs5oA";
+        const newType = "userApplied";
+        const userOld = await this.userCollection.getCompany(companyEmail);
+        const newNotification: Notification = {
+            ...defaultNotification,
+            eventID: newEventId,
+            type: newType,
+        };
+
+        await this.userCollection.createNotification(
+            companyEmail,
+            newNotification
+        );
+
+        const { notifications, numUnreadNotifications } =
+            await this.userCollection.getCompany(companyEmail);
+
+        assert(numUnreadNotifications === userOld.numUnreadNotifications + 1);
+
+        let found = false;
+        let eventDate: Date;
+        for (const notification of notifications) {
+            const { eventID, type, date } = notification;
+            if (eventID === newEventId && type === newType) {
+                eventDate = date.toDate();
+                found = true;
+                await this.userCollection.markNotificationRead(companyEmail, {
+                    ...newNotification,
+                    date: eventDate,
+                });
+                break;
+            }
+        }
+
+        assert(found);
+    });
+
+    it("should save then unsave an opportunity", async function () {
+        let student: Student;
+        const eventId = "3o6Zd35nstzvC48Xs5oA";
+        await this.userCollection.saveOpportunity(studentEmail, eventId);
+        student = await this.userCollection.getStudent(studentEmail);
+        assert(student.savedEvents.includes(eventId));
+
+        await this.userCollection.unsaveOpportunity(studentEmail, eventId);
+        student = await this.userCollection.getStudent(studentEmail);
+        assert(!student.savedEvents.includes(eventId));
     });
 };
