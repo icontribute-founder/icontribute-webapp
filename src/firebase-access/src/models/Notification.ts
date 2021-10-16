@@ -1,4 +1,12 @@
-export default interface Notification {
+export enum NotificationType {
+    Edited = "edited",
+    UserApplied = "userApplied",
+    CompanyApplied = "companyApplied",
+    Delete = "delete",
+    Review = "review",
+}
+
+export interface Notification {
     sourceEmail: string;
     eventID: string;
     eventName: string;
@@ -8,33 +16,3 @@ export default interface Notification {
     date: Date;
     sourceProfilePicture: string;
 }
-
-// export default class Notifications {
-//     sourceEmail: string;
-//     eventID: string;
-//     eventName: string;
-//     sourceUserName: string;
-//     read: boolean;
-//     type: string;
-//     date: Date;
-//     sourceProfilePicture: string;
-
-//     constructor(
-//         sourceEmail?: string,
-//         eventID?: string,
-//         eventName?: string,
-//         sourceUserName?: string,
-//         read?: boolean,
-//         type?: string,
-//         sourceProfilePicture?: string
-//     ) {
-//         this.sourceEmail = sourceEmail || "";
-//         this.eventID = eventID || "";
-//         this.eventName = eventName || "";
-//         this.sourceUserName = sourceUserName || "";
-//         this.read = read || false;
-//         this.type = type || "";
-//         this.date = new Date();
-//         this.sourceProfilePicture = sourceProfilePicture || "";
-//     }
-// }

@@ -1,27 +1,25 @@
-import { before } from "mocha";
 import { assert, expect } from "chai";
 import { GeoPoint } from "firebase/firestore";
 import { defaultEvent } from "../dist";
-import { OpportunityCollection } from "../dist/opportunity";
-import config from "../firebaseConfig.json";
 
-describe("Opportunity", function () {
-    const opportunityCollection = OpportunityCollection.create(config);
-    const companyId = "pPn3FypudrthuNbop1wh";
+export const opportunityTest = function () {
+    const companyId = "testcompany@email.com";
     const eventId = "utJSlNLCImWrkTuxFpGM";
 
-    before((done) => {
-        opportunityCollection.connectFirestoreEmulator("localhost", 8080);
-        done();
-    });
-
-    it("should get some opportunities", async () => {
-        const opportunities = await opportunityCollection.getOpportunities();
+    it("should get some opportunities", async function () {
+        const opportunities =
+            await this.opportunityCollection.getOpportunities();
         assert(opportunities.length > 0);
     });
 
-    it("should get one opportunity by the given id", async () => {
-        const opportunity = await opportunityCollection.getOpportunityById(
+    it("should get some opportunities", async function () {
+        const opportunities =
+            await this.opportunityCollection.getOpportunities();
+        assert(opportunities.length > 0);
+    });
+
+    it("should get one opportunity by the given id", async function () {
+        const opportunity = await this.opportunityCollection.getOpportunityById(
             eventId
         );
         expect(opportunity).to.not.be.null;
@@ -30,7 +28,7 @@ describe("Opportunity", function () {
         }
     });
 
-    it("should create a new opportunity", async () => {
+    it("should create a new opportunity", async function () {
         const event = {
             ...defaultEvent,
             eventName: "Test event",
@@ -40,20 +38,20 @@ describe("Opportunity", function () {
             coordinates: new GeoPoint(36.66002, 6.18195),
         };
 
-        const res = await opportunityCollection.createOpportunity(
+        const res = await this.opportunityCollection.createOpportunity(
             companyId,
             event
         );
         assert(res);
     });
 
-    it("should update an exisiting opportunity", async () => {
-        await opportunityCollection.updateOpportunity(eventId, {
+    it("should update an exisiting opportunity", async function () {
+        await this.opportunityCollection.updateOpportunity(eventId, {
             companyName: "Test company name",
         });
     });
 
-    it("should delete an exisiting opportunity", async () => {
-        await opportunityCollection.deleteOpportunity(eventId);
+    it("should delete an exisiting opportunity", async function () {
+        await this.opportunityCollection.deleteOpportunity(eventId);
     });
-});
+};

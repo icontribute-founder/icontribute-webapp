@@ -11,10 +11,10 @@
     "scripts": {
         "clean": "rimraf dist",
         "build": "npm run clean && tsc",
-        "test:base": "mocha -r ts-node/register ./tests/**/*.test.ts --exit",
+        "test:base": "mocha -r ts-node/register ./tests/index.ts --exit",
         "test:prep": "npm run build",
         "test": "npm run test:prep && firebase emulators:exec --import=tests/data 'npm run test:base'",
-        "start:emulator": "firebase emulators:start",
+        "start:emulator": "firebase emulators:start --import=tests/data",
         "install-firebase-cli": "npm install -g firebase-tools",
         "docs": "typedoc --options typedoc.json"
     },

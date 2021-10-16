@@ -1,4 +1,3 @@
-import { FirebaseOptions } from "@firebase/app-types";
 import {
     getDoc,
     query,
@@ -11,7 +10,9 @@ import {
     arrayUnion,
     QueryDocumentSnapshot,
     updateDoc,
+    Firestore,
 } from "firebase/firestore";
+import { FirebaseApp } from "firebase/app";
 import { distanceBetween } from "geofire-common";
 import ICFirestoreCollection from "./collection";
 import { EventQuery, EventType, Event } from "./models";
@@ -19,51 +20,50 @@ import { EventQuery, EventType, Event } from "./models";
 /**
  * A class to perform CRUD opperations for Event/Opportunity Collection on Firestore.
  *
- * **Note:** {@link connectFirestoreEmulator} is inherited for developing and testing purposes.
- * DO NOT call {@link connectFirestoreEmulator} in production.
- *
  * Example:
  *
  * ```typescript
  * const config = { apiKey: ..., authDomain: ..., ...};
- * const opportunityCollection = OpportunityCollection.create(config);
+ * const app = initializeApp(config);
+ * const db = getFirestore(app);
+ * const opportunityCollection = OpportunityCollection.create(app, db);
  * const allOpportunites = await opportunityCollection.getOpportunities();
  * ```
  */
 export class OpportunityCollection extends ICFirestoreCollection {
     /**
      *
-     * @param options Same as `options` used by initializeApp(options, name)
-     * @param name Same as `name` used by initializeApp(options, name)
-     * @returns A `OpportunityCollection` instance
+     * @param app The app instance returned by [initializeApp()](https://firebase.google.com/docs/reference/js/app#initializeapp)
+     * @param db The firestore instance returned by [getFirestore()](https://firebase.google.com/docs/reference/js/firestore_.md#getfirestore)
      *
-     * See [Firebase Documentation](https://firebase.google.com/docs/reference/js/app#initializeapp) for more about initializeApp().
-     *
+     * See [Firebase Documentation](https://firebase.google.com/docs/guides) for more information.
      */
-    constructor(options: FirebaseOptions, name?: string | undefined) {
-        super(options, name);
+    constructor(app: FirebaseApp, db: Firestore) {
+        super(app, db);
     }
 
     /**
      * A static method to create a new `OpportunityCollection` instance. The instance can be used to CRUD opportunities.
      *
-     * @param options Same as `options` used by initializeApp(options, name)
-     * @param name Same as `name` used by initializeApp(options, name)
+     * @param app The app instance returned by [initializeApp()](https://firebase.google.com/docs/reference/js/app#initializeapp)
+     * @param db The firestore instance returned by [getFirestore()](https://firebase.google.com/docs/reference/js/firestore_.md#getfirestore)
      * @returns A `OpportunityCollection` instance
      *
-     * See [Firebase Documentation](https://firebase.google.com/docs/reference/js/app#initializeapp) for more about initializeApp().
+     * See [Firebase Documentation](https://firebase.google.com/docs/guides) for more information.
      *
      * Example:
      *
      * ```typescript
      * const config = { apiKey: ..., authDomain: ..., ...};
-     * const opportunityCollection = OpportunityCollection.create(config);
+     * const app = initializeApp(config);
+     * const db = getFirestore(app);
+     * const opportunityCollection = OpportunityCollection.create(app, db);
      * const allOpportunites = await opportunityCollection.getOpportunities();
      * ```
      *
      */
-    static create(options: FirebaseOptions, name?: string | undefined) {
-        return new OpportunityCollection(options, name);
+    static create(app: FirebaseApp, db: Firestore) {
+        return new OpportunityCollection(app, db);
     }
 
     private buildOpportunityQuery(eventQuery: EventQuery) {
@@ -224,5 +224,27 @@ export class OpportunityCollection extends ICFirestoreCollection {
     public async deleteOpportunity(id: string) {
         const fields = { deleted: true };
         await this.updateOpportunity(id, fields);
+    }
+
+    /**
+     *
+     * @param ids
+     * @returns
+     */
+    public async getOpportunitiesByIds(ids: [string]) {
+        const docs: QueryDocumentSnapshot<DocumentData>[] = [];
+
+        for (const id of ids) {
+            const ref = doc(this.eventRef, id);
+            const eventDoc = await getDoc(ref);
+            if (eventDoc.exists()) {
+                // const event = eventDoc.data();
+                docs.push(eventDoc);
+            }
+        }
+
+        return docs.map((doc) => {
+            return { ...doc.data(), id: doc.id };
+        });
     }
 }

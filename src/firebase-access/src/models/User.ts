@@ -1,5 +1,5 @@
 import Review from "./Review";
-import Notification from "./Notification";
+import { Notification } from "./Notification";
 
 export enum UserType {
     STUDENT = "student",
