@@ -12,7 +12,7 @@ import TutoringIcon from "./Svgs/TutoringIcon";
 import AnimalIcon from "./Svgs/AnimalIcon";
 import OtherIcon from "./Svgs/OtherIcon";
 import { Grid } from "@material-ui/core";
-import { EventCategory } from "../firebase-access/src";
+import { EventCategory } from "@icontribute-founder/firebase-access";
 
 interface ClickableCategoryCardProps {
     svg: any;

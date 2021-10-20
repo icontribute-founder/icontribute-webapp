@@ -12,7 +12,7 @@ import { RootState } from "../../store";
 import { updateHostingType } from "../../features/newOpportunity";
 
 import Section from "./Section";
-import { HostingType } from "../../firebase-access/src";
+import { HostingType } from "@icontribute-founder/firebase-access";
 
 const HostingTypeDescription = styled.p`
     font-style: normal;
