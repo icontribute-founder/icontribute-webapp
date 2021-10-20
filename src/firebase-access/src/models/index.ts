@@ -2,9 +2,12 @@ import { GeoPoint } from "firebase/firestore";
 import { Event, HostingType } from "./Event";
 import Shift from "./Shift";
 import { Student, UserType, Company } from "./User";
+import { Notification } from "./Notification";
 
 export * from "./Event";
 export * from "./EventQuery";
+export * from "./User";
+export * from "./Notification";
 
 export const defaultStudent: Readonly<Student> = {
     firstName: "",
@@ -31,7 +34,7 @@ export const defaultCompany: Readonly<Company> = {
     profilePicture: "",
     companyName: "",
     event: [],
-    rating: 1,
+    rating: 0,
     reviews: [],
     description: "",
     website: "",
@@ -82,4 +85,15 @@ export const defaultShift: Readonly<Shift> = {
     users: [],
     repeat: undefined,
     spotsFilled: 0,
+};
+
+export const defaultNotification: Readonly<Notification> = {
+    sourceEmail: "",
+    eventID: "",
+    eventName: "",
+    sourceUserName: "",
+    read: false,
+    type: "",
+    date: today,
+    sourceProfilePicture: "",
 };
