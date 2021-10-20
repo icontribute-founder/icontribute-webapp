@@ -1,9 +1,9 @@
 import { useHistory } from "react-router";
 import Button from "../components/common/Button";
-import SignUpImage from "../assets/images/signup-image.png";
 import styled from "styled-components";
+import DashboardGraphic from "../components/Svgs/DashboardGraphic";
 
-const Dashboard2 = () => {
+const Dashboard = () => {
     const history = useHistory();
 
     const handleOnClick = () => {
@@ -18,19 +18,24 @@ const Dashboard2 = () => {
 
             <BottomContainer>
                 <LeftBox>
-                    <HeaderThree>You have not created any opportunities. When you do, they will show up on this page.</HeaderThree>
-                    <br/>
-                    <Button onClick={handleOnClick}>Create my first opportunity</Button>
+                    <HeaderThree>
+                        You have not created any opportunities. When you do,
+                        they will show up on this page.
+                    </HeaderThree>
+                    <br />
+                    <Button onClick={handleOnClick}>
+                        Create my first opportunity
+                    </Button>
                 </LeftBox>
                 <RightBox>
-                    <img src={SignUpImage} alt="SignUpImage" />
+                    <DashboardGraphic />
                 </RightBox>
             </BottomContainer>
         </div>
     );
 };
 
-export default Dashboard2;
+export default Dashboard;
 
 const HeaderContainer = styled.div`
     font-family: Source Sans Pro;
@@ -59,11 +64,7 @@ const LeftBox = styled.div`
 `;
 
 const RightBox = styled.div`
-    display: flex;
-    align-items: flex-start;
-    justify-content: flex-start;
-    flex-direction: column;
-    width: 0.5;
+    padding: 5%;
 `;
 
 const HeaderOne = styled.h1`
