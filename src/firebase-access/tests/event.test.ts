@@ -27,6 +27,7 @@ export const opportunityTest = function () {
             assert(opportunity.id === eventId);
         }
     });
+  });
 
     it("should create a new opportunity", async function () {
         const event = {
