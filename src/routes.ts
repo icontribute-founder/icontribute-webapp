@@ -11,6 +11,7 @@ import Dashboard from "./views/Dashboard";
 import Profile from "./views/Profile";
 import ReviewOpportunity from "./views/ReviewOpportunity";
 import SignUpConfirm from "./views/SignUpConfirm";
+import OrganizationDashboard from "./views/OrganizationDashboard";
 
 export const routes = [
     // { path: "/dashboard", exact: true, component: Dashboard },
@@ -57,5 +58,10 @@ export const routes = [
         path: "/signup-confirm",
         exact: true,
         component: SignUpConfirm,
+    },
+    {
+        path: "/organization-dashboard",
+        exact: true,
+        component: OrganizationDashboard,
     },
 ];

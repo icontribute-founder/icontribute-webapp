@@ -1,85 +1,77 @@
 import { useHistory } from "react-router";
-import Button from "../components/common/Button";
-import SignUpImage from "../assets/images/signup-image.png";
+import React, { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
-import DashboardGraphic from "../components/Svgs/DashboardGraphic";
+import Button from "../components/common/Button";
 
 const Dashboard = () => {
-    const history = useHistory();
+  const history = useHistory();
+  const dispatch = useDispatch();
 
-    const handleOnClick = () => {
-        history.push("/new-opportunity");
-    };
+  const handleOnClick = () => {
+    history.push("/new-opportunity");
+  };
 
-    return (
-        <div>
-            <HeaderContainer>
-                <HeaderOne>Your organization dashboard</HeaderOne>
-            </HeaderContainer>
-
-            <BottomContainer>
-                <LeftBox>
-                    <HeaderThree>
-                        You have not created any opportunities. When you do,
-                        they will show up on this page.
-                    </HeaderThree>
-                    <br />
-                    <Button onClick={handleOnClick}>
-                        Create my first opportunity
-                    </Button>
-                </LeftBox>
-                <RightBox>
-                    {/* <img src={SignUpImage} alt="SignUpImage" /> */}
-                    <DashboardGraphic />
-                </RightBox>
-            </BottomContainer>
-        </div>
-    );
+  return (
+    <div>
+      <HeaderContainer>
+        <LeftBox>
+          <HeaderOne>Your organization dashboard</HeaderOne>
+          <HeaderThree>
+            Here you can view the volunteer opportunities you've posted, edit
+            them, or create a new one.
+          </HeaderThree>
+        </LeftBox>
+        <RightBox>
+          <Button onClick={handleOnClick}>Create a new opportunity</Button>
+        </RightBox>
+      </HeaderContainer>
+    </div>
+  );
 };
 
 export default Dashboard;
 
 const HeaderContainer = styled.div`
-    font-family: Source Sans Pro;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    border-bottom: 2px solid silver;
-    padding-left: 3%;
-`;
-
-const BottomContainer = styled.div`
-    display: flex;
-    align-items: flex-start;
-    justify-content: flex-start;
-    flex-direction: row;
-    margin-left: 5%;
+  font-family: Source Sans Pro;
+  display: flex;
+  align-items: flex-start;
+  flex-direction: column;
+  justify-content: space-between;
+  border-bottom: 2px solid silver;
+  margin-top: -1%;
+  flex-direction: row;
+  width: 1;
 `;
 
 const LeftBox = styled.div`
-    display: flex;
-    align-items: flex-start;
-    justify-content: flex-start;
-    flex-direction: column;
-    width: 0.5;
-    padding-top: 7%;
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex-direction: column;
+  width: 0.5;
+  padding-left: 2%;
 `;
 
 const RightBox = styled.div`
-    padding: 5%;
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex-direction: column;
+  width: 0.5;
+  padding-top: 2%;
+  padding-right: 3%;
 `;
 
 const HeaderOne = styled.h1`
     font-family: Source Sans Pro;
+    font-weight: bold;
     text-align: left";
-    margin-top: 0%;
-    margin-bottom: 2%;
-    margin-left: 5%;
-    margin-right: 5%;
 `;
 
 const HeaderThree = styled.h3`
     font-family: Source Sans Pro;
-    margin-top: 5%;
-    margin-bottom: 5%;
+    text-align: left";
+    margin-bottom: -2%;
+    margin-bottom: 1%;
 `;
