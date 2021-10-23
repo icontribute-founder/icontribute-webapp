@@ -48,6 +48,7 @@ const SignUpConfirm = () => {
                     <img src={SignupImage} alt="SignupImage" width="100%" />
                 </ImageContainer>
 
+
             </SignupContainer>
 
         </div>
