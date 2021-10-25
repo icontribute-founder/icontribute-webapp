@@ -1,13 +1,14 @@
 import { Container } from "@material-ui/core";
 import OpportunityReview from "../components/OpportunityReview";
-import Footer from "../components/Footer";
 import styled from "styled-components";
-import { Box, Button, Grid } from "@material-ui/core";
+import { Box } from "@material-ui/core";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router";
-import { save, publish } from "../features/newOpportunity";
 import { RootState } from "../store";
 import { BlueButton, LightBlueButton } from "../components/styles";
+import { OpportunityCollection } from "@icontribute-founder/firebase-access";
+import { firebaseApp, firestore } from "../configure";
+import { reset } from "../features/newOpportunity";
 
 const Content = styled.div`
     margin-top: 16px;
@@ -40,23 +41,25 @@ const SaveButton = styled(LightBlueButton)`
 `;
 
 const ReviewOpportunity = () => {
-    const dispatch = useDispatch();
     const history = useHistory();
-    // const { hostingType } = useSelector(
-    //     (state: RootState) => state.newOpportunity
-    // );
+    const dispatch = useDispatch();
 
-    // const history = useHistory();
-    // if (true) {
-    //     history.push("/new-opportunity-created");
-    // }
-
+    const opportunity = useSelector((state: RootState) => state.newOpportunity);
+    const userId = "info@girlsinscience.ca";
     const handleSave = () => {
-        dispatch(save());
+        console.log("save");
     };
 
-    const handlePublish = () => {
-        dispatch(publish());
+    const handlePublish = async () => {
+        const opportunityCollection = OpportunityCollection.create(
+            firebaseApp,
+            firestore
+        );
+        const res = await opportunityCollection.createOpportunity(userId, {
+            ...opportunity,
+            deadline: new Date(opportunity.deadline),
+        });
+        dispatch(reset());
         history.push("/new-opportunity-confirm");
     };
 
@@ -71,7 +74,6 @@ const ReviewOpportunity = () => {
             <Content>
                 <OpportunityReview />
             </Content>
-            {/* <Footer /> */}
             <Box display="flex" justifyContent="flex-end" mt={5} mb={5}>
                 <SaveButton onClick={handleSave}>Save as Draft</SaveButton>
                 <PublishButton onClick={handlePublish}>Publish</PublishButton>

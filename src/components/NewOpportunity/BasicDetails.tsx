@@ -10,9 +10,11 @@ import Section from "./Section";
 
 const BasicDetails = () => {
     const dispatch = useDispatch();
-    const { deadline, type } = useSelector(
+    const { deadline, virtual } = useSelector(
         (state: RootState) => state.newOpportunity
     );
+
+    const type = virtual ? "VIRTUAL" : "IN_PERSON";
 
     const handleDeadlineOnChange = (date: any) => {
         dispatch(updateDeadline(new Date(date)));
@@ -52,7 +54,7 @@ const BasicDetails = () => {
                 aria-label="opportunity-type-radio-group"
                 name="opportunity-type-radio-group"
                 onChange={handleOpportunityTypeOnChange}
-                value={type.toString()}
+                value={type}
             >
                 <FormControlLabel
                     value="IN_PERSON"

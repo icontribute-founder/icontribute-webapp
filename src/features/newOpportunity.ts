@@ -11,9 +11,11 @@ export interface EditShiftProp {
     shift: Shift;
 }
 
+const newOpportunity = { ...defaultEvent, deadline: Date.now() };
+
 export const newOpportunitySlice = createSlice({
     name: "newOpportunity",
-    initialState: defaultEvent,
+    initialState: newOpportunity,
     reducers: {
         updateCategories: (state, action: PayloadAction<EventCategory>) => {
             const category = action.payload;
@@ -40,7 +42,7 @@ export const newOpportunitySlice = createSlice({
             state.virtual = action.payload;
         },
         updateDeadline: (state, action: PayloadAction<Date>) => {
-            state.deadline = action.payload;
+            state.deadline = action.payload.getTime();
         },
         updateImageUrl: (state, action: PayloadAction<string>) => {
             state.eventImage = action.payload;
@@ -57,18 +59,13 @@ export const newOpportunitySlice = createSlice({
             const { index, shift } = action.payload;
             state.shifts[index] = shift;
         },
-        save: (state) => {
-            console.log("save", state);
-        },
-        publish: (state) => {
-            console.log("post", state.eventName);
+        reset: (state) => {
+            state = newOpportunity;
         },
     },
 });
 
 export const {
-    save,
-    publish,
     updateTitle,
     updateDescription,
     updateLocation,
@@ -80,6 +77,7 @@ export const {
     newShift,
     editShift,
     removeShift,
+    reset,
 } = newOpportunitySlice.actions;
 
 export default newOpportunitySlice.reducer;
