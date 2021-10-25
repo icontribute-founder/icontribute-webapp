@@ -1,6 +1,6 @@
 import { useHistory } from "react-router";
 import Button from "../components/common/Button";
-
+import { useEffect, useState } from "react";
 import styled from "styled-components";
 
 import DemoImage from "../assets/images/Demo_Photo.png";
@@ -9,6 +9,10 @@ import MoreDetails from "../assets/images/more-details.svg";
 import Calendar from "../components/Svgs/CalendarIcon";
 import React from 'react'
 import { GoogleMap, useJsApiLoader } from '@react-google-maps/api';
+
+import config from "../firebaseConfig.json";
+import { OpportunityCollection } from "../firebase-access/src/";
+
 
 
 
@@ -53,32 +57,40 @@ const Dashboard = () => {
     const onUnmount = React.useCallback(function callback(map) {
         setMap(null)
     }, [])
+
+    const [indexes, setIndexes] = useState([false, false]);
+    const [opportunities, setOpportunity] = useState([]);
+    const defaultIndexesBasedOnOpsLength: boolean[] = [];
+    
+    interface EventInfoProps {
+        position: string;
+        
+    }
+      
+
+    useEffect(() => {
+        const getOpportunity = async () => {
+          const opportunityCollection = OpportunityCollection.create(config);
+          const data: any = await opportunityCollection.getOpportunities();
+          setOpportunity(data);
+          console.log("Data: ", data);
+    
+          for (let i = 0; i < opportunities.length; i++) {
+            defaultIndexesBasedOnOpsLength[i] = false;
+          }
+          setIndexes(defaultIndexesBasedOnOpsLength);
+        };
+        getOpportunity();
+      }, []);
+
+
+     
+
+    
     
 
-    interface EventCardProps {
-        eventImage: string;
-        eventName: string;
-        date: Date;
-        description: string;
-      
-        eventID: string;
-        onClick: any;
-      
-        selected: boolean;
-      }
 
-
-
-    const SmallEventCard = ({
-        eventImage,
-        eventName,
-        date,
-        description,
-        eventID,
-        onClick,
-        selected,
-      }: EventCardProps) => { 
-          return isLoaded ? (
+    return isLoaded ? (
         <div>
             <Button onClick={handleOnClick}>Create a new opportunity</Button>
 
@@ -111,7 +123,7 @@ const Dashboard = () => {
                             <Grid container>
 
                                 <Grid item xs={6}>
-                                    <HeaderThree> Variable for Name </HeaderThree>
+                                    <HeaderThree> {} </HeaderThree>
                                     <HeaderTwo>Name of variable</HeaderTwo>
                                         <Location>
                                             Charity
@@ -196,8 +208,8 @@ const Dashboard = () => {
 
         
     ): <></>
+    
     };
-};
 
 
 
