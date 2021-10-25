@@ -1,5 +1,6 @@
 import { useHistory } from "react-router";
 import Button from "../components/common/Button";
+
 import { useEffect, useState } from "react";
 import styled from "styled-components";
 
@@ -21,6 +22,10 @@ import { OpportunityCollection } from "../firebase-access/src/";
 import {
     Grid,
 } from "@material-ui/core";
+
+
+import SignUpImage from "../assets/images/signup-image.png";
+import DashboardGraphic from "../components/Svgs/DashboardGraphic";
 
 
 const Dashboard = () => {
@@ -97,18 +102,28 @@ const Dashboard = () => {
             <SignupContainer>
                 <Grid container>
                     <Grid item xs={6}>
-                        <HeaderOne>Let's create your profile</HeaderOne>
-                        
-                        <HeaderTwo>Login details</HeaderTwo>
-                        <HeaderTwo>Organization details</HeaderTwo>
-                        <Paragraph>
-                            Are you registered as a charity or non-profit
-                            organization on the Canada Revenue Agency's website?
-                        </Paragraph>
+                        <div>
+                            <HeaderContainer>
+                                <HeaderOne>Your organization dashboard</HeaderOne>
+                            </HeaderContainer>
 
-                        <HeaderThree>
-                            Upload an account photo or logo
-                        </HeaderThree>
+                            <BottomContainer>
+                                <LeftBox>
+                                    <HeaderThree>
+                                        You have not created any opportunities. When you do,
+                                        they will show up on this page.
+                                    </HeaderThree>
+                                    <br />
+                                    <Button onClick={handleOnClick}>
+                                        Create my first opportunity
+                                    </Button>
+                                </LeftBox>
+                                <RightBox>
+                                    {/* <img src={SignUpImage} alt="SignUpImage" /> */}
+                                    <DashboardGraphic />
+                                </RightBox>
+                            </BottomContainer>
+                        </div>
                     </Grid>
 
                     <Grid item xs={6} >
@@ -205,10 +220,10 @@ const Dashboard = () => {
 
 
         </div>
-
+        
         
     ): <></>
-    
+
     };
 
 
@@ -248,7 +263,7 @@ const HeaderTwo = styled.p`
 `;
 
 
-const HeaderOne = styled.h1`
+const HeaderOnePaulina = styled.h1`
     font-size: 40px;
     font-weight: bold;
     margin: 0;
@@ -285,10 +300,54 @@ export const Paragraph = styled.p`
     margin-top: 0px;
 `;
 
-export const HeaderThree = styled.h3`
+export const HeaderThreePaulina = styled.h3`
     font-size: 20px;
     font-weight: bold;
     margin: 0px; 
 
     color: #192226;
+    `;
+const HeaderContainer = styled.div`
+    font-family: Source Sans Pro;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 2px solid silver;
+    padding-left: 3%;
+`;
+
+const BottomContainer = styled.div`
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+    flex-direction: row;
+    margin-left: 5%;
+`;
+
+const LeftBox = styled.div`
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+    flex-direction: column;
+    width: 0.5;
+    padding-top: 7%;
+`;
+
+const RightBox = styled.div`
+    padding: 5%;
+`;
+
+const HeaderOne = styled.h1`
+    font-family: Source Sans Pro;
+    text-align: left";
+    margin-top: 0%;
+    margin-bottom: 2%;
+    margin-left: 5%;
+    margin-right: 5%;
+`;
+
+const HeaderThree = styled.h3`
+    font-family: Source Sans Pro;
+    margin-top: 5%;
+    margin-bottom: 5%;
 `;
