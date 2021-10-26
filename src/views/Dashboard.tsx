@@ -3,14 +3,57 @@ import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import Button from "../components/common/Button";
+import OrganizationDashboard from "./OrganizationDashboard";
+import { OpportunityCollection } from "@icontribute-founder/firebase-access";
+import { firebaseApp, firestore } from "../configure";
+import SmallEventCard from "../components/SmallEventCard";
 
 const Dashboard = () => {
   const history = useHistory();
   const dispatch = useDispatch();
+  const [indexes, setIndexes] = useState([false, false]);
+  const [opportunities, setOpportunity] = useState([]);
+  const defaultIndexesBasedOnOpsLength: boolean[] = [];
 
   const handleOnClick = () => {
     history.push("/new-opportunity");
   };
+
+  useEffect(() => {
+    const getOpportunity = async () => {
+      const opportunityCollection = OpportunityCollection.create(
+        firebaseApp,
+        firestore
+      );
+      const data: any = await opportunityCollection.getOpportunities();
+      setOpportunity(data);
+      console.log("Data: ", data);
+
+      for (let i = 0; i < opportunities.length; i++) {
+        defaultIndexesBasedOnOpsLength[i] = false;
+      }
+      setIndexes(defaultIndexesBasedOnOpsLength);
+    };
+    getOpportunity();
+  }, []);
+
+  const handleCardOnClick = (e: any, i: any) => {
+    const newIndexes = [false, false];
+    newIndexes[i] = true;
+    setIndexes(newIndexes);
+  };
+
+  const ListEventCardComponents = opportunities.map((props: any, i) => (
+    <SmallEventCard
+      eventImage={props.eventImage}
+      eventName={props.eventName}
+      date={new Date(props.date.seconds * 1000)}
+      description={props.description}
+      eventID={props.eventID}
+      onClick={(e: any) => handleCardOnClick(e, i)}
+      selected={indexes[i]}
+    ></SmallEventCard>
+  ));
 
   return (
     <div>
@@ -26,11 +69,19 @@ const Dashboard = () => {
           <Button onClick={handleOnClick}>Create a new opportunity</Button>
         </RightBox>
       </HeaderContainer>
+
+      <BodyContainer>
+        <EventsListContainer>{ListEventCardComponents}</EventsListContainer>
+      </BodyContainer>
     </div>
   );
 };
 
 export default Dashboard;
+
+const OrganizationDashboardPage = styled.div`
+  height: calc(100% - 85px);
+`;
 
 const HeaderContainer = styled.div`
   font-family: Source Sans Pro;
@@ -42,6 +93,17 @@ const HeaderContainer = styled.div`
   margin-top: -1%;
   flex-direction: row;
   width: 1;
+  height: 0.3;
+`;
+
+const BodyContainer = styled.div`
+  font-family: Source Sans Pro;
+  display: flex;
+  align-items: flex-start;
+  flex-direction: column;
+  justify-content: space-between;
+  flex-direction: row;
+  width: 1;
 `;
 
 const LeftBox = styled.div`
@@ -51,6 +113,13 @@ const LeftBox = styled.div`
   flex-direction: column;
   width: 0.5;
   padding-left: 2%;
+`;
+
+const EventsListContainer = styled.div`
+  width: 44%;
+  font-family: Source Sans Pro;
+  overflow-y: scroll;
+  height: 500px;
 `;
 
 const RightBox = styled.div`
