@@ -33,6 +33,7 @@ const OrganizationDashboard = () => {
     };
     getOpportunity();
   }, []);
+
   const handleCardOnClick = (e: any, i: any) => {
     const newIndexes = [false, false];
     newIndexes[i] = true;
