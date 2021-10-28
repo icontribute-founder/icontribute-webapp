@@ -3,8 +3,8 @@ import {
     defaultEvent,
     EventCategory,
     HostingType,
-} from "../firebase-access/src";
-import Shift from "../firebase-access/src/models/Shift";
+    Shift,
+} from "@icontribute-founder/firebase-access";
 
 export interface EditShiftProp {
     index: number;

@@ -1,9 +1,0 @@
-node_modules
-dist
-firebaseConfig.json
-.firebase
-.firebaserc
-firebase-debug.log
-firestore-debug.log
-ui-debug.log
-docs
