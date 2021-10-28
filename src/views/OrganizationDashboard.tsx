@@ -13,10 +13,7 @@ import Map from "../components/Map";
 
 import config from "../firebaseConfig.json";
 import { OpportunityCollection } from "../firebase-access/src/";
-
 import { useJsApiLoader } from "@react-google-maps/api";
-
-import { preProcessFile } from "typescript";
 
 const OrganizationDashboard = () => {
   const history = useHistory();
@@ -41,8 +38,8 @@ const OrganizationDashboard = () => {
   const [categories, setEventCategories] = useState([]);
 
   var center1 = {
-    lat: -3.745,
-    lng: -38.523,
+    lat: 45.42,
+    lng: -75.69,
   };
 
   const [center, setCenter] = useState(center1);
@@ -97,10 +94,18 @@ const OrganizationDashboard = () => {
       startDate = new Date(props.shift[0].start.seconds * 1000);
       endDate = new Date(props.shift[0].end.seconds * 1000);
 
-      startDate.getHours().toString().length === 1 ? formatedStartHour = "0" + startDate.getHours(): formatedStartHour = "" + startDate.getHours()
-      endDate.getHours().toString().length === 1 ? formatedEndHour = "0" + endDate.getHours(): formatedEndHour = "" + endDate.getHours()
-      startDate.getMinutes().toString().length === 1 ? formatedStartMinutes = "0" + startDate.getMinutes(): formatedStartMinutes = "" + startDate.getMinutes()
-      endDate.getMinutes().toString().length === 1 ? formatedEndMinutes = "0" + endDate.getMinutes(): formatedEndMinutes = "" + endDate.getMinutes()
+      startDate.getHours().toString().length === 1
+        ? (formatedStartHour = "0" + startDate.getHours())
+        : (formatedStartHour = "" + startDate.getHours());
+      endDate.getHours().toString().length === 1
+        ? (formatedEndHour = "0" + endDate.getHours())
+        : (formatedEndHour = "" + endDate.getHours());
+      startDate.getMinutes().toString().length === 1
+        ? (formatedStartMinutes = "0" + startDate.getMinutes())
+        : (formatedStartMinutes = "" + startDate.getMinutes());
+      endDate.getMinutes().toString().length === 1
+        ? (formatedEndMinutes = "0" + endDate.getMinutes())
+        : (formatedEndMinutes = "" + endDate.getMinutes());
 
       setEventStart(
         startDate.getMonth() +
@@ -166,11 +171,21 @@ const OrganizationDashboard = () => {
     ></SmallEventCard>
   ));
 
-
   return isLoaded ? (
     <OrganizationDashboardPage>
       <div>
-        <Button onClick={handleOnClick}>Create a new opportunity</Button>
+        <HeaderContainer>
+          <LeftBox>
+            <HeaderOne>Your organization dashboard</HeaderOne>
+            <HeaderFour>
+              Here you can view the volunteer opportunities you've posted, edit
+              them, or create a new one.
+            </HeaderFour>
+          </LeftBox>
+          <RightBox>
+            <Button onClick={handleOnClick}>Create a new opportunity</Button>
+          </RightBox>
+        </HeaderContainer>
 
         <SignupContainer>
           <Grid container>
@@ -182,11 +197,16 @@ const OrganizationDashboard = () => {
 
             <Grid item xs={6}>
               <Scolling>
-                  {eventImage ? (
-                    <img src={eventImage} alt="EventImage" width="100%" height="300px" />
-                  ) : (
-                    <></>
-                  )}
+                {eventImage ? (
+                  <img
+                    src={eventImage}
+                    alt="EventImage"
+                    width="100%"
+                    height="300px"
+                  />
+                ) : (
+                  <></>
+                )}
 
                 <TextGroup>
                   <Grid container>
@@ -222,7 +242,7 @@ const OrganizationDashboard = () => {
 
                 <HeaderTwo>Location</HeaderTwo>
                 <SubHeader>{address}</SubHeader>
-                  {center ? <Map center={center}></Map> : <></>}
+                {center ? <Map center={center}></Map> : <></>}
 
                 <TextGroup>
                   <HeaderTwo>Shift 1</HeaderTwo>
@@ -250,6 +270,51 @@ const OrganizationDashboard = () => {
   );
 };
 
+const HeaderContainer = styled.div`
+  font-family: Source Sans Pro;
+  display: flex;
+  align-items: flex-start;
+  flex-direction: column;
+  justify-content: space-between;
+  border-bottom: 2px solid silver;
+  margin-top: -1%;
+  flex-direction: row;
+  width: 1;
+  height: 0.3;
+`;
+
+const LeftBox = styled.div`
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex-direction: column;
+  width: 0.5;
+  padding-left: 2%;
+`;
+
+const RightBox = styled.div`
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex-direction: column;
+  width: 0.5;
+  padding-top: 2%;
+  padding-right: 3%;
+`;
+
+const HeaderOne = styled.h1`
+    font-family: Source Sans Pro;
+    font-weight: bold;
+    text-align: left";
+`;
+
+const HeaderFour = styled.h3`
+    font-family: Source Sans Pro;
+    text-align: left";
+    margin-bottom: -2%;
+    margin-bottom: 1%;
+`;
+
 const Scolling = styled.div`
   height: 70vh;
   scroll-behaviour: smooth;
@@ -275,16 +340,15 @@ const HeaderTwo = styled.p`
   margin: 0px;
 `;
 
-
 const OrganizationDashboardPage = styled.div`
   height: calc(100% - 85px);
 `;
 
 const EventsListContainer = styled.div`
-  width: 100%;
+  height: 70vh;
   font-family: Source Sans Pro;
   overflow-y: scroll;
-  height: 100%;
+  scroll-behaviour: smooth;
 `;
 
 export const Location = styled.h4`
