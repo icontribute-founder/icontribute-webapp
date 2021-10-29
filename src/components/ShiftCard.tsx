@@ -1,6 +1,6 @@
 import { useState } from "react";
 import ShiftDialog from "./ShiftDialog";
-import Shift from "../firebase-access/src/models/Shift";
+import { Shift } from "@icontribute-founder/firebase-access";
 import StaticButton from "./Buttons/StaticButton";
 import { CardBase, LightBlueButton, BlueButton } from "./styles";
 import styled from "styled-components";

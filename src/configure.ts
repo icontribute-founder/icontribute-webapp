@@ -1,3 +1,7 @@
+import { getAuth } from "firebase/auth";
+import { initializeApp } from "firebase/app";
+import { getFirestore } from "firebase/firestore";
+
 const environmentVars = [
     "REACT_APP_FIRESTORE_API_KEY",
     "REACT_APP_FIRESTORE_APP_ID",
@@ -20,7 +24,7 @@ if (missingVars !== "") {
     throw new Error(`ENV ERROR: ${missingVars}`);
 }
 
-export const firebaseConfig = {
+const firebaseConfig = {
     apiKey: process.env.REACT_APP_FIRESTORE_API_KEY,
     authDomain: process.env.REACT_APP_FIRESTORE_AUTH_DOMAIN,
     projectId: process.env.REACT_APP_FIRESTORE_PROJECT_ID,
@@ -29,3 +33,7 @@ export const firebaseConfig = {
     appId: process.env.REACT_APP_FIRESTORE_APP_ID,
     measurementId: process.env.REACT_APP_FIRESTORE_MEASUREMENT_ID,
 };
+
+export const firebaseApp = initializeApp(firebaseConfig);
+export const firebaseAuth = getAuth(firebaseApp);
+export const firestore = getFirestore(firebaseApp);

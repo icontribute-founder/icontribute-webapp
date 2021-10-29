@@ -1,3 +1,4 @@
+import { OpportunityCollection } from "@icontribute-founder/firebase-access";
 import { useEffect, useState } from "react";
 
 import { useHistory } from "react-router";
