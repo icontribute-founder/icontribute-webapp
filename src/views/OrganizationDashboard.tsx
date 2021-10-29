@@ -1,19 +1,14 @@
-import { OpportunityCollection } from "@icontribute-founder/firebase-access";
+import { useJsApiLoader } from "@react-google-maps/api";
 import { useEffect, useState } from "react";
-
 import { useHistory } from "react-router";
 import styled from "styled-components";
 import { Grid } from "@material-ui/core";
-
 import SmallEventCard from "../components/SmallEventCard";
 import Button from "../components/common/Button";
 import Calendar from "../components/Svgs/CalendarIcon";
 import MoreOptions from "../components/MoreOptions";
 import Map from "../components/Map";
-
-import config from "../firebaseConfig.json";
-import { OpportunityCollection } from "../firebase-access/src/";
-import { useJsApiLoader } from "@react-google-maps/api";
+import { opportunityCollection } from "../configure";
 
 const OrganizationDashboard = () => {
     const history = useHistory();
@@ -38,7 +33,6 @@ const OrganizationDashboard = () => {
 
     useEffect(() => {
         const getOpportunity = async () => {
-            const opportunityCollection = OpportunityCollection.create(config);
             const data: any = await opportunityCollection.getOpportunities();
 
             setOpportunity(data);
