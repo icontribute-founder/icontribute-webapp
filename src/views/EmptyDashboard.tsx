@@ -3,7 +3,7 @@ import Button from "../components/common/Button";
 import styled from "styled-components";
 import DashboardGraphic from "../components/Svgs/DashboardGraphic";
 
-const Dashboard = () => {
+const EmptyDashboard = () => {
     const history = useHistory();
 
     const handleOnClick = () => {
@@ -35,7 +35,7 @@ const Dashboard = () => {
     );
 };
 
-export default Dashboard;
+export default EmptyDashboard;
 
 const HeaderContainer = styled.div`
     font-family: Source Sans Pro;
