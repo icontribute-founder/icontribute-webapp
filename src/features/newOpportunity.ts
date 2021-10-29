@@ -5,13 +5,28 @@ import {
     HostingType,
     Shift,
 } from "@icontribute-founder/firebase-access";
+import { GeoPoint } from "@firebase/firestore";
 
 export interface EditShiftProp {
     index: number;
     shift: Shift;
 }
 
-const newOpportunity = { ...defaultEvent, deadline: Date.now() };
+export const serializeGeopoint = (point: GeoPoint) => {
+    return JSON.stringify(point);
+};
+
+export const toGeopoint = (point: string) => {
+    const pointJson = JSON.parse(point);
+    return new GeoPoint(pointJson.latitude, pointJson.longitude);
+};
+
+const newOpportunity = {
+    ...defaultEvent,
+    deadline: Date.now(),
+    date: defaultEvent.date.getTime(),
+    coordinates: serializeGeopoint(defaultEvent.coordinates),
+};
 
 export const newOpportunitySlice = createSlice({
     name: "newOpportunity",

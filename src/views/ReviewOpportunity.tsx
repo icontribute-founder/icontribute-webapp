@@ -6,9 +6,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router";
 import { RootState } from "../store";
 import { BlueButton, LightBlueButton } from "../components/styles";
-import { OpportunityCollection } from "@icontribute-founder/firebase-access";
-import { firebaseApp, firestore } from "../configure";
-import { reset } from "../features/newOpportunity";
+import { opportunityCollection } from "../configure";
+import { reset, toGeopoint } from "../features/newOpportunity";
 
 const Content = styled.div`
     margin-top: 16px;
@@ -51,13 +50,11 @@ const ReviewOpportunity = () => {
     };
 
     const handlePublish = async () => {
-        const opportunityCollection = OpportunityCollection.create(
-            firebaseApp,
-            firestore
-        );
-        const res = await opportunityCollection.createOpportunity(userId, {
+        await opportunityCollection.createOpportunity(userId, {
             ...opportunity,
             deadline: new Date(opportunity.deadline),
+            date: new Date(opportunity.date),
+            coordinates: toGeopoint(opportunity.coordinates),
         });
         dispatch(reset());
         history.push("/new-opportunity-confirm");
