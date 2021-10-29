@@ -1,8 +1,6 @@
 import styled from "styled-components";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import NotificationCard from "../components/NotificationCard";
-import { Paper } from "@material-ui/core";
-import Pfp from "../assets/images/notifPfp";
 
 const Notifications = () => {
   return (
@@ -37,64 +35,6 @@ const Notifications = () => {
         sourceUserName={""}
         type={"userApplied"}
       ></NotificationCard>
-
-      {/*      
-      <Paper style={boxBlue}>
-        <div>
-          <Pfp></Pfp>
-        </div>
-
-        <h3 style={h3}>
-          <b>Congratulations!</b> Jordan has applied for Relay for Life
-          Volunteer position. Lorem ipsum dolor sit amet, consectetur adipiscing
-          elit, sed do eiusmod tempor incididunt ut labore et dolore magna
-          aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
-          laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor
-          in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-          pariatur.
-        </h3>
-
-        <BsThreeDotsVertical style={icon}></BsThreeDotsVertical>
-      </Paper>
-
-      <br></br>
-
-      <Paper style={boxBlue}>
-        <div>
-          <Pfp></Pfp>
-        </div>
-
-        <h3 style={h3}>
-          <b>Congratulations!</b> Jordan has applied for Relay for Life
-          Volunteer position. Lorem ipsum dolor sit amet, consectetur adipiscing
-          elit, sed do eiusmod tempor incididunt ut labore et dolore magna
-          aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
-          laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor
-          in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-          pariatur.
-        </h3>
-
-        <BsThreeDotsVertical style={icon}></BsThreeDotsVertical>
-      </Paper>
-
-      <h2 style={h2}>Old Notifications</h2>
-
-      <Paper style={box}>
-        <div>
-          <Pfp></Pfp>
-        </div>
-        <h3 style={h3}>
-          <b>Congratulations!</b> Jordan has applied for Relay for Life
-          Volunteer position. Lorem ipsum dolor sit amet, consectetur adipiscing
-          elit, sed do eiusmod tempor incididunt ut labore et dolore magna
-          aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
-          laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor
-          in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-          pariatur.
-        </h3>
-        <BsThreeDotsVertical style={icon}></BsThreeDotsVertical>
-      </Paper>
-*/}
       <br></br>
     </div>
   );

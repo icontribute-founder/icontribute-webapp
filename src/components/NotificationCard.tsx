@@ -57,7 +57,7 @@ const HeaderThree = styled.h3`
   font-family: Source Sans Pro;
   margin-left: 15px;
   margin-right: 30px;
-  font-size: 16px;
+  font-size: 24px;
   font-weight: normal;
 `;
 
