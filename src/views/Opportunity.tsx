@@ -8,7 +8,7 @@ import styled from "styled-components";
 import { RootState } from "../store";
 import { HeaderOne } from "./SignUp";
 import { Subtitle } from "../components/styles";
-import { useHistory } from "react-router";
+import { useHistory, useParams } from "react-router";
 import { useState } from "react";
 import { ArrowBackIos } from "@material-ui/icons";
 
@@ -18,7 +18,7 @@ const SaveButtonContainer = styled.div`
     margin-right: -200px;
 `;
 
-const NewOpportunityContainer = styled(Container)`
+const OpportunityContainer = styled(Container)`
     padding-bottom: 40px;
     font-family: Source Sans Pro;
 `;
@@ -27,7 +27,7 @@ const ContentContainer = styled.div`
     margin-top: 60px;
 `;
 
-const StyledNewOpportunity = styled.div`
+const StyledOpportunity = styled.div`
     > * {
         &:first-child {
             margin-left: 20px;
@@ -53,8 +53,15 @@ const BackButton = styled.button`
     }
 `;
 
-const NewOpportunity = () => {
+type OpportunityParams = {
+    action: string;
+};
+
+const Opportunity = () => {
     const history = useHistory();
+
+    const { action } = useParams<OpportunityParams>();
+    console.log(action);
 
     const [imageUploading, setImageUploading] = useState(false);
 
@@ -66,6 +73,7 @@ const NewOpportunity = () => {
     const { eventName, address } = useSelector(
         (state: RootState) => state.newOpportunity
     );
+    console.log(eventName);
 
     const handleBackClick = () => {
         history.push("/");
@@ -73,14 +81,30 @@ const NewOpportunity = () => {
 
     const canSubmit = eventName !== "" && address !== "" && !imageUploading;
 
+    let title: string;
+    switch (action) {
+        case "create":
+            title = "Create an opportunity";
+            break;
+        case "edit":
+            title = "Edit an opportunity";
+            break;
+        case "duplicate":
+            title = `Copy of ${eventName}`;
+            break;
+        default:
+            title = "";
+            break;
+    }
+
     return (
-        <StyledNewOpportunity>
+        <StyledOpportunity>
             <BackButton onClick={handleBackClick}>
                 <ArrowBackIos style={{ fontSize: 12 }} />
                 Back to dashboard
             </BackButton>
-            <NewOpportunityContainer fixed maxWidth="md">
-                <HeaderOne>Create an opportunity</HeaderOne>
+            <OpportunityContainer fixed maxWidth="md">
+                <HeaderOne>{title}</HeaderOne>
                 <Subtitle>
                     Tell us what you’re looking for with easy-to-use opportunity
                     templates to find relevant and qualified candidates.
@@ -97,9 +121,9 @@ const NewOpportunity = () => {
                         />
                     </SaveButtonContainer>
                 </ContentContainer>
-            </NewOpportunityContainer>
-        </StyledNewOpportunity>
+            </OpportunityContainer>
+        </StyledOpportunity>
     );
 };
 
-export default NewOpportunity;
+export default Opportunity;

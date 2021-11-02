@@ -5,7 +5,7 @@ import {
     HostingType,
     Shift,
 } from "@icontribute-founder/firebase-access";
-import { GeoPoint } from "@firebase/firestore";
+import { GeoPoint, Timestamp } from "@firebase/firestore";
 
 export interface EditShiftProp {
     index: number;
@@ -21,16 +21,14 @@ export const toGeopoint = (point: string) => {
     return new GeoPoint(pointJson.latitude, pointJson.longitude);
 };
 
-const newOpportunity = {
+const initialState = {
     ...defaultEvent,
-    deadline: Date.now(),
-    date: defaultEvent.date.getTime(),
     coordinates: serializeGeopoint(defaultEvent.coordinates),
 };
 
 export const newOpportunitySlice = createSlice({
     name: "newOpportunity",
-    initialState: newOpportunity,
+    initialState,
     reducers: {
         updateCategories: (state, action: PayloadAction<EventCategory>) => {
             const category = action.payload;
@@ -63,19 +61,39 @@ export const newOpportunitySlice = createSlice({
             state.eventImage = action.payload;
         },
         newShift: (state, action: PayloadAction<Shift>) => {
-            state.shifts.push(action.payload);
+            state.shift.push(action.payload);
         },
         removeShift: (state, action: PayloadAction<number>) => {
             const index = action.payload;
             console.log(index);
-            state.shifts.splice(index, 1);
+            state.shift.splice(index, 1);
         },
         editShift: (state, action: PayloadAction<EditShiftProp>) => {
             const { index, shift } = action.payload;
-            state.shifts[index] = shift;
+            state.shift[index] = shift;
         },
-        reset: (state) => {
-            state = newOpportunity;
+        reset: (state) => initialState,
+        useExistingOpportunity: (state, action) => {
+            let opportunity =
+                action.payload === null ? initialState : action.payload;
+
+            const {
+                eventName,
+                address,
+                description,
+                virtual,
+                categories,
+                date,
+                deadline,
+            } = opportunity;
+            console.log(categories);
+
+            state.eventName = eventName;
+            state.address = address;
+            state.description = description;
+            state.virtual = virtual;
+            state.deadline = deadline;
+            state.date = date;
         },
     },
 });
@@ -93,6 +111,7 @@ export const {
     editShift,
     removeShift,
     reset,
+    useExistingOpportunity,
 } = newOpportunitySlice.actions;
 
 export default newOpportunitySlice.reducer;

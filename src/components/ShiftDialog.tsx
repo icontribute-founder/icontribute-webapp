@@ -80,7 +80,9 @@ const ShiftDialog = ({
     index,
 }: ShiftDialogProps) => {
     const dispatch = useDispatch();
-    const { shifts } = useSelector((state: RootState) => state.newOpportunity);
+    const { shift: shifts } = useSelector(
+        (state: RootState) => state.newOpportunity
+    );
 
     const initialShift: Shift =
         edit && index !== -1 ? { ...shifts[index] } : defaultShift;
@@ -88,11 +90,11 @@ const ShiftDialog = ({
     const [shift, setShift] = useState(initialShift);
 
     const handleStartOnChange = (e: any) => {
-        setShift({ ...shift, start: new Date(e) });
+        setShift({ ...shift, start: new Date(e).getTime() });
     };
 
     const handleEndOnChange = (e: any) => {
-        setShift({ ...shift, end: new Date(e) });
+        setShift({ ...shift, end: new Date(e).getTime() });
     };
 
     const handleRecurrenceOnChange = (e: any) => {

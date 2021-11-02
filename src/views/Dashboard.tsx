@@ -10,14 +10,30 @@ import MoreOptions from "../components/MoreOptions";
 import Map from "../components/Map";
 import { opportunityCollection } from "../configure";
 import EmptyDashboard from "./EmptyDashboard";
+import { reset, useExistingOpportunity } from "../features/newOpportunity";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../store";
 
 const Dashboard = () => {
     const history = useHistory();
-
+    const dispatch = useDispatch();
     const [selectedOpportunity, setSelectedOpportunity] = useState<any>(null);
     const [selectedIndex, setSelectedIndex] = useState(0);
     const [opportunities, setOpportunity] = useState([]);
     const [opportunitiesLoaded, setOpportunitiesLoaded] = useState(false);
+
+    const opportunity =
+        selectedOpportunity === null
+            ? null
+            : {
+                  ...selectedOpportunity,
+                  deadline: selectedOpportunity.deadline.seconds * 1000,
+                  date: selectedOpportunity.date.seconds * 1000,
+              };
+    dispatch(useExistingOpportunity(opportunity));
+
+    const a = useSelector((state: RootState) => state.newOpportunity);
+    console.log(a);
 
     const [center, setCenter] = useState({
         lat: 45.42,
@@ -25,7 +41,8 @@ const Dashboard = () => {
     });
 
     const handleOnClick = () => {
-        history.push("/new-opportunity");
+        dispatch(reset());
+        history.push("/opportunity/create");
     };
 
     const { isLoaded: isMapLoaded } = useJsApiLoader({
@@ -156,7 +173,7 @@ const Dashboard = () => {
                             paddingRight: "50px",
                         }}
                     >
-                        <MoreOptions />
+                        <MoreOptions opportunity={selectedOpportunity} />
                         <SubHeader>
                             <Calendar />
                             {formatDate(new Date(date.seconds * 1000))}
@@ -310,7 +327,6 @@ const StyledImage = styled.img`
 `;
 
 const EventsListContainer = styled.div`
-    padding-right: 12px;
     height: 75vh;
     font-family: Source Sans Pro;
     overflow-y: scroll;

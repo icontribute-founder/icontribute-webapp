@@ -87,7 +87,7 @@ const ShiftCard = ({ start, end, recurrence, i }: any) => {
 };
 
 const Summary = () => {
-    const { eventName, description, shifts, eventImage } = useSelector(
+    const { eventName, description, shift, eventImage } = useSelector(
         (state: RootState) => state.newOpportunity
     );
 
@@ -131,7 +131,7 @@ const Summary = () => {
                 <Grid item xs={12}>
                     <H4>Location</H4>
                 </Grid>
-                {shifts.map(({ start, end, recurring }: any, i) => (
+                {shift.map(({ start, end, recurring }: any, i) => (
                     <Grid item xs={6} key={`shift-card-${i}`}>
                         <ShiftCard
                             start={start}

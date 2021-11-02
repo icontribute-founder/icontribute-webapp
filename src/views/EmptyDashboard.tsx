@@ -7,7 +7,7 @@ const EmptyDashboard = () => {
     const history = useHistory();
 
     const handleOnClick = () => {
-        history.push("/new-opportunity");
+        history.push("/opportunity/create");
     };
 
     return (

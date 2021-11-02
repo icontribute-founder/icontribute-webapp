@@ -1,4 +1,4 @@
-import { Grid, TextField } from "@material-ui/core";
+import { Grid } from "@material-ui/core";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -11,16 +11,13 @@ import { Shift } from "@icontribute-founder/firebase-access";
 import { upload } from "../../imageUploader";
 import { RootState } from "../../store";
 import ImageDropzone from "../FormElements/ImageDropzone";
-// import InputField from "../FormElements/InputField";
-import TextareaField from "../FormElements/TextareaField";
 import ShiftCard from "../ShiftCard";
-import { Subtitle } from "../styles";
 import Section from "./Section";
 import InputField from "../common/InputField";
 
 const OpportunityDetails = ({ setImageUploading }: any) => {
     const dispatch = useDispatch();
-    const { eventName, address, description, shifts } = useSelector(
+    const { eventName, address, description, shift } = useSelector(
         (state: RootState) => state.newOpportunity
     );
 
@@ -96,9 +93,9 @@ const OpportunityDetails = ({ setImageUploading }: any) => {
 
             <h3>Shift</h3>
             <Grid container spacing={2}>
-                {shifts.map((shift: Shift, i: number) => (
+                {shift.map((s: Shift, i: number) => (
                     <Grid item md={6} key={`grid-shift-${i}`}>
-                        <ShiftCard shift={shift} index={i} />
+                        <ShiftCard shift={s} index={i} />
                     </Grid>
                 ))}
                 <Grid item md={6}>

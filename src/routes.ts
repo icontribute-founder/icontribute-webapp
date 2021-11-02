@@ -1,4 +1,4 @@
-import NewOpportunity from "./views/NewOpportunity";
+import Opportunity from "./views/Opportunity";
 import Confirmation1 from "./views/Confirmation1";
 import Confirmation2 from "./views/Confirmation2";
 // import Profile from "./views/Profile";
@@ -14,9 +14,9 @@ import SignUpConfirm from "./views/SignUpConfirm";
 
 export const routes = [
     {
-        path: "/new-opportunity",
+        path: "/opportunity/:action",
         exact: true,
-        component: NewOpportunity,
+        component: Opportunity,
     },
     {
         path: "/",

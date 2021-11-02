@@ -52,8 +52,6 @@ const ReviewOpportunity = () => {
     const handlePublish = async () => {
         await opportunityCollection.createOpportunity(userId, {
             ...opportunity,
-            deadline: new Date(opportunity.deadline),
-            date: new Date(opportunity.date),
             coordinates: toGeopoint(opportunity.coordinates),
         });
         dispatch(reset());
