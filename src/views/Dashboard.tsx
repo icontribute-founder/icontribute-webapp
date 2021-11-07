@@ -26,11 +26,13 @@ const Dashboard = () => {
   const [opportunities, setOpportunity] = useState([]);
   const [opportunitiesLoaded, setOpportunitiesLoaded] = useState(false);
   
-  const [disable, setDisable] = useState({});
-  const [value, setValue] = useState("");
+  const [disable, setDisable] = useState({}); // disables opportunities screen when pop up is open
+  const [value, setValue] = useState(""); // checks if user typed "DELETE"
 
-  const [onClick, setOnClick] = useState(false);
-  const [deleteVar, setDeleteVar] = useState('');
+  const [deleteOnClick, setDeleteOnClick] = useState(false); // checks if the delete on click was clicked
+  const [deleteOpportunityId, setDeleteOpportunityId] = useState(''); //holds id of opportunity to be deleted
+
+
 
   const [center, setCenter] = useState({
     lat: 45.42,
@@ -125,8 +127,8 @@ const Dashboard = () => {
                   }}
 
                   onClick={(e:any) => {
-                    setOnClick(true)
-                    setDeleteVar(id)
+                    setDeleteOnClick(true)
+                    setDeleteOpportunityId(id)
                     setDisable({});
                     onClose();
                   }}
@@ -195,11 +197,11 @@ const Dashboard = () => {
 
   if (opportunitiesLoaded) {
     const getOpportunity = async () => {
-      if(onClick === true){
+      if(deleteOnClick === true){
         console.log("I am deleting an opportunity")
         //console.log(deleteVar === " 3PbEJDsrSWyzhhA6bc56")
-        await opportunityCollection.deleteOpportunity(deleteVar.replace(' ',''))
-        setOnClick(false)
+        await opportunityCollection.deleteOpportunity(deleteOpportunityId.replace(' ',''))
+        setDeleteOnClick(false)
       }  
     }
     getOpportunity();
