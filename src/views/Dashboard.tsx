@@ -11,18 +11,13 @@ import Map from "../components/Map";
 import { opportunityCollection } from "../configure";
 import EmptyDashboard from "./EmptyDashboard";
 
-import PopUp from "../components/PopUp";
+//import PopUp from "../components/PopUp";
 
 import { confirmAlert } from "react-confirm-alert"; // Import
 import "../assets/css/react-confirm-alert.css";
 
 const Dashboard = () => {
   const history = useHistory();
-
-  const [input, setInput] = useState("Save Edits");
-  const inputHanlder = (e: any) => {
-    setInput(e.target.value);
-  };
 
   const deleteButton = useRef<any>(null);
 
@@ -34,7 +29,7 @@ const Dashboard = () => {
   const [disable, setDisable] = useState({});
   const [value, setValue] = useState("");
 
-  const [onClick, setOnClick] = useState("");
+  const [onClick, setOnClick] = useState(false);
   const [deleteVar, setDeleteVar] = useState('');
 
   const [center, setCenter] = useState({
@@ -46,24 +41,7 @@ const Dashboard = () => {
     history.push("/new-opportunity");
   };
 
-  const onClickDelete = (id:any) => {
-      //setDeleteVar(e.currentTarget);
-
-      //setValue("DELETE")
-      //console.log(eventID)
-      //opportunityCollection.deleteOpportunity(eventID)
-
-      
-      //setDisable({});
-
-
-  };
-
-
-
   const deletePopUP = (id: any) => {
-
-    
 
     setDisable({ opacity: 0.5, pointerEvents: "none" });
     confirmAlert({
@@ -147,19 +125,10 @@ const Dashboard = () => {
                   }}
 
                   onClick={(e:any) => {
-                    setOnClick("what about now?")
+                    setOnClick(true)
                     setDeleteVar(id)
-                    if (deleteButton.current){
-                      if (deleteButton.current.style){
-                        
-                          deleteButton.current.style.backgroundColor = '#FFF';
-                        
-                    }
-                  }
                     setDisable({});
                     onClose();
-                    onClickDelete(id);
-                    
                   }}
                 >
                   Delete Opportunity
@@ -195,7 +164,6 @@ const Dashboard = () => {
       if (deleteButton) {
         deleteButton.current.style.pointerEvents = 'auto';
         deleteButton.current.style.color = '#2836D1';
-        //opportunityCollection.deleteOpportunity('UKu2BTI1qyGfawpER7WI')
       }
     }
     else{
@@ -206,46 +174,19 @@ const Dashboard = () => {
     }
   }, [value]);
 
-  /*
-  const deleteOpportunity = async () => {
-                      console.log("I'm going to delete something")
-                      //UKu2BTI1qyGfawpER7WI
-                      console.log(eventID)
-                      await opportunityCollection.deleteOpportunity(eventID)
-                    };
-                    deleteOpportunity()
-
-
-
-  */
-                                  
-  useEffect(() => {
-    const deleteOpportunity = async () => {
-      //console.log("I'm going to delete something")
-      //const id = 'UKu2BTI1qyGfawpER7WI';
-      //console.log(id)
-      //console.log(opportunities)
-      
-    };
-    deleteOpportunity()   
-  }, []);
-
+                          
   useEffect(() => {
     const getOpportunity = async () => {
       setOpportunitiesLoaded(false);
       const data: any = await opportunityCollection.getOpportunities();
       
-      //console.log("123",data);
       const result = data.filter((item:any) => item.deleted !== true);
-      //console.log(result)
       setOpportunity(result);
-      
-
-      //opportunityCollection.deleteOpportunity('UKu2BTI1qyGfawpER7WI')
-      
+            
       if (data[0] != null) {
         handleCardOnClick(0, 0, data[0]);
       }
+      console.log(data)
       setOpportunitiesLoaded(true);
     };
     getOpportunity();
@@ -254,8 +195,11 @@ const Dashboard = () => {
 
   if (opportunitiesLoaded) {
     const getOpportunity = async () => {
-      if(onClick === "what about now?"){
-        await opportunityCollection.deleteOpportunity(deleteVar)
+      if(onClick === true){
+        console.log("I am deleting an opportunity")
+        //console.log(deleteVar === " 3PbEJDsrSWyzhhA6bc56")
+        await opportunityCollection.deleteOpportunity(deleteVar.replace(' ',''))
+        setOnClick(false)
       }  
     }
     getOpportunity();
@@ -312,7 +256,6 @@ const Dashboard = () => {
     date,
   } = selectedOpportunity;
 
-  //console.log("Type of event:", typeof eventID);
 
   const header = (
     <HeaderContainer>
