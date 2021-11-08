@@ -72,7 +72,7 @@ const ImageContainer = styled.div`
   align-items: center;
   background: #EDECFF;
   display: flex;
-  margin-right: 3%;
+  margin-right: 10%;
 `;
 
 const StyledImage = styled.img`
