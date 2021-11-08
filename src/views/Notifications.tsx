@@ -2,6 +2,7 @@ import styled from "styled-components";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import Notification from "../models/Notification"
 import NotificationCard from "../components/NotificationCard";
+import UnreadNotificationCard from "../components/UnreadNotificationCard";
 import { useSelector } from "react-redux";
 import { RootState } from "../store";
 
@@ -13,7 +14,6 @@ const Notifications = () => {
 
   let notificationCollection = [];
   notificationCollection = currUser.notifications;
-  console.log("Current User Notification: ", notificationCollection);
 
   let readNotifications:any = [];
   let unreadNotifications:any = [];
@@ -23,8 +23,6 @@ const Notifications = () => {
     readNotifications.push(element)
     : unreadNotifications.push(element)
   })
-  console.log("Read Notification: ", readNotifications);
-  console.log("Unread Notification: ", unreadNotifications);
 
   return (
     <div>
@@ -37,19 +35,17 @@ const Notifications = () => {
 
         {unreadNotifications.map((element: Notification) => {
           return (
-            <NotificationCardContainer>
-              <NotificationCard
-                key={element.eventID}
-                date={new Date()}
-                eventID={element.eventID}
-                eventName={element.eventName}
-                read={true}
-                sourceEmail={element.sourceEmail}
-                sourceProfilePicture={element.sourceProfilePicture}
-                sourceUserName={element.sourceUserName}
-                type={element.type}
-              ></NotificationCard>
-            </NotificationCardContainer>
+            <NotificationCard
+              key={element.eventID}
+              date={element.date}
+              eventID={element.eventID}
+              eventName={element.eventName}
+              read={element.read}
+              sourceEmail={element.sourceEmail}
+              sourceProfilePicture={element.sourceProfilePicture}
+              sourceUserName={element.sourceUserName}
+              type={element.type}
+            ></NotificationCard>
           )
         })}
 
@@ -57,19 +53,17 @@ const Notifications = () => {
 
         {readNotifications.map((element: Notification) => {
           return (
-            <NotificationCardContainer>
-              <NotificationCard
-                key={element.eventID}
-                date={new Date()}
-                eventID={element.eventID}
-                eventName={element.eventName}
-                read={true}
-                sourceEmail={element.sourceEmail}
-                sourceProfilePicture={element.sourceProfilePicture}
-                sourceUserName={element.sourceUserName}
-                type={element.type}
-              ></NotificationCard>
-            </NotificationCardContainer>
+            <UnreadNotificationCard
+              key={element.eventID}
+              date={element.date}
+              eventID={element.eventID}
+              eventName={element.eventName}
+              read={element.read}
+              sourceEmail={element.sourceEmail}
+              sourceProfilePicture={element.sourceProfilePicture}
+              sourceUserName={element.sourceUserName}
+              type={element.type}
+            ></UnreadNotificationCard>
           )
         })}
 
@@ -91,17 +85,6 @@ const HeaderContainer = styled.div`
   height: 0.3;
 `;
 
-const NotificationCardContainer = styled.div`
-  font-family: Source Sans Pro;
-  align-items: center;
-  flex-direction: row;
-  justify-content: flex-start;
-  margin: 1%;
-  flex-direction: row;
-  width: 1;
-  height: 0.3;
-`;
-
 const HeaderOne = styled.h2`
   font-family: Source Sans Pro;
   margin-left: 2%;
@@ -118,47 +101,6 @@ const HeaderTwo = styled.h2`
   font-weight: normal;
 `;
 
-const box: React.CSSProperties = {
-  padding: "15px",
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "space-between",
-  marginLeft: "5%",
-  marginRight: "5%",
-};
-const boxGray: React.CSSProperties = {
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "space-between",
-  borderBottom: "2px solid silver",
-};
-const boxBlue: React.CSSProperties = {
-  padding: "15px",
-  backgroundColor: "#EDECFF",
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "space-between",
-  marginLeft: "5%",
-  marginRight: "5%",
-};
-const h1: React.CSSProperties = {
-  fontFamily: "Source Sans Pro",
-  textAlign: "left",
-  marginLeft: "5%",
-  marginRight: "5%",
-};
-
-const h3: React.CSSProperties = {
-  fontFamily: "Source Sans Pro",
-  marginLeft: "15px",
-  marginRight: "30px",
-  fontSize: "15px",
-  fontWeight: "normal",
-};
-const icon: React.CSSProperties = {
-  cursor: "pointer",
-  width: "35px",
-};
 const icon2: React.CSSProperties = {
   cursor: "pointer",
   width: "35px",
