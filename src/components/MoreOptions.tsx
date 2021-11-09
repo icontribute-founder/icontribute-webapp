@@ -9,60 +9,42 @@ import { Grid } from "@material-ui/core";
 import styled from "styled-components";
 import DeletePopUp from "../components/PopUp";
 
-
 interface MoreOptionsProps {
-  eventId: string
-  deleteScreen:Function
-  setOpportunity:Function
+  eventId: string;
+  setOpportunity: Function;
   //setPopUpOpen:Function
 }
 
-const MoreOptions = ({  deleteScreen, eventId, setOpportunity }: MoreOptionsProps) => {
+const MoreOptions = ({ eventId, setOpportunity }: MoreOptionsProps) => {
   const [anchorEl, setAnchorEl] = React.useState(null);
-  
-  const [value, setValue] = useState('I love coding');
-  const [allowDelete, setAllowDelete] = useState(false);
-  const [input, setInput] = React.useState("Save Edits");
-  const inputHanlder = (e:any) => {
-    setInput(e.target.value);
-  };
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
- 
-  
+
   const MyOptions = [
     "Edit Opportunity",
     "Duplicate Opportunity",
     "View all applicants",
     "Delete Opportunity",
   ];
-  
-  const handleClick = (event:any) => {
+
+  const handleClick = (event: any) => {
     setAnchorEl(event.currentTarget);
   };
-  
-  const open = Boolean(anchorEl);
-  
-  const handleClose = (option:any) => {
-    if (option === 'Delete Opportunity'){
-      console.log("The option that was selected", option)
-      setDeleteModalOpen(true)
-      //deleteScreen(eventId)
-      
-      //deletePopUP(eventId)
-      //setPopUpOpen(true)
-      
 
+  const open = Boolean(anchorEl);
+
+  const handleClose = (option: any) => {
+    if (option === "Delete Opportunity") {
+      console.log("The option that was selected", option);
+      setDeleteModalOpen(true);
     }
-    
+
     setAnchorEl(null);
   };
 
-  
   return (
     <div
       style={{
         padding: "0%",
-        
       }}
     >
       <IconButton
@@ -72,34 +54,26 @@ const MoreOptions = ({  deleteScreen, eventId, setOpportunity }: MoreOptionsProp
         aria-controls="long-menu"
         style={{
           padding: "0%",
-          
         }}
       >
         <MoreVertIcon />
       </IconButton>
-      <Menu 
-        anchorEl={anchorEl} 
-        keepMounted onClose={handleClose} 
-        open={open}>
+      <Menu anchorEl={anchorEl} keepMounted onClose={handleClose} open={open}>
         {MyOptions.map((option) => (
-          <MenuItem
-            key={option} 
-            onClick={() => handleClose(option)}>
+          <MenuItem key={option} onClick={() => handleClose(option)}>
             {option}
           </MenuItem>
         ))}
-        
-        
       </Menu>
-      {deleteModalOpen && (<DeletePopUp
-      opportunityId = {eventId}
-      handleCancel={() => setDeleteModalOpen(false)}
-      setOpportunity = {setOpportunity} 
-      ></DeletePopUp>)}
-      
+      {deleteModalOpen && (
+        <DeletePopUp
+          opportunityId={eventId}
+          handleCancel={() => setDeleteModalOpen(false)}
+          setOpportunity={setOpportunity}
+        ></DeletePopUp>
+      )}
     </div>
   );
- 
 };
 
 export const HeaderOnePopUp = styled.h1`
@@ -122,5 +96,4 @@ export const HeaderThree = styled.h3`
   color: #192226;
 `;
 
-  
 export default MoreOptions;

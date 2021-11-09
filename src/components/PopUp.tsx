@@ -1,4 +1,4 @@
-import {useState } from "react";
+import { useState } from "react";
 import { Grid } from "@material-ui/core";
 import Modal from "@mui/material/Modal";
 import Box from "@mui/material/Box";
@@ -9,13 +9,16 @@ import styled from "styled-components";
 
 interface DeletePopUpProps {
   handleCancel: Function;
-  opportunityId: string
-  setOpportunity: Function
+  opportunityId: string;
+  setOpportunity: Function;
 }
 
-const DeletePopUp = ({ handleCancel, opportunityId, setOpportunity }: DeletePopUpProps) => {
+const DeletePopUp = ({
+  handleCancel,
+  opportunityId,
+  setOpportunity,
+}: DeletePopUpProps) => {
   const [value, setValue] = useState("");
-  
 
   return (
     <div
@@ -24,9 +27,8 @@ const DeletePopUp = ({ handleCancel, opportunityId, setOpportunity }: DeletePopU
       }}
     >
       <Modal
-      hideBackdrop = {true}
+        hideBackdrop={true}
         open={true}
-        //onClose={setOpen(false)}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
@@ -36,69 +38,76 @@ const DeletePopUp = ({ handleCancel, opportunityId, setOpportunity }: DeletePopU
             top: "55%",
             left: "75%",
             transform: "translate(-50%, -50%)",
-            width:"385px",
-            height:"300px",
+            width: "385px",
+            height: "300px",
             bgcolor: "background.paper",
-            borderRadius:"8px",
+            borderRadius: "8px",
             boxShadow: "0 3px 10px rgb(0 0 0 / 0.2)",
-            
           }}
         >
-
-          <HeaderOne style={{ fontFamily: "Source Sans Pro", textAlign: "center", fontSize:24, paddingTop:"10px",color: '#2836D1' }}>
+          <HeaderOne
+            style={{
+              fontFamily: "Source Sans Pro",
+              textAlign: "center",
+              fontSize: 24,
+              paddingTop: "10px",
+              color: "#2836D1",
+            }}
+          >
             Are you sure?
-          </HeaderOne> 
+          </HeaderOne>
 
           <HeaderTwo
-            style={{ fontFamily: "Source Sans Pro", textAlign: "center" ,fontSize:14 }}
+            style={{
+              fontFamily: "Source Sans Pro",
+              textAlign: "center",
+              fontSize: 14,
+            }}
           >
             If you’d like to delete this opportunity, type ‘DELETE’ in the text
             box below to confirm.
           </HeaderTwo>
 
-          
-           <form
-          
+          <form
             style={{
               height: 30,
               display: "flex",
               justifyContent: "center",
               alignItems: "center",
               padding: "20px 30px 30px 30px",
-              
             }}
-            
           >
             <label style={{ height: 30, width: "100%" }}>
               <input
                 type="text"
                 name="name"
                 placeholder="type 'DELETE'"
-                style={{ height: 30, width: "100%",border: "1px solid #D1D2D3" }}
-                onChange={
-                  (e) =>{
-                    console.log(e.currentTarget.value)
-                    setValue(e.currentTarget.value )}
-                }
+                style={{
+                  height: 30,
+                  width: "100%",
+                  border: "1px solid #D1D2D3",
+                }}
+                onChange={(e) => {
+                  console.log(e.currentTarget.value);
+                  setValue(e.currentTarget.value);
+                }}
               />
             </label>
-          </form> 
+          </form>
 
-           
           <HeaderThree
             style={{
               fontFamily: "Source Sans Pro",
               textAlign: "center",
               fontSize: "10px",
-              paddingBottom:'20px'
+              paddingBottom: "20px",
             }}
           >
             WARNING: if you delete this opportunity, you will lose its details
             and automatically decline all the active applicants. This cannot be
             undone.
-          </HeaderThree> 
+          </HeaderThree>
 
-             
           <Grid
             spacing={2}
             style={{
@@ -121,7 +130,7 @@ const DeletePopUp = ({ handleCancel, opportunityId, setOpportunity }: DeletePopU
                   borderBottom: "0px",
                   borderLeft: "0px",
                   borderTop: "1px #D1D2D3 solid",
-                  fontSize:16
+                  fontSize: 16,
                 }}
               >
                 Cancel
@@ -131,8 +140,8 @@ const DeletePopUp = ({ handleCancel, opportunityId, setOpportunity }: DeletePopU
               <button
                 id="delete-button"
                 style={{
-                  backgroundColor: 'white',
-                  color: value === 'DELETE' ?  '#2836D1': '#D1D2D3',
+                  backgroundColor: "white",
+                  color: value === "DELETE" ? "#2836D1" : "#D1D2D3",
                   maxWidth: "100%",
                   whiteSpace: "nowrap",
                   padding: "20px 40% 25px 20%",
@@ -140,30 +149,35 @@ const DeletePopUp = ({ handleCancel, opportunityId, setOpportunity }: DeletePopU
                   borderBottom: "0px",
                   borderLeft: "1px #D1D2D3 solid",
                   borderTop: "1px #D1D2D3 solid",
-                  fontSize:16,
-                  pointerEvents: value === 'DELETE' ?  'auto': 'none'
+                  fontSize: 16,
+                  pointerEvents: value === "DELETE" ? "auto" : "none",
                 }}
                 onClick={() => {
                   const deleteOpportunity = async () => {
-                      console.log("I am deleting an opportunity")
-                      console.log("OPPORTUNITY ID", opportunityId)
-                      await opportunityCollection.deleteOpportunity(opportunityId.replace(' ',''))
-                      const data: any = await opportunityCollection.getOpportunities();
-      
-                      const result = data.filter((item:any) => item.deleted !== true);
-                      if (data[0] != null) {
-                        //handleCardOnClick(0, 0, data[0]);
-                      }
-                      setOpportunity(result);
-                  }
+                    console.log("I am deleting an opportunity");
+                    console.log("OPPORTUNITY ID", opportunityId);
+                    await opportunityCollection.deleteOpportunity(
+                      opportunityId.replace(" ", "")
+                    );
+                    const data: any =
+                      await opportunityCollection.getOpportunities();
+
+                    const result = data.filter(
+                      (item: any) => item.deleted !== true
+                    );
+                    if (data[0] != null) {
+                      //handleCardOnClick(0, 0, data[0]);
+                    }
+                    setOpportunity(result);
+                  };
                   deleteOpportunity();
-                  handleCancel()
+                  handleCancel();
                 }}
               >
                 Delete Opportunity
               </button>
             </Grid>
-          </Grid> 
+          </Grid>
         </Box>
       </Modal>
     </div>
@@ -171,16 +185,15 @@ const DeletePopUp = ({ handleCancel, opportunityId, setOpportunity }: DeletePopU
 };
 
 export const HeaderOne = styled.h1`
-    font-family: Source Sans Pro;
-    font-weight: bold;
-    textAlign: "center";
-    fontFamily: "Source Sans Pro",
-   
+  font-family: Source Sans Pro;
+  font-weight: bold;
+  textalign: "center";
+  fontfamily: "Source Sans Pro";
 `;
 
 const HeaderTwo = styled.p`
   margin: 0px;
-  color:'red'
+  color: "red";
 `;
 
 export const HeaderThree = styled.h3`

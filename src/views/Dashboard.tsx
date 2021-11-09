@@ -11,29 +11,14 @@ import Map from "../components/Map";
 import { opportunityCollection } from "../configure";
 import EmptyDashboard from "./EmptyDashboard";
 
-//import PopUp from "../components/PopUp";
-
-import { confirmAlert } from "react-confirm-alert"; // Import
-import "../assets/css/react-confirm-alert.css";
-
 const Dashboard = () => {
   const history = useHistory();
-
-  const deleteButton = useRef<any>(null);
-
   const [selectedOpportunity, setSelectedOpportunity] = useState<any>(null);
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [opportunities, setOpportunity] = useState([]);
   const [opportunitiesLoaded, setOpportunitiesLoaded] = useState(false);
-  
+
   const [disable, setDisable] = useState({}); // disables opportunities screen when pop up is open
-  const [value, setValue] = useState(""); // checks if user typed "DELETE"
-
-  const [deleteOnClick, setDeleteOnClick] = useState(false); // checks if the delete on click was clicked
-  const [deleteOpportunityId, setDeleteOpportunityId] = useState(''); //holds id of opportunity to be deleted
-  
-  const [popUpOpen, setPopUpOpen] = useState(false);
-
 
   const [center, setCenter] = useState({
     lat: 45.42,
@@ -43,112 +28,6 @@ const Dashboard = () => {
   const handleOnClick = () => {
     history.push("/new-opportunity");
   };
-
-  const deletePopUP = (id: any) => {
-
-    setDisable({ opacity: 0.5, pointerEvents: "none" });
-    confirmAlert({
-      closeOnClickOutside: false,
-      customUI: ({ onClose }) => {
-        return (
-          <div>
-            <HeaderOnePopUp style={{color: "#2836D1",fontFamily: "Source Sans Pro",textAlign: "center"}}>
-              Are you sure?
-            </HeaderOnePopUp>
-            <HeaderTwo style={{ fontFamily: "Source Sans Pro", textAlign: "center" }}>
-              If you’d like to delete this opportunity, type ‘DELETE’ in the
-              text box below to confirm.
-            </HeaderTwo>
-            <form
-              style={{height: 30,padding: "30px"}}
-            >
-              <label style={{ height: 30, width: "100%" }}>
-                <input
-                  placeholder="type 'DELETE'"
-                  style={{ height: 30, width: "100%" }}
-                  onChange={(e) => {
-                    setValue(e.currentTarget.value);
-                  }}
-                />
-              </label>
-            </form>
-
-            <HeaderThree style={{fontFamily: "Source Sans Pro",textAlign: "center",fontSize: "10px"}}>
-              WARNING: if you delete this opportunity, you will lose its details
-              and automatically decline all the active applicants. This cannot
-              be undone.
-            </HeaderThree>
-
-            <Grid
-              spacing={2}
-              style={{
-                display: "flex",
-                justifyContent: "center",
-                alignContent: "center",
-                textAlign: "center",
-              }}
-            >
-              <Grid item xs={6}>
-                <button
-                  onClick={() => {
-                    setDisable({});
-                    onClose();
-
-                  }}
-                  style={{
-                    backgroundColor: "white",
-                    color: "#2836D1",
-                    padding: "25px 40% 20px 40%",
-                    borderRight: "1px #D1D2D3 solid",
-                    borderBottom: "0px",
-                    borderLeft: "0px",
-                    borderTop: "1px #D1D2D3 solid",
-                  }}
-                >
-                  Cancel
-                </button>
-              </Grid>
-
-              <Grid item xs={6}>
-                <button
-                  ref={deleteButton}
-                  id="delete-button"
-                  style={{
-                    backgroundColor: "#FFFFFF",
-                    color: "#D1D2D3",
-                    maxWidth: "100%",
-                    whiteSpace: "nowrap",
-                    padding: "25px 55% 25px 30%",
-                    borderRight: "0px",
-                    borderBottom: "0px",
-                    borderLeft: "0px",
-                    borderTop: "1px #D1D2D3 solid",
-                    opacity: 0.5,
-                    pointerEvents: "none"
-                  }}
-
-                  onClick={(e:any) => {
-                    setDeleteOnClick(true)
-                    setDeleteOpportunityId(id)
-                    setDisable({});
-                    onClose();
-                  }}
-                >
-                  Delete Opportunity
-                </button>
-              </Grid>
-            </Grid>
-
-            
-
-          </div>
-        );
-      },
-    });
-  };
-
-  
-  
 
   const { isLoaded: isMapLoaded } = useJsApiLoader({
     id: "google-map-script",
@@ -165,49 +44,21 @@ const Dashboard = () => {
   };
 
   useEffect(() => {
-    if (value === "DELETE") {
-
-      if (deleteButton) {
-        deleteButton.current.style.pointerEvents = 'auto';
-        deleteButton.current.style.color = '#2836D1';
-      }
-    }
-    else{
-      if (deleteButton.current) {
-        deleteButton.current.style.pointerEvents = 'none';
-        deleteButton.current.style.backgroundColor = 'white';
-      }
-    }
-  }, [value]);
-
-                          
-  useEffect(() => {
     const getOpportunity = async () => {
       setOpportunitiesLoaded(false);
       const data: any = await opportunityCollection.getOpportunities();
-      
-      const result = data.filter((item:any) => item.deleted !== true);
+
+      const result = data.filter((item: any) => item.deleted !== true);
       setOpportunity(result);
-            
+
       if (data[0] != null) {
         handleCardOnClick(0, 0, data[0]);
       }
-      console.log(data)
+      console.log(data);
       setOpportunitiesLoaded(true);
     };
     getOpportunity();
   }, []);
-
-
-  if (opportunitiesLoaded) {
-    const getOpportunity = async () => {
-      if(deleteOnClick === true){
-        await opportunityCollection.deleteOpportunity(deleteOpportunityId.replace(' ',''))
-        setDeleteOnClick(false)
-      }  
-    }
-    getOpportunity();
-  }
 
   if (opportunitiesLoaded && opportunities.length === 0) {
     return <EmptyDashboard />;
@@ -258,9 +109,8 @@ const Dashboard = () => {
     shift,
     deadline,
     date,
-    id
+    id,
   } = selectedOpportunity;
-
 
   const header = (
     <HeaderContainer>
@@ -300,7 +150,7 @@ const Dashboard = () => {
               paddingRight: "50px",
             }}
           >
-            <MoreOptions deleteScreen={deletePopUP} eventId={id} setOpportunity = {setOpportunity} />
+            <MoreOptions eventId={id} setOpportunity={setOpportunity} />
             <SubHeader>
               <Calendar />
               {formatDate(new Date(date.seconds * 1000))}
@@ -345,19 +195,9 @@ const Dashboard = () => {
     </SelectedOpportunity>
   );
 
-  
-
   return isMapLoaded ? (
-
-    
-    
-    
-
     <OrganizationDashboardPage>
       {header}
-
-      {popUpOpen ? (<HeaderOne>Hi</HeaderOne>) : <></>}
-      
       <SignupContainer>
         <Grid container>
           <Grid item xs={6}>
@@ -370,14 +210,9 @@ const Dashboard = () => {
         </Grid>
       </SignupContainer>
     </OrganizationDashboardPage>
-    
-
-    
-
   ) : (
     <></>
   );
-  
 };
 
 const HeaderContainer = styled.div`
