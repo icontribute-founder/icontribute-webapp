@@ -13,10 +13,11 @@ import DeletePopUp from "../components/PopUp";
 interface MoreOptionsProps {
   eventId: string
   deleteScreen:Function
+  setOpportunity:Function
   //setPopUpOpen:Function
 }
 
-const MoreOptions = ({  deleteScreen, eventId }: MoreOptionsProps) => {
+const MoreOptions = ({  deleteScreen, eventId, setOpportunity }: MoreOptionsProps) => {
   const [anchorEl, setAnchorEl] = React.useState(null);
   
   const [value, setValue] = useState('I love coding');
@@ -91,7 +92,9 @@ const MoreOptions = ({  deleteScreen, eventId }: MoreOptionsProps) => {
         
       </Menu>
       {deleteModalOpen && (<DeletePopUp
+      opportunityId = {eventId}
       handleCancel={() => setDeleteModalOpen(false)}
+      setOpportunity = {setOpportunity} 
       ></DeletePopUp>)}
       
     </div>

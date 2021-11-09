@@ -202,8 +202,6 @@ const Dashboard = () => {
   if (opportunitiesLoaded) {
     const getOpportunity = async () => {
       if(deleteOnClick === true){
-        console.log("I am deleting an opportunity")
-        //console.log(deleteVar === " 3PbEJDsrSWyzhhA6bc56")
         await opportunityCollection.deleteOpportunity(deleteOpportunityId.replace(' ',''))
         setDeleteOnClick(false)
       }  
@@ -230,10 +228,10 @@ const Dashboard = () => {
     `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`;
 
   const ListEventCardComponents = opportunities.map((props: any, i: number) => {
-    const { eventName, eventImage, date, description, eventID } = props;
+    const { eventName, eventImage, date, description, eventID, id } = props;
     return (
       <SmallEventCard
-        key={eventID}
+        key={id}
         eventImage={eventImage}
         eventName={eventName}
         date={date.toDate()}
@@ -260,6 +258,7 @@ const Dashboard = () => {
     shift,
     deadline,
     date,
+    id
   } = selectedOpportunity;
 
 
@@ -301,7 +300,7 @@ const Dashboard = () => {
               paddingRight: "50px",
             }}
           >
-            <MoreOptions deleteScreen={deletePopUP} eventId={eventID} />
+            <MoreOptions deleteScreen={deletePopUP} eventId={id} setOpportunity = {setOpportunity} />
             <SubHeader>
               <Calendar />
               {formatDate(new Date(date.seconds * 1000))}
