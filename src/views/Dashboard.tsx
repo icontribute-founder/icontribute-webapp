@@ -31,7 +31,8 @@ const Dashboard = () => {
 
   const [deleteOnClick, setDeleteOnClick] = useState(false); // checks if the delete on click was clicked
   const [deleteOpportunityId, setDeleteOpportunityId] = useState(''); //holds id of opportunity to be deleted
-
+  
+  const [popUpOpen, setPopUpOpen] = useState(false);
 
 
   const [center, setCenter] = useState({
@@ -137,6 +138,9 @@ const Dashboard = () => {
                 </button>
               </Grid>
             </Grid>
+
+            
+
           </div>
         );
       },
@@ -342,9 +346,19 @@ const Dashboard = () => {
     </SelectedOpportunity>
   );
 
+  
+
   return isMapLoaded ? (
+
+    
+    
+    
+
     <OrganizationDashboardPage>
       {header}
+
+      {popUpOpen ? (<HeaderOne>Hi</HeaderOne>) : <></>}
+      
       <SignupContainer>
         <Grid container>
           <Grid item xs={6}>
@@ -357,9 +371,14 @@ const Dashboard = () => {
         </Grid>
       </SignupContainer>
     </OrganizationDashboardPage>
+    
+
+    
+
   ) : (
     <></>
   );
+  
 };
 
 const HeaderContainer = styled.div`
