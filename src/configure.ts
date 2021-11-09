@@ -2,6 +2,7 @@ import { getAuth } from "firebase/auth";
 import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
 import { OpportunityCollection } from "@icontribute-founder/firebase-access";
+import { getStorage } from "firebase/storage";
 
 const environmentVars = [
     "REACT_APP_FIRESTORE_API_KEY",
@@ -38,8 +39,10 @@ const firebaseConfig = {
 export const firebaseApp = initializeApp(firebaseConfig);
 export const firebaseAuth = getAuth(firebaseApp);
 export const firestore = getFirestore(firebaseApp);
+export const storage = getStorage(firebaseApp);
 
 export const opportunityCollection = OpportunityCollection.create(
     firebaseApp,
-    firestore
+    firestore,
+    storage
 );

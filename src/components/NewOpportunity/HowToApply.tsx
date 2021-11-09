@@ -1,14 +1,14 @@
 import {
-    FormControl,
-    FormControlLabel,
-    Grid,
-    Radio,
-    RadioGroup,
+  FormControl,
+  FormControlLabel,
+  Grid,
+  Radio,
+  RadioGroup,
 } from "@material-ui/core";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import { RootState } from "../../store";
-import { updateHostingType } from "../../features/newOpportunity";
+import { updateHostingType } from "../../features/opportunity";
 
 import Section from "./Section";
 import { HostingType } from "@icontribute-founder/firebase-access";
@@ -16,108 +16,99 @@ import ExternalIcon from "../Svgs/ExternalIcon";
 import InternalIcon from "../Svgs/InternalIcon";
 
 const HostingTypeDescription = styled.p`
-    font-style: normal;
-    font-weight: normal;
-    // font-size: 14px;
-    line-height: 20px;
-    color: #736b6b;
-    font-family: Source Sans Pro;
-    margin: 0px;
+  font-style: normal;
+  font-weight: normal;
+  // font-size: 14px;
+  line-height: 20px;
+  color: #736b6b;
+  font-family: Source Sans Pro;
+  margin: 0px;
 `;
 
 const StyledRadioLabel = styled.div`
-    color: #192226;
-    // font-size: 14px;
-    line-height: 20px;
-    display: flex;
-    align-items: center;
+  color: #192226;
+  // font-size: 14px;
+  line-height: 20px;
+  display: flex;
+  align-items: center;
 `;
 
 const StyledSpan = styled.span`
-    margin-right: 10px;
+  margin-right: 10px;
 `;
 
 const RadioLabel = ({ label, svg }: any) => {
-    return (
-        <StyledRadioLabel>
-            <StyledSpan>{label}</StyledSpan>
-            {svg}
-        </StyledRadioLabel>
-    );
+  return (
+    <StyledRadioLabel>
+      <StyledSpan>{label}</StyledSpan>
+      {svg}
+    </StyledRadioLabel>
+  );
 };
 
 const PrimaryRadio = <Radio color="primary" />;
 
 const HowToApply = () => {
-    const dispatch = useDispatch();
-    const { type: hostingType } = useSelector(
-        (state: RootState) => state.newOpportunity
-    );
+  const dispatch = useDispatch();
+  const {
+    opportunity: { type: hostingType },
+  } = useSelector((state: RootState) => state.opportunity);
 
-    const handleRadioChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        switch ((e.target as HTMLInputElement).value) {
-            case HostingType.Internal:
-                return dispatch(updateHostingType(HostingType.Internal));
-            case HostingType.External:
-                return dispatch(updateHostingType(HostingType.External));
-            default:
-                return;
-        }
-    };
+  const handleRadioChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    switch ((e.target as HTMLInputElement).value) {
+      case HostingType.Internal:
+        return dispatch(updateHostingType(HostingType.Internal));
+      case HostingType.External:
+        return dispatch(updateHostingType(HostingType.External));
+      default:
+        return;
+    }
+  };
 
-    const content = (
-        <RadioGroup
-            value={hostingType.toString()}
-            onChange={handleRadioChange}
-            aria-label="hosting-type"
-            name="hosting-type"
-        >
-            <Grid container>
-                <Grid item md={6}>
-                    <FormControlLabel
-                        value={HostingType.Internal}
-                        control={PrimaryRadio}
-                        label={
-                            <RadioLabel
-                                label="iContribute"
-                                svg={<InternalIcon />}
-                            />
-                        }
-                    />
-                    <HostingTypeDescription>
-                        Choose to receive applications through iContribute.
-                        We'll store all the opportunity details.
-                    </HostingTypeDescription>
-                </Grid>
-                <Grid item md={6}>
-                    <FormControlLabel
-                        value={HostingType.External}
-                        control={PrimaryRadio}
-                        label={
-                            <RadioLabel
-                                label="External Website"
-                                svg={<ExternalIcon />}
-                            />
-                        }
-                    />
-                    <HostingTypeDescription>
-                        Provide a link to you website. We’ll redirect applicants
-                        to your organization's website to apply for an
-                        opportunity.
-                    </HostingTypeDescription>
-                </Grid>
-            </Grid>
-        </RadioGroup>
-    );
+  const content = (
+    <RadioGroup
+      value={hostingType.toString()}
+      onChange={handleRadioChange}
+      aria-label="hosting-type"
+      name="hosting-type"
+    >
+      <Grid container>
+        <Grid item md={6}>
+          <FormControlLabel
+            value={HostingType.Internal}
+            control={PrimaryRadio}
+            label={<RadioLabel label="iContribute" svg={<InternalIcon />} />}
+          />
+          <HostingTypeDescription>
+            Choose to receive applications through iContribute. We'll store all
+            the opportunity details.
+          </HostingTypeDescription>
+        </Grid>
+        <Grid item md={6}>
+          <FormControlLabel
+            value={HostingType.External}
+            control={PrimaryRadio}
+            label={
+              <RadioLabel label="External Website" svg={<ExternalIcon />} />
+            }
+          />
+          <HostingTypeDescription>
+            Provide a link to you website. We’ll redirect applicants to your
+            organization's website to apply for an opportunity.
+          </HostingTypeDescription>
+        </Grid>
+      </Grid>
+    </RadioGroup>
+  );
 
-    return (
-        <Section
-            title="How to apply"
-            subtitle="Choose to receive applications through iContribute or redirect
+  return (
+    <Section
+      title="How to apply"
+      subtitle="Choose to receive applications through iContribute or redirect
                 volunteers to an external link."
-            content={content}
-        />
-    );
+      content={content}
+    />
+  );
 };
 
 export default HowToApply;
