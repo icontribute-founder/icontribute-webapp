@@ -3,21 +3,20 @@ import MoreVertIcon from "@material-ui/icons/MoreVert";
 import IconButton from "@material-ui/core/IconButton";
 import MenuItem from "@material-ui/core/MenuItem";
 import Menu from "@material-ui/core/Menu";
-import { confirmAlert } from "react-confirm-alert"; // Import
-import { useEffect, useState } from "react";
-import { Grid } from "@material-ui/core";
 import styled from "styled-components";
 import DeletePopUp from "../components/PopUp";
 
 interface MoreOptionsProps {
   eventId: string;
   setOpportunity: Function;
-  //setPopUpOpen:Function
+  setDeleteModalOpen:Function;
+  deleteModalOpen:boolean;
+  handleCardOnClick:Function;
 }
 
-const MoreOptions = ({ eventId, setOpportunity }: MoreOptionsProps) => {
+const MoreOptions = ({ eventId, setOpportunity, setDeleteModalOpen,deleteModalOpen,handleCardOnClick }: MoreOptionsProps) => {
   const [anchorEl, setAnchorEl] = React.useState(null);
-  const [deleteModalOpen, setDeleteModalOpen] = useState(false);
+  
 
   const MyOptions = [
     "Edit Opportunity",
@@ -70,8 +69,9 @@ const MoreOptions = ({ eventId, setOpportunity }: MoreOptionsProps) => {
           opportunityId={eventId}
           handleCancel={() => setDeleteModalOpen(false)}
           setOpportunity={setOpportunity}
+          handleCardOnClick = {handleCardOnClick}
         ></DeletePopUp>
-      )}
+      ) }
     </div>
   );
 };
@@ -82,10 +82,6 @@ export const HeaderOnePopUp = styled.h1`
     text-align: left";
     color: #2836D1;
     textAlign: 'center';
-`;
-const HeaderTwo = styled.p`
-  font-weight: bold;
-  margin: 0px;
 `;
 
 export const HeaderThree = styled.h3`

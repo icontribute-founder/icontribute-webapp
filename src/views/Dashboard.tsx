@@ -1,5 +1,5 @@
 import { useJsApiLoader } from "@react-google-maps/api";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { useHistory } from "react-router";
 import styled from "styled-components";
 import { Grid } from "@material-ui/core";
@@ -18,7 +18,7 @@ const Dashboard = () => {
   const [opportunities, setOpportunity] = useState([]);
   const [opportunitiesLoaded, setOpportunitiesLoaded] = useState(false);
 
-  const [disable, setDisable] = useState({}); // disables opportunities screen when pop up is open
+  const [deleteModalOpen, setDeleteModalOpen] = useState(false);
 
   const [center, setCenter] = useState({
     lat: 45.42,
@@ -51,8 +51,8 @@ const Dashboard = () => {
       const result = data.filter((item: any) => item.deleted !== true);
       setOpportunity(result);
 
-      if (data[0] != null) {
-        handleCardOnClick(0, 0, data[0]);
+      if (result[0] != null) {
+        handleCardOnClick(0, 0, result[0]);
       }
       console.log(data);
       setOpportunitiesLoaded(true);
@@ -99,7 +99,6 @@ const Dashboard = () => {
   }
 
   const {
-    eventID,
     eventName,
     companyName,
     description,
@@ -128,7 +127,18 @@ const Dashboard = () => {
   );
 
   const selectedOpportunityView = (
-    <SelectedOpportunity style={disable}>
+    <SelectedOpportunity
+      style={{
+        padding: "0px 14px",
+        height: "75vh",
+        backgroundColor: "white",
+        scrollBehavior: "smooth",
+        overflowX: "hidden",
+        overflowY: "scroll",
+        opacity: deleteModalOpen ? "0.5" : "",
+        pointerEvents: deleteModalOpen ? "none" : "auto",
+      }}
+    >
       {eventImage ? <StyledImage src={eventImage} alt="EventImage" /> : <></>}
 
       <TextGroup>
@@ -150,7 +160,13 @@ const Dashboard = () => {
               paddingRight: "50px",
             }}
           >
-            <MoreOptions eventId={id} setOpportunity={setOpportunity} />
+            <MoreOptions
+              eventId={id}
+              setOpportunity={setOpportunity}
+              setDeleteModalOpen={setDeleteModalOpen}
+              deleteModalOpen={deleteModalOpen}
+              handleCardOnClick={handleCardOnClick}
+            />
             <SubHeader>
               <Calendar />
               {formatDate(new Date(date.seconds * 1000))}
@@ -260,14 +276,7 @@ const HeaderFour = styled.h3`
     margin-bottom: 1%;
 `;
 
-const SelectedOpportunity = styled.div`
-  padding: 0px 14px;
-  height: 75vh;
-  background-color: white;
-  scroll-behaviour: smooth;
-  overflow-y: scroll;
-  overflow-x: hidden;
-`;
+const SelectedOpportunity = styled.div``;
 
 const SignupContainer = styled.div`
   font-family: Source Sans Pro;

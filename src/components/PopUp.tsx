@@ -11,12 +11,14 @@ interface DeletePopUpProps {
   handleCancel: Function;
   opportunityId: string;
   setOpportunity: Function;
+  handleCardOnClick: Function;
 }
 
 const DeletePopUp = ({
   handleCancel,
   opportunityId,
   setOpportunity,
+  handleCardOnClick,
 }: DeletePopUpProps) => {
   const [value, setValue] = useState("");
 
@@ -154,8 +156,6 @@ const DeletePopUp = ({
                 }}
                 onClick={() => {
                   const deleteOpportunity = async () => {
-                    console.log("I am deleting an opportunity");
-                    console.log("OPPORTUNITY ID", opportunityId);
                     await opportunityCollection.deleteOpportunity(
                       opportunityId.replace(" ", "")
                     );
@@ -165,12 +165,14 @@ const DeletePopUp = ({
                     const result = data.filter(
                       (item: any) => item.deleted !== true
                     );
-                    if (data[0] != null) {
-                      //handleCardOnClick(0, 0, data[0]);
+                    if (result[0] != null) {
+                      handleCardOnClick(0, 0, result[0]);
                     }
                     setOpportunity(result);
                   };
+
                   deleteOpportunity();
+
                   handleCancel();
                 }}
               >
