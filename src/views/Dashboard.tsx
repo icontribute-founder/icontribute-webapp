@@ -12,249 +12,255 @@ import { opportunityCollection } from "../configure";
 import EmptyDashboard from "./EmptyDashboard";
 
 const Dashboard = () => {
-    const history = useHistory();
+  const history = useHistory();
+  const [selectedOpportunity, setSelectedOpportunity] = useState<any>(null);
+  const [selectedIndex, setSelectedIndex] = useState(0);
+  const [opportunities, setOpportunity] = useState([]);
+  const [opportunitiesLoaded, setOpportunitiesLoaded] = useState(false);
 
-    const [selectedOpportunity, setSelectedOpportunity] = useState<any>(null);
-    const [selectedIndex, setSelectedIndex] = useState(0);
-    const [opportunities, setOpportunity] = useState([]);
-    const [opportunitiesLoaded, setOpportunitiesLoaded] = useState(false);
+  const [deleteModalOpen, setDeleteModalOpen] = useState(false);
 
-    const [center, setCenter] = useState({
-        lat: 45.42,
-        lng: -75.69,
+  const [center, setCenter] = useState({
+    lat: 45.42,
+    lng: -75.69,
+  });
+
+  const handleOnClick = () => {
+    history.push("/new-opportunity");
+  };
+
+  const { isLoaded: isMapLoaded } = useJsApiLoader({
+    id: "google-map-script",
+    googleMapsApiKey: process.env.REACT_APP_GOOGLE_KEY!,
+  });
+
+  const handleCardOnClick = (e: any, i: number, props: any) => {
+    setSelectedOpportunity(props);
+    setSelectedIndex(i);
+    setCenter({
+      lat: props.coordinates._lat,
+      lng: props.coordinates._long,
     });
+  };
 
-    const handleOnClick = () => {
-        history.push("/new-opportunity");
+  useEffect(() => {
+    const getOpportunity = async () => {
+      setOpportunitiesLoaded(false);
+      const data: any = await opportunityCollection.getOpportunities();
+
+      const result = data.filter((item: any) => item.deleted !== true);
+      setOpportunity(result);
+
+      if (result[0] != null) {
+        handleCardOnClick(0, 0, result[0]);
+      }
+      console.log(data);
+      setOpportunitiesLoaded(true);
     };
+    getOpportunity();
+  }, []);
 
-    const { isLoaded: isMapLoaded } = useJsApiLoader({
-        id: "google-map-script",
-        googleMapsApiKey: process.env.REACT_APP_GOOGLE_KEY!,
-    });
+  if (opportunitiesLoaded && opportunities.length === 0) {
+    return <EmptyDashboard />;
+  }
 
-    const handleCardOnClick = (e: any, i: number, props: any) => {
-        setSelectedOpportunity(props);
-        setSelectedIndex(i);
-        setCenter({
-            lat: props.coordinates._lat,
-            lng: props.coordinates._long,
-        });
-    };
+  const formatDateTime = (date: Date) => {
+    const appendZero = (n: number) =>
+      n < 10 ? "0" + n.toString() : n.toString();
 
-    useEffect(() => {
-        const getOpportunity = async () => {
-            setOpportunitiesLoaded(false);
-            const data: any = await opportunityCollection.getOpportunities();
+    return `${
+      date.getMonth() + 1
+    }/${date.getDate()}/${date.getFullYear()} ${appendZero(
+      date.getHours()
+    )}:${appendZero(date.getMinutes())}`;
+  };
 
-            setOpportunity(data);
+  const formatDate = (date: Date) =>
+    `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`;
 
-            if (data[0] != null) {
-                handleCardOnClick(0, 0, data[0]);
-            }
-            setOpportunitiesLoaded(true);
-        };
-        getOpportunity();
-    }, []);
-
-    if (opportunitiesLoaded && opportunities.length === 0) {
-        return <EmptyDashboard />;
-    }
-
-    const formatDateTime = (date: Date) => {
-        const appendZero = (n: number) =>
-            n < 10 ? "0" + n.toString() : n.toString();
-
-        return `${
-            date.getMonth() + 1
-        }/${date.getDate()}/${date.getFullYear()} ${appendZero(
-            date.getHours()
-        )}:${appendZero(date.getMinutes())}`;
-    };
-
-    const formatDate = (date: Date) =>
-        `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`;
-
-    const ListEventCardComponents = opportunities.map(
-        (props: any, i: number) => {
-            const { eventName, eventImage, date, description, eventID } = props;
-            return (
-                <SmallEventCard
-                    key={eventID}
-                    eventImage={eventImage}
-                    eventName={eventName}
-                    date={date.toDate()}
-                    description={description}
-                    eventID={eventID}
-                    onClick={(e: any) => handleCardOnClick(e, i, props)}
-                    selected={i === selectedIndex}
-                />
-            );
-        }
+  const ListEventCardComponents = opportunities.map((props: any, i: number) => {
+    const { eventName, eventImage, date, description, eventID, id } = props;
+    return (
+      <SmallEventCard
+        key={id}
+        eventImage={eventImage}
+        eventName={eventName}
+        date={date.toDate()}
+        description={description}
+        eventID={eventID}
+        onClick={(e: any) => handleCardOnClick(e, i, props)}
+        selected={i === selectedIndex}
+      />
     );
+  });
 
-    if (!selectedOpportunity) {
-        return "";
-    }
+  if (!selectedOpportunity) {
+    return "";
+  }
 
-    const {
-        eventName,
-        companyName,
-        description,
-        address,
-        eventImage,
-        categories,
-        shift,
-        deadline,
-        date,
-    } = selectedOpportunity;
+  const {
+    eventName,
+    companyName,
+    description,
+    address,
+    eventImage,
+    categories,
+    shift,
+    deadline,
+    date,
+    id,
+  } = selectedOpportunity;
 
-    const header = (
-        <HeaderContainer>
-            <LeftBox>
-                <HeaderOne>Your organization dashboard</HeaderOne>
-                <HeaderFour>
-                    Here you can view the volunteer opportunities you've posted,
-                    edit them, or create a new one.
-                </HeaderFour>
-            </LeftBox>
-            <RightBox>
-                <Button onClick={handleOnClick}>
-                    Create a new opportunity
-                </Button>
-            </RightBox>
-        </HeaderContainer>
-    );
+  const header = (
+    <HeaderContainer>
+      <LeftBox>
+        <HeaderOne>Your organization dashboard</HeaderOne>
+        <HeaderFour>
+          Here you can view the volunteer opportunities you've posted, edit
+          them, or create a new one.
+        </HeaderFour>
+      </LeftBox>
+      <RightBox>
+        <Button onClick={handleOnClick}>Create a new opportunity</Button>
+      </RightBox>
+    </HeaderContainer>
+  );
 
-    const selectedOpportunityView = (
-        <SelectedOpportunity>
-            {eventImage ? (
-                <StyledImage src={eventImage} alt="EventImage" />
-            ) : (
-                <></>
-            )}
+  const selectedOpportunityView = (
+    <SelectedOpportunity
+      style={{
+        padding: "0px 14px",
+        height: "75vh",
+        backgroundColor: "white",
+        scrollBehavior: "smooth",
+        overflowX: "hidden",
+        overflowY: "scroll",
+        opacity: deleteModalOpen ? "0.5" : "",
+        pointerEvents: deleteModalOpen ? "none" : "auto",
+      }}
+    >
+      {eventImage ? <StyledImage src={eventImage} alt="EventImage" /> : <></>}
 
-            <TextGroup>
-                <Grid container>
-                    <Grid item xs={6}>
-                        <HeaderThree>{eventName}</HeaderThree>
-                        <HeaderTwo>{companyName}</HeaderTwo>
+      <TextGroup>
+        <Grid container>
+          <Grid item xs={6}>
+            <HeaderThree>{eventName}</HeaderThree>
+            <HeaderTwo>{companyName}</HeaderTwo>
 
-                        {categories.map((category: any, i: number) => (
-                            <Location key={`category-${i}`}>
-                                {" "}
-                                {category}{" "}
-                            </Location>
-                        ))}
-                    </Grid>
-
-                    <Grid
-                        item
-                        xs={6}
-                        style={{
-                            textAlign: "right",
-                            paddingRight: "50px",
-                        }}
-                    >
-                        <MoreOptions />
-                        <SubHeader>
-                            <Calendar />
-                            {formatDate(new Date(date.seconds * 1000))}
-                        </SubHeader>
-                        <SubHeader>
-                            Application Deadline:{" "}
-                            {formatDate(new Date(deadline.seconds * 1000))}
-                        </SubHeader>
-                    </Grid>
-                </Grid>
-            </TextGroup>
-
-            <TextGroup style={{ paddingTop: "0px" }}>
-                <HeaderTwo>Organization details</HeaderTwo>
-                <Paragraph>{description}</Paragraph>
-            </TextGroup>
-
-            <HeaderTwo>Location</HeaderTwo>
-            <SubHeader>{address}</SubHeader>
-            {center ? <Map center={center}></Map> : <></>}
-
-            {shift.map((s: any, i: number) => (
-                <TextGroup>
-                    <HeaderTwo>Shift {i + 1}</HeaderTwo>
-                    <Paragraph>
-                        Start:{" "}
-                        {formatDateTime(new Date(s.start.seconds * 1000))}
-                    </Paragraph>
-                    <Paragraph>
-                        End: {formatDateTime(new Date(s.end.seconds * 1000))}
-                    </Paragraph>
-                    {s.repeating ? (
-                        <Paragraph>Repeats</Paragraph>
-                    ) : (
-                        <Paragraph>Does Not Repeat</Paragraph>
-                    )}
-                </TextGroup>
+            {categories.map((category: any, i: number) => (
+              <Location key={`category-${i}`}> {category} </Location>
             ))}
+          </Grid>
 
-            <HeaderThree>Applicants</HeaderThree>
+          <Grid
+            item
+            xs={6}
+            style={{
+              textAlign: "right",
+              paddingRight: "50px",
+            }}
+          >
+            <MoreOptions
+              eventId={id}
+              setOpportunity={setOpportunity}
+              setDeleteModalOpen={setDeleteModalOpen}
+              deleteModalOpen={deleteModalOpen}
+              handleCardOnClick={handleCardOnClick}
+            />
+            <SubHeader>
+              <Calendar />
+              {formatDate(new Date(date.seconds * 1000))}
+            </SubHeader>
+            <SubHeader>
+              Application Deadline:{" "}
+              {formatDate(new Date(deadline.seconds * 1000))}
+            </SubHeader>
+          </Grid>
+        </Grid>
+      </TextGroup>
 
-            <Paragraph>There are no applicants</Paragraph>
-        </SelectedOpportunity>
-    );
+      <TextGroup style={{ paddingTop: "0px" }}>
+        <HeaderTwo>Organization details</HeaderTwo>
+        <Paragraph>{description}</Paragraph>
+      </TextGroup>
 
-    return isMapLoaded ? (
-        <OrganizationDashboardPage>
-            {header}
+      <HeaderTwo>Location</HeaderTwo>
+      <SubHeader>{address}</SubHeader>
+      {center ? <Map center={center}></Map> : <></>}
 
-            <SignupContainer>
-                <Grid container>
-                    <Grid item xs={6}>
-                        <EventsListContainer>
-                            {ListEventCardComponents}
-                        </EventsListContainer>
-                    </Grid>
+      {shift.map((s: any, i: number) => (
+        <TextGroup>
+          <HeaderTwo>Shift {i + 1}</HeaderTwo>
+          <Paragraph>
+            Start: {formatDateTime(new Date(s.start.seconds * 1000))}
+          </Paragraph>
+          <Paragraph>
+            End: {formatDateTime(new Date(s.end.seconds * 1000))}
+          </Paragraph>
+          {s.repeating ? (
+            <Paragraph>Repeats</Paragraph>
+          ) : (
+            <Paragraph>Does Not Repeat</Paragraph>
+          )}
+        </TextGroup>
+      ))}
 
-                    <Grid item xs={6}>
-                        {selectedOpportunityView}
-                    </Grid>
-                </Grid>
-            </SignupContainer>
-        </OrganizationDashboardPage>
-    ) : (
-        <></>
-    );
+      <HeaderThree>Applicants</HeaderThree>
+
+      <Paragraph>There are no applicants</Paragraph>
+    </SelectedOpportunity>
+  );
+
+  return isMapLoaded ? (
+    <OrganizationDashboardPage>
+      {header}
+      <SignupContainer>
+        <Grid container>
+          <Grid item xs={6}>
+            <EventsListContainer>{ListEventCardComponents}</EventsListContainer>
+          </Grid>
+
+          <Grid item xs={6}>
+            {selectedOpportunityView}
+          </Grid>
+        </Grid>
+      </SignupContainer>
+    </OrganizationDashboardPage>
+  ) : (
+    <></>
+  );
 };
 
 const HeaderContainer = styled.div`
-    font-family: Source Sans Pro;
-    display: flex;
-    align-items: flex-start;
-    flex-direction: column;
-    justify-content: space-between;
-    border-bottom: 2px solid silver;
-    margin-top: -1%;
-    flex-direction: row;
-    width: 1;
-    height: 0.3;
+  font-family: Source Sans Pro;
+  display: flex;
+  align-items: flex-start;
+  flex-direction: column;
+  justify-content: space-between;
+  border-bottom: 2px solid silver;
+  margin-top: -1%;
+  flex-direction: row;
+  width: 1;
+  height: 0.3;
 `;
 
 const LeftBox = styled.div`
-    display: flex;
-    align-items: flex-start;
-    justify-content: flex-start;
-    flex-direction: column;
-    width: 0.5;
-    padding-left: 2%;
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex-direction: column;
+  width: 0.5;
+  padding-left: 2%;
 `;
 
 const RightBox = styled.div`
-    display: flex;
-    align-items: flex-start;
-    justify-content: flex-start;
-    flex-direction: column;
-    width: 0.5;
-    padding-top: 2%;
-    padding-right: 3%;
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex-direction: column;
+  width: 0.5;
+  padding-top: 2%;
+  padding-right: 3%;
 `;
 
 const HeaderOne = styled.h1`
@@ -270,85 +276,86 @@ const HeaderFour = styled.h3`
     margin-bottom: 1%;
 `;
 
-const SelectedOpportunity = styled.div`
-    padding: 0px 14px;
-    height: 75vh;
-    background-color: white;
-    scroll-behaviour: smooth;
-    overflow-y: scroll;
-    overflow-x: hidden;
-`;
+const SelectedOpportunity = styled.div``;
 
 const SignupContainer = styled.div`
-    font-family: Source Sans Pro;
-    width: fit-content;
-    margin: auto;
-    background: rgba(117, 122, 124, 0.08);
-    overflow-y: hidden;
+  font-family: Source Sans Pro;
+  width: fit-content;
+  margin: auto;
+  background: rgba(117, 122, 124, 0.08);
+  overflow-y: hidden;
 `;
 
 const TextGroup = styled.div`
-    margin: auto;
-    padding-bottom: 20px;
-    padding-top: 20px;
+  margin: auto;
+  padding-bottom: 20px;
+  padding-top: 20px;
 `;
 
 const HeaderTwo = styled.p`
-    font-weight: bold;
-    margin: 0px;
+  font-weight: bold;
+  margin: 0px;
 `;
 
 const OrganizationDashboardPage = styled.div`
-    height: calc(100% - 85px);
+  height: calc(100% - 85px);
 `;
 
 const StyledImage = styled.img`
-    margin-top: 12px;
-    width: 100%;
-    height: 300px;
-    border-radius: 8px 8px 0px 0px;
+  margin-top: 12px;
+  width: 100%;
+  height: 300px;
+  border-radius: 8px 8px 0px 0px;
 `;
 
 const EventsListContainer = styled.div`
-    padding-right: 12px;
-    height: 75vh;
-    font-family: Source Sans Pro;
-    overflow-y: scroll;
-    overflow-x: hidden;
-    scroll-behaviour: smooth;
+  padding-right: 12px;
+  height: 75vh;
+  font-family: Source Sans Pro;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  scroll-behaviour: smooth;
 `;
 
 export const Location = styled.h4`
-    font-size: 14px;
-    font-weight: 400;
-    color: #736b6b;
-    margin: 0px 0 0 0;
-    display: inline-block;
-    padding: 5px;
-    padding-left: 0px;
+  font-size: 14px;
+  font-weight: 400;
+  color: #736b6b;
+  margin: 0px 0 0 0;
+  display: inline-block;
+  padding: 5px;
+  padding-left: 0px;
 `;
 
 export const SubHeader = styled.h4`
-    font-size: 14px;
-    font-weight: 400;
-    color: #736b6b;
-    margin: 0px 0 0 0;
+  font-size: 14px;
+  font-weight: 400;
+  color: #736b6b;
+  margin: 0px 0 0 0;
 `;
 
 export const Paragraph = styled.p`
-    font-size: 15px;
-    font-weight: 400;
-    color: #192226;
-    margin-bottom: 0px;
-    margin-top: 0px;
+  font-size: 15px;
+  font-weight: 400;
+  color: #192226;
+  margin-bottom: 0px;
+  margin-top: 0px;
 `;
 
 export const HeaderThree = styled.h3`
-    font-size: 20px;
-    font-weight: bold;
-    margin: 0px;
+  font-size: 20px;
+  font-weight: bold;
+  margin: 0px;
 
-    color: #192226;
+  color: #192226;
+`;
+
+export const HeaderOnePopUp = styled.h1`
+    font-family: Source Sans Pro;
+    font-weight: bold;
+    text-align: left";
+    color: #2836D1;
+    textAlign: 'center';
 `;
 
 export default Dashboard;
