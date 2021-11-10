@@ -1,21 +1,39 @@
-import { useState } from "react";
+import { ChangeEvent, useState } from "react";
 import { Grid, Modal } from "@material-ui/core";
-import { opportunityCollection } from "../configure";
-
 import styled from "styled-components";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../store";
+import { deleteOpportunity } from "../features/opportunities";
 
 interface DeletePopUpProps {
   handleCancel: Function;
-  opportunityId: string;
-  handleCardOnClick: Function;
 }
 
-const DeletePopUp = ({
-  handleCancel,
-  opportunityId,
-  handleCardOnClick,
-}: DeletePopUpProps) => {
+const DeletePopUp = ({ handleCancel }: DeletePopUpProps) => {
+  const dispatch = useDispatch();
   const [value, setValue] = useState("");
+  const { opportunities, indexSelected } = useSelector(
+    (state: RootState) => state.opportunities
+  );
+
+  if (!opportunities || opportunities.length === 0) {
+    return <></>;
+  }
+
+  const handleDeleteInputOnChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setValue(e.currentTarget.value);
+  };
+
+  const handleCancelButtonOnClick = () => {
+    handleCancel();
+  };
+
+  const handleDeleteOpportunityButtonOnClick = () => {
+    dispatch(
+      deleteOpportunity({ eventId: opportunities[indexSelected].eventID })
+    );
+    handleCancel();
+  };
 
   return (
     <Modal
@@ -26,129 +44,37 @@ const DeletePopUp = ({
     >
       <ModalBody>
         <ModalContent>
-          <p
-            style={{
-              fontFamily: "Source Sans Pro",
-              fontSize: 24,
-              textAlign: "center",
-              margin: 0,
-              marginBottom: 12,
-              padding: 0,
-              paddingTop: 20,
-              color: "#2836D1",
-            }}
-          >
-            Are you sure?
-          </p>
-
-          <p
-            style={{
-              fontFamily: "Source Sans Pro",
-              fontSize: 14,
-              lineHeight: "20px",
-              marginBottom: 12,
-              margin: 0,
-            }}
-          >
+          <Title>Are you sure?</Title>
+          <Description>
             If you’d like to delete this opportunity, type ‘DELETE’ in the text
             box below to confirm.
-          </p>
-
-          <input
+          </Description>
+          <DeleteInput
             type="text"
-            name="name"
+            name="delete-input"
             placeholder="Type 'DELETE'"
-            style={{
-              width: "300px",
-              padding: "10px",
-              border: "1px solid #D1D2D3",
-            }}
-            onChange={(e) => {
-              console.log(e.currentTarget.value);
-              setValue(e.currentTarget.value);
-            }}
+            onChange={handleDeleteInputOnChange}
           />
-
-          <p
-            style={{
-              fontFamily: "Source Sans Pro",
-              lineHeight: "18px",
-              fontSize: 10,
-            }}
-          >
+          <Warning>
             WARNING: if you delete this opportunity, you will lose its details
             and automatically decline all the active applicants. This cannot be
             undone.
-          </p>
+          </Warning>
         </ModalContent>
-        <Grid
-          spacing={2}
-          style={{
-            display: "flex",
-            justifyContent: "center",
-            alignContent: "center",
-            textAlign: "center",
-          }}
-        >
+        <Grid container>
           <Grid item xs={6}>
-            <button
-              onClick={() => {
-                handleCancel();
-              }}
-              style={{
-                maxWidth: "100%",
-                backgroundColor: "white",
-                color: "#2836D1",
-                padding: "20px 40% 25px 40%",
-                border: "none",
-                borderRight: "1px #D1D2D3 solid",
-                borderTop: "1px #D1D2D3 solid",
-                fontSize: 16,
-                borderBottomLeftRadius: "8px",
-              }}
-            >
+            <CancelButton onClick={handleCancelButtonOnClick}>
               Cancel
-            </button>
+            </CancelButton>
           </Grid>
           <Grid item xs={6}>
-            <button
+            <DeleteButton
               id="delete-button"
-              style={{
-                backgroundColor: "white",
-                color: value === "DELETE" ? "#2836D1" : "#D1D2D3",
-                maxWidth: "100%",
-                whiteSpace: "nowrap",
-                padding: "20px 40% 25px 20%",
-                border: "none",
-                borderTop: "1px #D1D2D3 solid",
-                fontSize: 16,
-                pointerEvents: value === "DELETE" ? "auto" : "none",
-                borderBottomRightRadius: "8px",
-              }}
-              onClick={() => {
-                const deleteOpportunity = async () => {
-                  await opportunityCollection.deleteOpportunity(
-                    opportunityId.replace(" ", "")
-                  );
-                  const data: any =
-                    await opportunityCollection.getOpportunities();
-
-                  const result = data.filter(
-                    (item: any) => item.deleted !== true
-                  );
-                  if (result[0] != null) {
-                    handleCardOnClick(0, 0, result[0]);
-                  }
-                  // setOpportunity(result);
-                };
-
-                deleteOpportunity();
-
-                handleCancel();
-              }}
+              disabled={value !== "DELETE"}
+              onClick={handleDeleteOpportunityButtonOnClick}
             >
               Delete Opportunity
-            </button>
+            </DeleteButton>
           </Grid>
         </Grid>
       </ModalBody>
@@ -171,6 +97,73 @@ const ModalBody = styled.div`
 const ModalContent = styled.div`
   padding-left: 20px;
   padding-right: 32px;
+`;
+
+const Warning = styled.p`
+  font-family: Source Sans Pro;
+  line-height: 18px;
+  font-size: 10px;
+`;
+
+const Title = styled.p`
+  font-family: Source Sans Pro;
+  font-size: 24px;
+  text-align: center;
+  margin: 0px;
+  padding: 0px;
+  padding-top: 20px;
+  color: #2836d1;
+  margin-bottom: 12px;
+`;
+
+const Description = styled.p`
+  font-family: Source Sans Pro;
+  font-size: 14px;
+  line-height: 20px;
+  margin: 0;
+  margin-bottom: 12px;
+`;
+
+const DeleteInput = styled.input`
+  width: 300px;
+  padding: 10px;
+  border: 1px solid #d1d2d3;
+`;
+
+const Button = styled.button`
+  max-width: 100%;
+  background-color: white;
+  color: #2836d1;
+  padding: 20px 40% 25px 40%;
+  border: none;
+  border-top: 1px #d1d2d3 solid;
+  font-size: 16px;
+  &: hover {
+    cursor: pointer;
+  }
+`;
+
+const CancelButton = styled(Button)`
+  border-bottom-left-radius: 8px;
+  border-right: 1px #d1d2d3 solid;
+`;
+
+interface DeleteButtonProps {
+  disabled: boolean;
+}
+
+const DeleteButton = styled(Button)<DeleteButtonProps>`
+  color: ${(props: DeleteButtonProps) => {
+    return !props.disabled ? "#2836D1" : "#D1D2D3";
+  }};
+
+  pointer-events: ${(props: DeleteButtonProps) => {
+    return !props.disabled ? "auto" : "none";
+  }};
+
+  white-space: nowrap;
+  border-bottom-right-radius: 8px;
+  padding: 20px 40% 25px 15%;
 `;
 
 export default DeletePopUp;

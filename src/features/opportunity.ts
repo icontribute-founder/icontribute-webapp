@@ -32,7 +32,7 @@ const initialState: InitialState = {
 };
 
 export const createOpportunity = createAsyncThunk<
-  any,
+  InitialState,
   { userId: string; opportunity: Event },
   { rejectValue: any }
 >(
@@ -46,7 +46,7 @@ export const createOpportunity = createAsyncThunk<
 );
 
 export const editOpportunity = createAsyncThunk<
-  any,
+  InitialState,
   { eventId: string; fields: Partial<Event> },
   { rejectValue: any }
 >("opportunity/editOpportunity", async ({ eventId, fields }, thunkApi) => {

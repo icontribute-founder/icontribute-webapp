@@ -149,7 +149,7 @@ const Dashboard = () => {
               paddingRight: "50px",
             }}
           >
-            <MoreOptions opportunity={opportunities[indexSelected]} />
+            <MoreOptions />
             <SubHeader>
               <Calendar />
               {formatDate(new Date(date))}

@@ -12,6 +12,7 @@ import {
   editOpportunity,
   reset,
 } from "../features/opportunity";
+import { getOpportunities } from "../features/opportunities";
 
 const Content = styled.div`
   margin-top: 16px;
@@ -69,7 +70,7 @@ const ReviewOpportunity = () => {
       default:
         break;
     }
-
+    dispatch(getOpportunities());
     history.push("/new-opportunity-confirm");
   };
 

@@ -5,7 +5,7 @@
   "dependencies": {
     "@date-io/date-fns": "^1.3.13",
     "@date-io/moment": "^1.3.13",
-    "@icontribute-founder/firebase-access": "git+ssh://git@github.com/icontribute-founder/firebase-wrapper.git#dist",
+    "@icontribute-founder/firebase-access": "github:icontribute-founder/firebase-wrapper#dist",
     "@material-ui/core": "^4.11.3",
     "@material-ui/icons": "^4.11.2",
     "@material-ui/pickers": "^3.2.10",
@@ -29,7 +29,6 @@
     "lodash": "^4.17.21",
     "moment": "^2.29.1",
     "node-sass": "^6.0.0",
-    "npm": "^8.1.2",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-dropzone": "^11.3.4",

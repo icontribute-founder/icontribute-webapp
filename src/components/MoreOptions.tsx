@@ -1,17 +1,15 @@
 import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { useHistory } from "react-router";
+import styled from "styled-components";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
 import IconButton from "@material-ui/core/IconButton";
 import MenuItem from "@material-ui/core/MenuItem";
 import Menu from "@material-ui/core/Menu";
-import styled from "styled-components";
 import DeletePopUp from "../components/DeletePopUp";
-import { useDispatch, useSelector } from "react-redux";
-import { useHistory } from "react-router";
-import { RootState } from "../store";
 import { setAction } from "../features/opportunity";
 
-const MoreOptions = ({ opportunity }: any) => {
-  const { eventId } = opportunity;
+const MoreOptions = () => {
   const dispatch = useDispatch();
   const history = useHistory();
   const [anchorEl, setAnchorEl] = useState(null);
@@ -34,6 +32,8 @@ const MoreOptions = ({ opportunity }: any) => {
     handleClose();
   };
 
+  const handleDeletePopupCancel = () => setDeleteModalOpen(false);
+
   const options = [
     { name: "Edit Opportunity", handler: handleEditOpportunity },
     { name: "Duplicate Opportunity", handler: handleDuplicateOpportunity },
@@ -51,11 +51,7 @@ const MoreOptions = ({ opportunity }: any) => {
   };
 
   return (
-    <div
-      style={{
-        padding: "0%",
-      }}
-    >
+    <StyledMoreOptions>
       <IconButton
         aria-label="more"
         onClick={handleClick}
@@ -75,15 +71,15 @@ const MoreOptions = ({ opportunity }: any) => {
         ))}
       </Menu>
       {deleteModalOpen && (
-        <DeletePopUp
-          opportunityId={eventId}
-          handleCancel={() => setDeleteModalOpen(false)}
-          handleCardOnClick={() => console.log(123)}
-        />
+        <DeletePopUp handleCancel={handleDeletePopupCancel} />
       )}
-    </div>
+    </StyledMoreOptions>
   );
 };
+
+const StyledMoreOptions = styled.div`
+  padding: 0%;
+`;
 
 export const HeaderOnePopUp = styled.h1`
     font-family: Source Sans Pro;
@@ -97,7 +93,6 @@ export const HeaderThree = styled.h3`
   font-size: 20px;
   font-weight: bold;
   margin: 0px;
-
   color: #192226;
 `;
 
