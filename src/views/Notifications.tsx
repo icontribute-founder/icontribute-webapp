@@ -1,207 +1,107 @@
+import styled from "styled-components";
 import { BsThreeDotsVertical } from "react-icons/bs";
-import { Paper } from "@material-ui/core";
-import Pfp from "../assets/images/notifPfp";
+import Notification from "../models/Notification";
+import NotificationCard from "../components/NotificationCard";
+import UnreadNotificationCard from "../components/UnreadNotificationCard";
+import { useSelector } from "react-redux";
+import { RootState } from "../store";
 
 const Notifications = () => {
-    return (
-        <div>
-            <div style={boxGray}>
-                <h1 style={h1}> Notifications </h1>
+  const currUser = useSelector((state: RootState) => state.newOrganization);
 
-                <BsThreeDotsVertical style={icon2}></BsThreeDotsVertical>
-            </div>
+  let notificationCollection = [];
+  notificationCollection = currUser.notifications;
 
-            <h2 style={h2}>New Notifications</h2>
+  let readNotifications: any = [];
+  let unreadNotifications: any = [];
 
-            <Paper style={boxBlue}>
-                <div>
-                    <Pfp></Pfp>
-                </div>
+  notificationCollection.map((element: any) => {
+    element.read
+      ? readNotifications.push(element)
+      : unreadNotifications.push(element);
+  });
 
-                <h3 style={h3}>
-                    <b>Congratulations!</b> Jordan has applied for Relay for
-                    Life Volunteer position. Lorem ipsum dolor sit amet,
-                    consectetur adipiscing elit, sed do eiusmod tempor
-                    incididunt ut labore et dolore magna aliqua. Ut enim ad
-                    minim veniam, quis nostrud exercitation ullamco laboris nisi
-                    ut aliquip ex ea commodo consequat. Duis aute irure dolor in
-                    reprehenderit in voluptate velit esse cillum dolore eu
-                    fugiat nulla pariatur.
-                </h3>
+  return (
+    <div>
+      <HeaderContainer>
+        <HeaderOne> Notifications</HeaderOne>
+        <BsThreeDotsVertical style={icon2}></BsThreeDotsVertical>
+      </HeaderContainer>
 
-                <BsThreeDotsVertical style={icon}></BsThreeDotsVertical>
-            </Paper>
+      <HeaderTwo>New Notifications</HeaderTwo>
 
-            <br></br>
+      {unreadNotifications.map((element: Notification) => {
+        return (
+          <NotificationCard
+            key={element.eventID}
+            date={element.date}
+            eventID={element.eventID}
+            eventName={element.eventName}
+            read={element.read}
+            sourceEmail={element.sourceEmail}
+            sourceProfilePicture={element.sourceProfilePicture}
+            sourceUserName={element.sourceUserName}
+            type={element.type}
+          ></NotificationCard>
+        );
+      })}
 
-            <Paper style={boxBlue}>
-                <div>
-                    <Pfp></Pfp>
-                </div>
+      <HeaderTwo>Old Notifications</HeaderTwo>
 
-                <h3 style={h3}>
-                    <b>Congratulations!</b> Jordan has applied for Relay for
-                    Life Volunteer position. Lorem ipsum dolor sit amet,
-                    consectetur adipiscing elit, sed do eiusmod tempor
-                    incididunt ut labore et dolore magna aliqua. Ut enim ad
-                    minim veniam, quis nostrud exercitation ullamco laboris nisi
-                    ut aliquip ex ea commodo consequat. Duis aute irure dolor in
-                    reprehenderit in voluptate velit esse cillum dolore eu
-                    fugiat nulla pariatur.
-                </h3>
+      {readNotifications.map((element: Notification) => {
+        return (
+          <UnreadNotificationCard
+            key={element.eventID}
+            date={element.date}
+            eventID={element.eventID}
+            eventName={element.eventName}
+            read={element.read}
+            sourceEmail={element.sourceEmail}
+            sourceProfilePicture={element.sourceProfilePicture}
+            sourceUserName={element.sourceUserName}
+            type={element.type}
+          ></UnreadNotificationCard>
+        );
+      })}
 
-                <BsThreeDotsVertical style={icon}></BsThreeDotsVertical>
-            </Paper>
-
-            <h2 style={h2}>Old Notifications</h2>
-
-            <Paper style={box}>
-                <div>
-                    <Pfp></Pfp>
-                </div>
-                <h3 style={h3}>
-                    <b>Congratulations!</b> Jordan has applied for Relay for
-                    Life Volunteer position. Lorem ipsum dolor sit amet,
-                    consectetur adipiscing elit, sed do eiusmod tempor
-                    incididunt ut labore et dolore magna aliqua. Ut enim ad
-                    minim veniam, quis nostrud exercitation ullamco laboris nisi
-                    ut aliquip ex ea commodo consequat. Duis aute irure dolor in
-                    reprehenderit in voluptate velit esse cillum dolore eu
-                    fugiat nulla pariatur.
-                </h3>
-                <BsThreeDotsVertical style={icon}></BsThreeDotsVertical>
-            </Paper>
-
-            <br></br>
-
-            <Paper style={box}>
-                <div>
-                    <Pfp></Pfp>
-                </div>
-                <h3 style={h3}>
-                    <b>Congratulations!</b> Jordan has applied for Relay for
-                    Life Volunteer position. Lorem ipsum dolor sit amet,
-                    consectetur adipiscing elit, sed do eiusmod tempor
-                    incididunt ut labore et dolore magna aliqua. Ut enim ad
-                    minim veniam, quis nostrud exercitation ullamco laboris nisi
-                    ut aliquip ex ea commodo consequat. Duis aute irure dolor in
-                    reprehenderit in voluptate velit esse cillum dolore eu
-                    fugiat nulla pariatur.
-                </h3>
-                <BsThreeDotsVertical style={icon}></BsThreeDotsVertical>
-            </Paper>
-
-            <br></br>
-
-            <Paper style={box}>
-                <div>
-                    <Pfp></Pfp>
-                </div>
-                <h3 style={h3}>
-                    <b>Congratulations!</b> Jordan has applied for Relay for
-                    Life Volunteer position. Lorem ipsum dolor sit amet,
-                    consectetur adipiscing elit, sed do eiusmod tempor
-                    incididunt ut labore et dolore magna aliqua. Ut enim ad
-                    minim veniam, quis nostrud exercitation ullamco laboris nisi
-                    ut aliquip ex ea commodo consequat. Duis aute irure dolor in
-                    reprehenderit in voluptate velit esse cillum dolore eu
-                    fugiat nulla pariatur.
-                </h3>
-                <BsThreeDotsVertical style={icon}></BsThreeDotsVertical>
-            </Paper>
-
-            <br></br>
-
-            <Paper style={box}>
-                <div>
-                    <Pfp></Pfp>
-                </div>
-                <h3 style={h3}>
-                    <b>Congratulations!</b> Jordan has applied for Relay for
-                    Life Volunteer position. Lorem ipsum dolor sit amet,
-                    consectetur adipiscing elit, sed do eiusmod tempor
-                    incididunt ut labore et dolore magna aliqua. Ut enim ad
-                    minim veniam, quis nostrud exercitation ullamco laboris nisi
-                    ut aliquip ex ea commodo consequat. Duis aute irure dolor in
-                    reprehenderit in voluptate velit esse cillum dolore eu
-                    fugiat nulla pariatur.
-                </h3>
-                <BsThreeDotsVertical style={icon}></BsThreeDotsVertical>
-            </Paper>
-
-            <br></br>
-
-            <Paper style={box}>
-                <div>
-                    <Pfp></Pfp>
-                </div>
-                <h3 style={h3}>
-                    <b>Congratulations!</b> Jordan has applied for Relay for
-                    Life Volunteer position. Lorem ipsum dolor sit amet,
-                    consectetur adipiscing elit, sed do eiusmod tempor
-                    incididunt ut labore et dolore magna aliqua. Ut enim ad
-                    minim veniam, quis nostrud exercitation ullamco laboris nisi
-                    ut aliquip ex ea commodo consequat. Duis aute irure dolor in
-                    reprehenderit in voluptate velit esse cillum dolore eu
-                    fugiat nulla pariatur.
-                </h3>
-                <BsThreeDotsVertical style={icon}></BsThreeDotsVertical>
-            </Paper>
-
-            <br></br>
-        </div>
-    );
+      <br></br>
+    </div>
+  );
 };
 
-const box: React.CSSProperties = {
-    padding: "15px",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "space-between",
-    marginLeft: "5%",
-    marginRight: "5%",
-};
-const boxGray: React.CSSProperties = {
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "space-between",
-    borderBottom: "2px solid silver",
-};
-const boxBlue: React.CSSProperties = {
-    padding: "15px",
-    backgroundColor: "#EDECFF",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "space-between",
-    marginLeft: "5%",
-    marginRight: "5%",
-};
-const h1: React.CSSProperties = {
-    fontFamily: "Source Sans Pro",
-    textAlign: "left",
-    marginLeft: "5%",
-    marginRight: "5%",
-};
-const h2: React.CSSProperties = {
-    fontFamily: "Source Sans Pro",
-    marginLeft: "5%",
-    marginRight: "5%",
-};
-const h3: React.CSSProperties = {
-    fontFamily: "Source Sans Pro",
-    marginLeft: "15px",
-    marginRight: "30px",
-    fontSize: "15px",
-    fontWeight: "normal",
-};
-const icon: React.CSSProperties = {
-    cursor: "pointer",
-    width: "35px",
-};
+const HeaderContainer = styled.div`
+  font-family: Source Sans Pro;
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  justify-content: space-between;
+  border-bottom: 2px solid silver;
+  margin-top: -1%;
+  flex-direction: row;
+  width: 1;
+  height: 0.3;
+`;
+
+const HeaderOne = styled.h2`
+  font-family: Source Sans Pro;
+  margin-left: 2%;
+  margith-right: 2%;
+  font-size: 30px;
+  font-weight: bold;
+`;
+
+const HeaderTwo = styled.h2`
+  font-family: Source Sans Pro;
+  margin-left: 2%;
+  margith-right: 2%;
+  font-size: 30px;
+  font-weight: normal;
+`;
+
 const icon2: React.CSSProperties = {
-    cursor: "pointer",
-    width: "35px",
-    marginRight: "5%",
+  cursor: "pointer",
+  width: "35px",
+  marginRight: "5%",
 };
 
 export default Notifications;

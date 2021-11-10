@@ -17,7 +17,7 @@ import { setAction, setExistingOpportunity } from "../features/opportunity";
 const Dashboard = () => {
   const history = useHistory();
   const dispatch = useDispatch();
-
+  // const [deleteModalOpen, setDeleteModalOpen] = useState(false);
   const { loading, opportunities, indexSelected, error } = useSelector(
     (state: RootState) => state.opportunities
   );
