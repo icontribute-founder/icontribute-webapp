@@ -1,9 +1,11 @@
 import { configureStore, ThunkAction, Action } from "@reduxjs/toolkit";
 import authenticationReducer from "./features/authentication";
 import newOpportunityReducer from "./features/newOpportunity";
+import newOrganizationReducer from "./features/newOrganization";
 
 export const store = configureStore({
     reducer: {
+        newOrganization: newOrganizationReducer,
         newOpportunity: newOpportunityReducer,
         authentication: authenticationReducer,
     },
