@@ -8,17 +8,23 @@ import Button from "../components/common/Button";
 import Calendar from "../components/Svgs/CalendarIcon";
 import MoreOptions from "../components/MoreOptions";
 import Map from "../components/Map";
-import { opportunityCollection } from "../configure";
 import EmptyDashboard from "./EmptyDashboard";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../store";
+import { getOpportunities, selectOpportunity } from "../features/opportunities";
+import { setAction, setExistingOpportunity } from "../features/opportunity";
 
 const Dashboard = () => {
   const history = useHistory();
-  const [selectedOpportunity, setSelectedOpportunity] = useState<any>(null);
-  const [selectedIndex, setSelectedIndex] = useState(0);
-  const [opportunities, setOpportunity] = useState([]);
-  const [opportunitiesLoaded, setOpportunitiesLoaded] = useState(false);
+  const dispatch = useDispatch();
+  // const [deleteModalOpen, setDeleteModalOpen] = useState(false);
+  const { loading, opportunities, indexSelected, error } = useSelector(
+    (state: RootState) => state.opportunities
+  );
 
-  const [deleteModalOpen, setDeleteModalOpen] = useState(false);
+  if (opportunities.length > 0) {
+    dispatch(setExistingOpportunity(opportunities[indexSelected]));
+  }
 
   const [center, setCenter] = useState({
     lat: 45.42,
@@ -26,7 +32,9 @@ const Dashboard = () => {
   });
 
   const handleOnClick = () => {
-    history.push("/new-opportunity");
+    dispatch(setExistingOpportunity(null));
+    dispatch(setAction("create"));
+    history.push("/opportunity/create");
   };
 
   const { isLoaded: isMapLoaded } = useJsApiLoader({
@@ -35,32 +43,20 @@ const Dashboard = () => {
   });
 
   const handleCardOnClick = (e: any, i: number, props: any) => {
-    setSelectedOpportunity(props);
-    setSelectedIndex(i);
+    dispatch(selectOpportunity(i));
     setCenter({
-      lat: props.coordinates._lat,
-      lng: props.coordinates._long,
+      lat: props.coordinates.latitude,
+      lng: props.coordinates.longitude,
     });
   };
 
   useEffect(() => {
-    const getOpportunity = async () => {
-      setOpportunitiesLoaded(false);
-      const data: any = await opportunityCollection.getOpportunities();
+    dispatch(getOpportunities());
+  }, [dispatch]);
 
-      const result = data.filter((item: any) => item.deleted !== true);
-      setOpportunity(result);
+  if (loading || error !== null) return "";
 
-      if (result[0] != null) {
-        handleCardOnClick(0, 0, result[0]);
-      }
-      console.log(data);
-      setOpportunitiesLoaded(true);
-    };
-    getOpportunity();
-  }, []);
-
-  if (opportunitiesLoaded && opportunities.length === 0) {
+  if (opportunities.length === 0) {
     return <EmptyDashboard />;
   }
 
@@ -79,24 +75,20 @@ const Dashboard = () => {
     `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`;
 
   const ListEventCardComponents = opportunities.map((props: any, i: number) => {
-    const { eventName, eventImage, date, description, eventID, id } = props;
+    const { eventName, eventImage, date, description, eventID } = props;
     return (
       <SmallEventCard
-        key={id}
+        key={eventID}
         eventImage={eventImage}
         eventName={eventName}
-        date={date.toDate()}
+        date={new Date(date)}
         description={description}
         eventID={eventID}
         onClick={(e: any) => handleCardOnClick(e, i, props)}
-        selected={i === selectedIndex}
+        selected={i === indexSelected}
       />
     );
   });
-
-  if (!selectedOpportunity) {
-    return "";
-  }
 
   const {
     eventName,
@@ -108,8 +100,12 @@ const Dashboard = () => {
     shift,
     deadline,
     date,
-    id,
-  } = selectedOpportunity;
+  } = opportunities[indexSelected];
+
+  let eventImageUrl = "";
+  if (eventImage && typeof eventImage === "string") {
+    eventImageUrl = eventImage;
+  }
 
   const header = (
     <HeaderContainer>
@@ -127,19 +123,12 @@ const Dashboard = () => {
   );
 
   const selectedOpportunityView = (
-    <SelectedOpportunity
-      style={{
-        padding: "0px 14px",
-        height: "75vh",
-        backgroundColor: "white",
-        scrollBehavior: "smooth",
-        overflowX: "hidden",
-        overflowY: "scroll",
-        opacity: deleteModalOpen ? "0.5" : "",
-        pointerEvents: deleteModalOpen ? "none" : "auto",
-      }}
-    >
-      {eventImage ? <StyledImage src={eventImage} alt="EventImage" /> : <></>}
+    <SelectedOpportunity>
+      {eventImage ? (
+        <StyledImage src={eventImageUrl} alt="EventImage" />
+      ) : (
+        <></>
+      )}
 
       <TextGroup>
         <Grid container>
@@ -160,20 +149,13 @@ const Dashboard = () => {
               paddingRight: "50px",
             }}
           >
-            <MoreOptions
-              eventId={id}
-              setOpportunity={setOpportunity}
-              setDeleteModalOpen={setDeleteModalOpen}
-              deleteModalOpen={deleteModalOpen}
-              handleCardOnClick={handleCardOnClick}
-            />
+            <MoreOptions />
             <SubHeader>
               <Calendar />
-              {formatDate(new Date(date.seconds * 1000))}
+              {formatDate(new Date(date))}
             </SubHeader>
             <SubHeader>
-              Application Deadline:{" "}
-              {formatDate(new Date(deadline.seconds * 1000))}
+              Application Deadline: {formatDate(new Date(deadline))}
             </SubHeader>
           </Grid>
         </Grid>
@@ -189,14 +171,10 @@ const Dashboard = () => {
       {center ? <Map center={center}></Map> : <></>}
 
       {shift.map((s: any, i: number) => (
-        <TextGroup>
+        <TextGroup key={`dashboard-shift-${i}`}>
           <HeaderTwo>Shift {i + 1}</HeaderTwo>
-          <Paragraph>
-            Start: {formatDateTime(new Date(s.start.seconds * 1000))}
-          </Paragraph>
-          <Paragraph>
-            End: {formatDateTime(new Date(s.end.seconds * 1000))}
-          </Paragraph>
+          <Paragraph>Start: {formatDateTime(new Date(s.start))}</Paragraph>
+          <Paragraph>End: {formatDateTime(new Date(s.end))}</Paragraph>
           {s.repeating ? (
             <Paragraph>Repeats</Paragraph>
           ) : (
@@ -276,7 +254,14 @@ const HeaderFour = styled.h3`
     margin-bottom: 1%;
 `;
 
-const SelectedOpportunity = styled.div``;
+const SelectedOpportunity = styled.div`
+  padding: 0px 14px;
+  height: 75vh;
+  background-color: white;
+  scroll-behaviour: smooth;
+  overflow-y: scroll;
+  overflow-x: hidden;
+`;
 
 const SignupContainer = styled.div`
   font-family: Source Sans Pro;
@@ -309,7 +294,6 @@ const StyledImage = styled.img`
 `;
 
 const EventsListContainer = styled.div`
-  padding-right: 12px;
   height: 75vh;
   font-family: Source Sans Pro;
   overflow-y: scroll;
@@ -348,14 +332,6 @@ export const HeaderThree = styled.h3`
   margin: 0px;
 
   color: #192226;
-`;
-
-export const HeaderOnePopUp = styled.h1`
-    font-family: Source Sans Pro;
-    font-weight: bold;
-    text-align: left";
-    color: #2836D1;
-    textAlign: 'center';
 `;
 
 export default Dashboard;

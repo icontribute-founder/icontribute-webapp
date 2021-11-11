@@ -1,28 +1,43 @@
-import React from "react";
+import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { useHistory } from "react-router";
+import styled from "styled-components";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
 import IconButton from "@material-ui/core/IconButton";
 import MenuItem from "@material-ui/core/MenuItem";
 import Menu from "@material-ui/core/Menu";
-import styled from "styled-components";
-import DeletePopUp from "../components/PopUp";
+import DeletePopUp from "../components/DeletePopUp";
+import { setAction } from "../features/opportunity";
 
-interface MoreOptionsProps {
-  eventId: string;
-  setOpportunity: Function;
-  setDeleteModalOpen:Function;
-  deleteModalOpen:boolean;
-  handleCardOnClick:Function;
-}
+const MoreOptions = () => {
+  const dispatch = useDispatch();
+  const history = useHistory();
+  const [anchorEl, setAnchorEl] = useState(null);
+  const [deleteModalOpen, setDeleteModalOpen] = useState(false);
 
-const MoreOptions = ({ eventId, setOpportunity, setDeleteModalOpen,deleteModalOpen,handleCardOnClick }: MoreOptionsProps) => {
-  const [anchorEl, setAnchorEl] = React.useState(null);
-  
+  const handleEditOpportunity = () => {
+    history.push("/opportunity/edit");
+    dispatch(setAction("edit"));
+    handleClose();
+  };
 
-  const MyOptions = [
-    "Edit Opportunity",
-    "Duplicate Opportunity",
-    "View all applicants",
-    "Delete Opportunity",
+  const handleDuplicateOpportunity = () => {
+    history.push("/opportunity/duplicate");
+    dispatch(setAction("create"));
+    handleClose();
+  };
+
+  const handleDeleteOpportunity = () => {
+    setDeleteModalOpen(true);
+    handleClose();
+  };
+
+  const handleDeletePopupCancel = () => setDeleteModalOpen(false);
+
+  const options = [
+    { name: "Edit Opportunity", handler: handleEditOpportunity },
+    { name: "Duplicate Opportunity", handler: handleDuplicateOpportunity },
+    { name: "Delete Opportunity", handler: handleDeleteOpportunity },
   ];
 
   const handleClick = (event: any) => {
@@ -31,21 +46,12 @@ const MoreOptions = ({ eventId, setOpportunity, setDeleteModalOpen,deleteModalOp
 
   const open = Boolean(anchorEl);
 
-  const handleClose = (option: any) => {
-    if (option === "Delete Opportunity") {
-      console.log("The option that was selected", option);
-      setDeleteModalOpen(true);
-    }
-
+  const handleClose = () => {
     setAnchorEl(null);
   };
 
   return (
-    <div
-      style={{
-        padding: "0%",
-      }}
-    >
+    <StyledMoreOptions>
       <IconButton
         aria-label="more"
         onClick={handleClick}
@@ -58,23 +64,22 @@ const MoreOptions = ({ eventId, setOpportunity, setDeleteModalOpen,deleteModalOp
         <MoreVertIcon />
       </IconButton>
       <Menu anchorEl={anchorEl} keepMounted onClose={handleClose} open={open}>
-        {MyOptions.map((option) => (
-          <MenuItem key={option} onClick={() => handleClose(option)}>
-            {option}
+        {options.map(({ handler, name }) => (
+          <MenuItem key={`option-${name}`} onClick={handler}>
+            {name}
           </MenuItem>
         ))}
       </Menu>
       {deleteModalOpen && (
-        <DeletePopUp
-          opportunityId={eventId}
-          handleCancel={() => setDeleteModalOpen(false)}
-          setOpportunity={setOpportunity}
-          handleCardOnClick = {handleCardOnClick}
-        ></DeletePopUp>
-      ) }
-    </div>
+        <DeletePopUp handleCancel={handleDeletePopupCancel} />
+      )}
+    </StyledMoreOptions>
   );
 };
+
+const StyledMoreOptions = styled.div`
+  padding: 0%;
+`;
 
 export const HeaderOnePopUp = styled.h1`
     font-family: Source Sans Pro;
@@ -88,7 +93,6 @@ export const HeaderThree = styled.h3`
   font-size: 20px;
   font-weight: bold;
   margin: 0px;
-
   color: #192226;
 `;
 
