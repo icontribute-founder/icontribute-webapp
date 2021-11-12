@@ -9,7 +9,7 @@ const InputField = ({ label, value, placeholder, name, id, onChange, checkMarkVi
     return (
         <Field>
             <Label htmlFor={id}>{label}</Label>
-            <StyledInput name={name} id={id} placeholder={placeholder} onChange={onChange} type={type} />
+            <StyledInput name={name} id={id} placeholder={placeholder} onChange={onChange} type={type} value={value?value:""}/>
             <div style={{ display: checkMarkVisible ?? "none" }}>
                 <StyledFormIcon />
             </div>
