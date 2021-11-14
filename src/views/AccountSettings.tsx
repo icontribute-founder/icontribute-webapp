@@ -1,6 +1,4 @@
 import React, { useState } from "react";
-// import InputField from "../components1/common/InputField";
-// import { StyledButton } from "../components1/OpportunityCard/style";
 import { Link, useHistory } from "react-router-dom";
 import styled from "styled-components";
 import UploadNewPhoto from "../assets/images/UploadNewPhoto.png";
@@ -13,25 +11,22 @@ import CloseIcon from "@material-ui/icons/Close";
 import { RootState } from "../store";
 import { useSelector } from "react-redux";
 
-import { editOpportunity } from "../features/opportunity";
-import { useDispatch } from "react-redux";
-
-//Modal-Start
 import StaticInputField from "../components/FormElements/StaticInputField";
+import { uploadImage } from "@icontribute-founder/firebase-access";
+import { storage } from "../configure";
+
+//Modal-Code-Start
 import { makeStyles, Theme, createStyles } from "@material-ui/core/styles";
 import Modal from "@material-ui/core/Modal";
-
 function getModalStyle() {
     const top = 50;
     const left = 50;
-
     return {
         top: `${top}%`,
         left: `${left}%`,
         transform: `translate(-${top}%, -${left}%)`,
     };
 }
-
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
         paper: {
@@ -43,7 +38,180 @@ const useStyles = makeStyles((theme: Theme) =>
         },
     })
 );
-//Modal-End
+//Modal-Code-End
+
+const AccountSettings = () => {
+    
+    //Modal-Code-Start
+    const classes = useStyles();
+    // getModalStyle is not a pure function, we roll the style only on the first render
+    const [modalStyle] = React.useState(getModalStyle);
+    const [open, setOpen] = React.useState(false);
+    const [imageFile, setImageFile] = React.useState<File>();
+    const handleOpen = () => {
+        setOpen(true);
+    };
+    const handleClose = () => {
+        setOpen(false);
+    };
+    const body = (
+        <div style={modalStyle} className={classes.paper}>
+            <div>
+                <ModalCloseIcon onClick={handleClose}></ModalCloseIcon>
+                <br />
+                <br />
+            </div>
+            <ImageDropzone
+                setOrgImage={(file: any) => {
+                    if (file === undefined || file === null) {
+                        setImageFile(undefined);
+                        return;
+                    }
+                    setImageFile(file[0]);
+                }}
+            ></ImageDropzone>
+            <ButtonCenter
+                onClick={async () => {
+                    if (imageFile === undefined || imageFile === null) {
+                        return;
+                    }
+                    handleClose();
+                    const url = await uploadImage(imageFile, storage);
+                    setCurrProfilePic(url);
+                    //NEED TO SAVE NEW URL OF PICTURE TO DATABASE HERE --------------------
+                }}
+            >
+                Confirm
+            </ButtonCenter>
+        </div>
+    );
+    //Modal-Code-End
+
+    const currUser = useSelector((state: RootState) => state.newOrganization);
+
+    const [currUserWebsite, setcurrUserWebsite] = React.useState(
+        currUser.website
+    );
+    const [currUserPostalCode, setcurrUserPostalCode] = React.useState(
+        currUser.postalCode
+    );
+    const [currUserDescription, setcurrUserDescription] = React.useState(
+        currUser.description
+    );
+
+    const WebsiteChangeListener = (event: any) => {
+        setcurrUserWebsite(event.target.value);
+    };
+    const PostalCodeChangeListener = (event: any) => {
+        setcurrUserPostalCode(event.target.value);
+    };
+    const DescriptionChangeListener = (event: any) => {
+        setcurrUserDescription(event.target.value);
+    };
+
+    const [currProfilePic, setCurrProfilePic] = useState(
+        currUser.profilePicture
+    );
+
+    const [saveDetailsNoti, setSaveDetailsNoti] = useState("");
+    const [saveDetailsNotiColor, setSaveDetailsNotiColor] = useState("");
+    const [isSaveDetailsNotiDisplayed, setIsSaveDetailsNotiDisplayed] =
+        useState(false);
+    const SaveDetailsButtonHandler = () => {
+        setIsSaveDetailsNotiDisplayed(true);
+        if (currUserDescription === "") {
+            setSaveDetailsNotiColor("#FC100D");
+            setSaveDetailsNoti("Please fill the description field!");
+            return;
+        }
+        setSaveDetailsNotiColor("#4bb543");
+        setSaveDetailsNoti("Details saved successfully");
+        //Need to update new details (3 state variables) to the db here -----;
+    };
+
+    const [isPasswordChangeNotiDisplayed, setIsPasswordChangeNotiDisplayed] =
+        useState(false);
+    const resetPasswordHandler = () => {
+        setIsPasswordChangeNotiDisplayed(true);
+        //Need to request a pasword change to the user email here -----;
+    };
+
+    return (
+        <Container>
+            <Left>
+                <h1 style={h1}>iContribute</h1>
+
+                <h2 style={h2}>Email address</h2>
+                <StaticInputField
+                    label="Email"
+                    value={currUser.email}
+                ></StaticInputField>
+                <PasswordChangeNoti isDisplayed={isPasswordChangeNotiDisplayed}>
+                    A link has been sent to your email to reset your passwords.
+                </PasswordChangeNoti>
+                <br />
+                <div>
+                    <ButtonFloatRight onClick={resetPasswordHandler}>
+                        Reset Password
+                    </ButtonFloatRight>
+                </div>
+
+                <h2 style={h2}>Organization details</h2>
+
+                <InputField
+                    type="text"
+                    label="Website (optional)"
+                    value={currUserWebsite}
+                    onChange={WebsiteChangeListener}
+                />
+                <InputField
+                    type="text"
+                    label="Postal Code (optional)"
+                    value={currUserPostalCode}
+                    onChange={PostalCodeChangeListener}
+                />
+                <TextareaField
+                    type="text"
+                    label="Description"
+                    rows="6"
+                    value={currUserDescription}
+                    onChange={DescriptionChangeListener}
+                />
+                <br></br>
+                <div>
+                    <SaveButtonEventNoti
+                        saveDetailsNotiColor={saveDetailsNotiColor}
+                        isSaveDetailsNotiDisplayed={isSaveDetailsNotiDisplayed}
+                    >
+                        {saveDetailsNoti}
+                    </SaveButtonEventNoti>
+                    <ButtonFloatRight onClick={SaveDetailsButtonHandler}>
+                        Save details
+                    </ButtonFloatRight>
+                </div>
+                <br></br>
+                <br></br>
+            </Left>
+
+            <Right>
+                <ProfileImage
+                    onClick={handleOpen}
+                    currProfilePic={currProfilePic}
+                />
+                <div>
+                    <Modal
+                        open={open}
+                        onClose={handleClose}
+                        aria-labelledby="simple-modal-title"
+                        aria-describedby="simple-modal-description"
+                    >
+                        {body}
+                    </Modal>
+                </div>
+            </Right>
+        </Container>
+    );
+};
 
 const Left = styled.div`
     flex: 1;
@@ -91,164 +259,16 @@ const PasswordChangeNoti = styled.p<{ isDisplayed: boolean }>`
     display: ${(props) => (props.isDisplayed ? "block" : "none")};
 `;
 
-const AccountSettings = () => {
-    //Modal-Start
-    const classes = useStyles();
-    // getModalStyle is not a pure function, we roll the style only on the first render
-    const [modalStyle] = React.useState(getModalStyle);
-    const [open, setOpen] = React.useState(false);
-
-    const handleOpen = () => {
-        setOpen(true);
-    };
-
-    const handleClose = () => {
-        setOpen(false);
-    };
-
-    let tempPicContainer = "";
-    const body = (
-        <div style={modalStyle} className={classes.paper}>
-            <div>
-                <ModalCloseIcon onClick={handleClose}></ModalCloseIcon>
-                <br />
-                <br />
-            </div>
-            <ImageDropzone
-                setOrgImage={(props: any) => {
-                    if (props !== null){
-                        tempPicContainer = URL.createObjectURL(props[0]);
-                    }
-                    else{
-                        tempPicContainer = "";
-                    }
-                }}
-            ></ImageDropzone>
-            <ButtonCenter
-                onClick={() => {
-                    if (tempPicContainer !== "") {
-                        setCurrProfilePic(tempPicContainer);
-                        handleClose();
-                        //NEED TO SAVE PIC TO DATABASE HERE --------------------
-                    }
-                }}
-            >
-                Confirm
-            </ButtonCenter>
-        </div>
-    );
-    //Modal-End
-
-    const currUser = useSelector((state: RootState) => state.newOrganization);
-
-    const [currUserWebsite, setcurrUserWebsite] = React.useState(
-        currUser.website
-    );
-    const [currUserPostalCode, setcurrUserPostalCode] = React.useState(
-        currUser.postalCode
-    );
-    const [currUserDescription, setcurrUserDescription] = React.useState(
-        currUser.description
-    );
-
-    const WebsiteChangeListener = (props: any) => {
-        setcurrUserWebsite(props.target.value);
-    };
-    const PostalCodeChangeListener = (props: any) => {
-        setcurrUserPostalCode(props.target.value);
-    };
-    const DescriptionChangeListener = (props: any) => {
-        setcurrUserDescription(props.target.value);
-    };
-
-    const [currProfilePic, setCurrProfilePic] = useState(
-        currUser.profilePicture
-    );
-
-    const dispatch = useDispatch();
-    const SaveDetailsButtonHandler = () => {
-        if (currUserDescription === "") {
-            alert("Please fill out all the required input fields!");
-            return;
-        }
-        console.log("Update new details to the db");
-    };
-
-    const [isNotiDisplayed, setIsNotiDisplayed] = useState(false);
-    const resetPasswordHandler = () => {
-        setIsNotiDisplayed(true);
-    };
-
-    return (
-        <Container>
-            <Left>
-                <h1 style={h1}>iContribute</h1>
-
-                <h2 style={h2}>Email address</h2>
-                <StaticInputField
-                    label="Email"
-                    value={currUser.email}
-                ></StaticInputField>
-                <PasswordChangeNoti isDisplayed={isNotiDisplayed}>
-                    A link has been sent to your email to reset your passwords.
-                </PasswordChangeNoti>
-                <br />
-                <div>
-                    <ButtonFloatRight onClick={resetPasswordHandler}>
-                        Reset Password
-                    </ButtonFloatRight>
-                </div>
-
-                <h2 style={h2}>Organization details</h2>
-
-                <InputField
-                    type="text"
-                    label="Website (optional)"
-                    value={currUserWebsite}
-                    onChange={WebsiteChangeListener}
-                />
-                <InputField
-                    type="text"
-                    label="Postal Code (optional)"
-                    value={currUserPostalCode}
-                    onChange={PostalCodeChangeListener}
-                />
-                <TextareaField
-                    type="text"
-                    label="Description"
-                    rows="6"
-                    value={currUserDescription}
-                    onChange={DescriptionChangeListener}
-                />
-                <br></br>
-                <div>
-                    <ButtonFloatRight onClick={SaveDetailsButtonHandler}>
-                        Save details
-                    </ButtonFloatRight>
-                </div>
-                <br></br>
-                <br></br>
-            </Left>
-
-            <Right>
-                <ProfileImage
-                    onClick={handleOpen}
-                    currProfilePic={currProfilePic}
-                />
-                <div>
-                    <Modal
-                        open={open}
-                        onClose={handleClose}
-                        aria-labelledby="simple-modal-title"
-                        aria-describedby="simple-modal-description"
-                    >
-                        {body}
-                    </Modal>
-                </div>
-            </Right>
-        </Container>
-    );
-};
+const SaveButtonEventNoti = styled.p<{
+    saveDetailsNotiColor: string;
+    isSaveDetailsNotiDisplayed: boolean;
+}>`
+    margin-top: 0px;
+    font-family: "Source Sans Pro";
+    color: ${(props) => props.saveDetailsNotiColor};
+    display: ${(props) =>
+        props.isSaveDetailsNotiDisplayed ? "block" : "none"};
+`;
 
 const ProfileImage = styled.div<{ currProfilePic: string }>`
     background: url(${(props) => props.currProfilePic});
