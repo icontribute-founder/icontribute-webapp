@@ -19,9 +19,19 @@ const SmallEventCard = ({
   onClick,
   selected,
 }: EventCardProps) => {
+
   return (
     <EventContainer selected={selected} onClick={onClick}>
-      <EventImage eventImage={eventImage}></EventImage>
+      {eventImage === "" ? 
+        <ImageContainer>
+          <img src="https://i.postimg.cc/m2gmWsvX/default-Opportunity.png"
+               width = "125"
+               height = "125"
+          />
+        </ImageContainer>
+        : <EventImage eventImage={eventImage}></EventImage>
+      }
+
       <EventContent>
         <EventHeading>{eventName}</EventHeading>
         <EventSubHeading>
@@ -37,8 +47,17 @@ const SmallEventCard = ({
   );
 };
 
+const ImageContainer = styled.div`
+  align-items: center;
+  background: #edecff;
+  display: flex-start;
+  width: 125px;
+  height: 125px;
+`;
+
 const EventContainer = styled.div<{ selected: boolean }>`
   border-bottom: 0.5px solid #9d99ff;
+  flex-direction: row;
   overflow: hidden;
   padding: 10px 28px 10px 28px;
   &:hover {
@@ -49,7 +68,7 @@ const EventContainer = styled.div<{ selected: boolean }>`
 `;
 
 const EventImage = styled.div<{ eventImage: string }>`
-  background-image: url(${(props) => props.eventImage});
+  background-image: url("${(props) => props.eventImage}");
   background-size: cover;
   background-position: center;
   width: 125px;

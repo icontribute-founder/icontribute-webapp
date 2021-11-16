@@ -23,6 +23,7 @@ const Dashboard = () => {
   );
 
   if (opportunities.length > 0) {
+    console.log("Volunteer Oppotunities: ", opportunities);
     dispatch(setExistingOpportunity(opportunities[indexSelected]));
   }
 

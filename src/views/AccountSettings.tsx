@@ -87,6 +87,7 @@ const AccountSettings = () => {
   //Modal-Code-End
 
   const currUser = useSelector((state: RootState) => state.newOrganization);
+  console.log("Current User: ", currUser);
 
   const [currUserWebsite, setcurrUserWebsite] = React.useState(
     currUser.website
@@ -221,7 +222,7 @@ const Right = styled.div`
   flex: 1;
   height: 100%;
   width: 100%;
-  align-items: center;
+  align-items: flex-start;
 `;
 
 const Container = styled.div`
@@ -268,10 +269,13 @@ const ProfileImage = styled.div<{ currProfilePic: string }>`
   background-repeat: no-repeat;
   background-position: center;
   background-size: contain;
+  box-shadow: 0 2px 2px 0px rgba(28, 28, 27, 0.3);
 
   cursor: pointer;
   width: 200px;
   height: 200px;
+  margin-top: 2%;
+  margin-left: 10%;
 
   &:hover {
     transition: 0.3s;
