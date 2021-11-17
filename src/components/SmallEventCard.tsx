@@ -23,12 +23,7 @@ const SmallEventCard = ({
   return (
     <EventContainer selected={selected} onClick={onClick}>
       {eventImage === "" ? 
-        <ImageContainer>
-          <img src="https://i.postimg.cc/m2gmWsvX/default-Opportunity.png"
-               width = "125"
-               height = "125"
-          />
-        </ImageContainer>
+        <EventImage eventImage={"https://i.postimg.cc/m2gmWsvX/default-Opportunity.png"}></EventImage>
         : <EventImage eventImage={eventImage}></EventImage>
       }
 
