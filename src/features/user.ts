@@ -1,16 +1,17 @@
 import { AuthErrorCodes, UserCredential } from "@firebase/auth";
 import { FirebaseError } from "@firebase/util";
-import { Company, Student } from "@icontribute-founder/firebase-access";
-import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { Company } from "@icontribute-founder/firebase-access";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { auth, user } from "../configure";
 
 interface AuthenticationI {
   userAuth: UserCredential | null;
-  userProfile: Company | Student | null;
+  userProfile: any;
   loggedIn: boolean;
   error: string;
-  loading: boolean;
+  loginLoading: boolean;
   loadingLocalUser: boolean;
+  signupLoading: boolean;
 }
 
 const initialState: AuthenticationI = {
@@ -18,7 +19,8 @@ const initialState: AuthenticationI = {
   userProfile: null,
   loggedIn: false,
   error: "",
-  loading: false,
+  loginLoading: false,
+  signupLoading: false,
   loadingLocalUser: false,
 };
 
@@ -26,7 +28,7 @@ export const login = createAsyncThunk<
   { userAuth: UserCredential; userProfile: any },
   { email: string; password: string },
   { rejectValue: any }
->("authentication/login", async ({ email, password }, thunkApi) => {
+>("user/login", async ({ email, password }, thunkApi) => {
   try {
     const userAuth = await auth.loginWithEmailAndPassword(email, password);
     const userProfile = await user.getCompany(email);
@@ -44,7 +46,7 @@ export const loadUser = createAsyncThunk<
   { userAuth: UserCredential; userProfile: any },
   void,
   { rejectValue: any }
->("authentication/loadUser", async (_, thunkApi) => {
+>("user/loadUser", async (_, thunkApi) => {
   let userAuth = null;
   let userProfile = null;
   const item = sessionStorage.getItem("user");
@@ -60,18 +62,37 @@ export const loadUser = createAsyncThunk<
   return { userAuth, userProfile };
 });
 
-export const authenticationSlice = createSlice({
-  name: "authentication",
+export const signup = createAsyncThunk<
+  { userAuth: UserCredential; userProfile: any },
+  { company: Company; password: string },
+  { rejectValue: any }
+>("user/signup", async ({ company, password }, thunkApi) => {
+  try {
+    const userAuth = await auth.signupWithEmailAndPassword(
+      company.email,
+      password
+    );
+    await user.createCompany(company);
+    return { userAuth, userProfile: company };
+  } catch (error) {
+    console.log(error);
+    return thunkApi.rejectWithValue({ code: "bad" });
+  }
+});
+
+export const userSlice = createSlice({
+  name: "user",
   initialState,
   reducers: {},
   extraReducers: (builder) => {
+    // login
     builder.addCase(login.pending, (state) => {
-      state.loading = true;
+      state.loginLoading = true;
     });
     builder.addCase(login.fulfilled, (state, { payload }) => {
       console.log(payload);
       const { userAuth, userProfile } = payload;
-      state.loading = false;
+      state.loginLoading = false;
       state.loggedIn = true;
       state.userAuth = userAuth;
       state.userProfile = userProfile;
@@ -81,7 +102,7 @@ export const authenticationSlice = createSlice({
       console.log(payload);
 
       const { INVALID_EMAIL, INVALID_PASSWORD } = AuthErrorCodes;
-      state.loading = false;
+      state.loginLoading = false;
       state.loggedIn = false;
       switch (payload.code) {
         case INVALID_EMAIL:
@@ -96,6 +117,7 @@ export const authenticationSlice = createSlice({
       }
     });
 
+    // load user from session storage
     builder.addCase(loadUser.pending, (state) => {
       state.loadingLocalUser = true;
     });
@@ -109,6 +131,8 @@ export const authenticationSlice = createSlice({
       const { userAuth, userProfile } = payload;
       if (userAuth !== null && userProfile !== null) {
         state.loggedIn = true;
+        state.userProfile = userProfile;
+        state.userAuth = userAuth;
         state.error = "";
       } else {
         state.loggedIn = false;
@@ -118,9 +142,25 @@ export const authenticationSlice = createSlice({
       state.loadingLocalUser = false;
       state.loggedIn = false;
     });
+
+    // sign up
+    builder.addCase(signup.pending, (state) => {
+      state.signupLoading = true;
+    });
+    builder.addCase(signup.fulfilled, (state, { payload }) => {
+      state.signupLoading = false;
+      const { userAuth, userProfile } = payload;
+      state.loggedIn = true;
+      state.userAuth = userAuth;
+      state.userProfile = userProfile;
+      state.error = "";
+    });
+    builder.addCase(signup.rejected, (state, { payload }) => {
+      state.signupLoading = false;
+    });
   },
 });
 
-// export const { addUser, removeUser } = authenticationSlice.actions;
+// export const { addUser, removeUser } = userSlice.actions;
 
-export default authenticationSlice.reducer;
+export default userSlice.reducer;

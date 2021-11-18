@@ -4,7 +4,7 @@ import { LightBlueButton } from "../components/styles";
 import Slides from "../components/Slides";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { login } from "../features/authentication";
+import { login } from "../features/user";
 import { RootState } from "../store";
 
 const InputField = styled.div`
@@ -76,9 +76,7 @@ interface AuthUser {
 
 const Login = ({ setShowSignup }: any) => {
   const dispatch = useDispatch();
-  const { error, loggedIn } = useSelector(
-    (state: RootState) => state.authentication
-  );
+  const { error, loggedIn } = useSelector((state: RootState) => state.user);
   const [credential, setCredential] = useState<AuthUser>({
     email: "",
     password: "",

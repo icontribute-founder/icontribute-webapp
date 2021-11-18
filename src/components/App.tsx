@@ -8,7 +8,7 @@ import { RootState } from "../store";
 import Login from "../views/Login";
 import SignUp from "../views/SignUp";
 import defaultTheme from "../themes";
-import { loadUser } from "../features/authentication";
+import { loadUser } from "../features/user";
 
 const RouteWithSubRoutes = (route: any) => {
   return (
@@ -22,7 +22,7 @@ const RouteWithSubRoutes = (route: any) => {
 
 const App = () => {
   const { loggedIn, loadingLocalUser } = useSelector(
-    (state: RootState) => state.authentication
+    (state: RootState) => state.user
   );
 
   const [showSignup, setShowSignup] = useState(false);
