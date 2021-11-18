@@ -22,6 +22,12 @@ const Dashboard = () => {
     (state: RootState) => state.opportunities
   );
 
+  const { userProfile } = useSelector(
+    (state: RootState) => state.authentication
+  );
+
+  console.log(userProfile);
+
   if (opportunities.length > 0) {
     console.log("Volunteer Oppotunities: ", opportunities);
     dispatch(setExistingOpportunity(opportunities[indexSelected]));
