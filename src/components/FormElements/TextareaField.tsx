@@ -49,6 +49,7 @@ const TextareaField = ({
                 rows={rows}
                 placeholder={placeholder}
                 onChange={onChange}
+                value={value?value:""}
             />
         </Field>
     );

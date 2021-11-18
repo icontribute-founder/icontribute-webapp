@@ -1,193 +1,300 @@
 import React, { useState } from "react";
-// import InputField from "../components1/common/InputField";
-// import { StyledButton } from "../components1/OpportunityCard/style";
 import { Link, useHistory } from "react-router-dom";
 import styled from "styled-components";
-import { LightBlueButton } from "../components/styles";
-import Slides from "../components/Slides";
-import Profile from "../assets/images/profile";
-import { ButtonBase } from "@material-ui/core";
+import UploadNewPhoto from "../assets/images/UploadNewPhoto.png";
+import InputField from "../components/FormElements/InputField";
+import TextareaField from "../components/FormElements/TextareaField";
+import Button from "../components/common/Button";
+import ImageDropzone from "../components/FormElements/ImageDropzone";
+import CloseIcon from "@material-ui/icons/Close";
 
-const InputField = styled.div`
-    font-family: Source Sans Pro;
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-   
-`;
-const TextField = styled.input`
-    background: #ffffff;
-    border: 2px solid #c4c4c4;
-    box-sizing: border-box;
-    border-radius: 8px;
-    height: 48px;
-    width: 100%;
-    margin-top: 8px;
-    padding: 10px;
-`;
-const TextFieldBig = styled.input`
-    background: #ffffff;
-    border: 2px solid #c4c4c4;
-    box-sizing: border-box;
-    border-radius: 8px;
-    height: 96px;
-    width: 100%;
-    margin-top: 8px;
-    padding: 10px;
-`;
+import { RootState } from "../store";
+import { useSelector } from "react-redux";
+
+import StaticInputField from "../components/FormElements/StaticInputField";
+import { uploadImage } from "@icontribute-founder/firebase-access";
+import { storage } from "../configure";
+
+//Modal-Code-Start
+import { makeStyles, Theme, createStyles } from "@material-ui/core/styles";
+import Modal from "@material-ui/core/Modal";
+function getModalStyle() {
+  const top = 50;
+  const left = 50;
+  return {
+    top: `${top}%`,
+    left: `${left}%`,
+    transform: `translate(-${top}%, -${left}%)`,
+  };
+}
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    paper: {
+      position: "absolute",
+      width: 600,
+      backgroundColor: theme.palette.background.paper,
+      boxShadow: theme.shadows[5],
+      padding: theme.spacing(2, 4, 3),
+    },
+  })
+);
+//Modal-Code-End
+
+const AccountSettings = () => {
+  //Modal-Code-Start
+  const classes = useStyles();
+  // getModalStyle is not a pure function, we roll the style only on the first render
+  const [modalStyle] = React.useState(getModalStyle);
+  const [open, setOpen] = React.useState(false);
+  const [imageFile, setImageFile] = React.useState<File>();
+  const handleOpen = () => {
+    setOpen(true);
+  };
+  const handleClose = () => {
+    setOpen(false);
+  };
+  const body = (
+    <div style={modalStyle} className={classes.paper}>
+      <div>
+        <ModalCloseIcon onClick={handleClose}></ModalCloseIcon>
+        <br />
+        <br />
+      </div>
+      <ImageDropzone
+        setOrgImage={(file: any) => {
+          if (file === undefined || file === null) {
+            setImageFile(undefined);
+            return;
+          }
+          setImageFile(file[0]);
+        }}
+      ></ImageDropzone>
+      <ButtonCenter
+        onClick={async () => {
+          if (imageFile === undefined || imageFile === null) {
+            return;
+          }
+          handleClose();
+          const url = await uploadImage(imageFile, storage);
+          setCurrProfilePic(url);
+          //NEED TO SAVE NEW URL OF PICTURE TO DATABASE HERE --------------------
+        }}
+      >
+        Confirm
+      </ButtonCenter>
+    </div>
+  );
+  //Modal-Code-End
+
+  const currUser = useSelector((state: RootState) => state.newOrganization);
+
+  const [currUserWebsite, setcurrUserWebsite] = React.useState(
+    currUser.website
+  );
+  const [currUserPostalCode, setcurrUserPostalCode] = React.useState(
+    currUser.postalCode
+  );
+  const [currUserDescription, setcurrUserDescription] = React.useState(
+    currUser.description
+  );
+
+  const WebsiteChangeListener = (event: any) => {
+    setcurrUserWebsite(event.target.value);
+  };
+  const PostalCodeChangeListener = (event: any) => {
+    setcurrUserPostalCode(event.target.value);
+  };
+  const DescriptionChangeListener = (event: any) => {
+    setcurrUserDescription(event.target.value);
+  };
+
+  const [currProfilePic, setCurrProfilePic] = useState(currUser.profilePicture);
+
+  const [saveDetailsNoti, setSaveDetailsNoti] = useState("");
+  const [saveDetailsNotiColor, setSaveDetailsNotiColor] = useState("");
+  const [isSaveDetailsNotiDisplayed, setIsSaveDetailsNotiDisplayed] =
+    useState(false);
+  const SaveDetailsButtonHandler = () => {
+    setIsSaveDetailsNotiDisplayed(true);
+    if (currUserDescription === "") {
+      setSaveDetailsNotiColor("#FC100D");
+      setSaveDetailsNoti("Please fill the description field!");
+      return;
+    }
+    setSaveDetailsNotiColor("#4bb543");
+    setSaveDetailsNoti("Details saved successfully");
+    //Need to update new details (3 state variables) to the db here -----;
+  };
+
+  const [isPasswordChangeNotiDisplayed, setIsPasswordChangeNotiDisplayed] =
+    useState(false);
+  const resetPasswordHandler = () => {
+    setIsPasswordChangeNotiDisplayed(true);
+    //Need to request a pasword change to the user email here -----;
+  };
+
+  return (
+    <Container>
+      <Left>
+        <HeaderOne>Profile Settings</HeaderOne>
+        <HeaderTwo>Email address</HeaderTwo>
+
+        <StaticInputField
+          label="Email"
+          value={currUser.email}
+        ></StaticInputField>
+        <PasswordChangeNoti isDisplayed={isPasswordChangeNotiDisplayed}>
+          A link has been sent to your email to reset your passwords.
+        </PasswordChangeNoti>
+        <br />
+        <div>
+          <ButtonFloatRight onClick={resetPasswordHandler}>
+            Reset Password
+          </ButtonFloatRight>
+        </div>
+
+        <HeaderTwo>Organization details</HeaderTwo>
+
+        <InputField
+          type="text"
+          label="Website (optional)"
+          value={currUserWebsite}
+          onChange={WebsiteChangeListener}
+        />
+        <InputField
+          type="text"
+          label="Postal Code (optional)"
+          value={currUserPostalCode}
+          onChange={PostalCodeChangeListener}
+        />
+        <TextareaField
+          type="text"
+          label="Description"
+          rows="6"
+          value={currUserDescription}
+          onChange={DescriptionChangeListener}
+        />
+        <br></br>
+        <div>
+          <SaveButtonEventNoti
+            saveDetailsNotiColor={saveDetailsNotiColor}
+            isSaveDetailsNotiDisplayed={isSaveDetailsNotiDisplayed}
+          >
+            {saveDetailsNoti}
+          </SaveButtonEventNoti>
+          <ButtonFloatRight onClick={SaveDetailsButtonHandler}>
+            Save details
+          </ButtonFloatRight>
+        </div>
+        <br></br>
+        <br></br>
+      </Left>
+
+      <Right>
+        <ProfileImage onClick={handleOpen} currProfilePic={currProfilePic} />
+        <div>
+          <Modal
+            open={open}
+            onClose={handleClose}
+            aria-labelledby="simple-modal-title"
+            aria-describedby="simple-modal-description"
+          >
+            {body}
+          </Modal>
+        </div>
+      </Right>
+    </Container>
+  );
+};
+
 const Left = styled.div`
-    
-    flex: 1;
-    height: 100%;
-    width: 100%;
-    display: flex;  
-    flex-direction: column;
-    
-    
+  flex: 1;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
 `;
 
 const Right = styled.div`
-    display: flex;
-    flex-direction: column;
-    flex: 1;
-    height: 100%;
-    width: 100%;
-    align-items: center;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  height: 100%;
+  width: 100%;
+  align-items: center;
 `;
 
 const Container = styled.div`
-    display: flex;
-    height: 100%;
-    width: auto;
-    margin-left: 10%;
-    margin-right: 10%;
- 
+  display: flex;
+  height: 100%;
+  width: auto;
+  margin-left: 4%;
+  margin-right: 10%;
 `;
 
-const Button = styled(LightBlueButton)`
-    background: #2836D1;
-    width: 197px;
-    height: 40px;
-    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.05);
-    font-size: 16px;
-    line-height: 24px;
-    color: #fefeff;
-    
-    float: right;
-    
-
+const ButtonFloatRight = styled(Button)`
+  float: right;
 `;
 
-const AccountSettings = () => {
+const ButtonCenter = styled(Button)`
+  width: fit-content;
+  margin: auto;
+  margin-top: 10px;
+`;
 
+const ModalCloseIcon = styled(CloseIcon)`
+  float: right;
+  cursor: pointer;
+`;
 
-    return (
-        <Container>
-            <Left>
+const PasswordChangeNoti = styled.p<{ isDisplayed: boolean }>`
+  margin-bottom: 0px;
+  font-family: "Source Sans Pro";
+  display: ${(props) => (props.isDisplayed ? "block" : "none")};
+`;
 
-                <h1 style = {h1}>iContribute</h1>
+const SaveButtonEventNoti = styled.p<{
+  saveDetailsNotiColor: string;
+  isSaveDetailsNotiDisplayed: boolean;
+}>`
+  margin-top: 0px;
+  font-family: "Source Sans Pro";
+  color: ${(props) => props.saveDetailsNotiColor};
+  display: ${(props) => (props.isSaveDetailsNotiDisplayed ? "block" : "none")};
+`;
 
-                <h2 style = {h2}>Email address</h2>
+const ProfileImage = styled.div<{ currProfilePic: string }>`
+  background: url(${(props) => props.currProfilePic});
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
 
-                <InputField>
-                    <label htmlFor="loginEmail">Email</label>
-                    <TextField
-                        type="text"
-                        id="loginEmail"
-                        
-                    />
-                </InputField>
-                <br></br>
+  cursor: pointer;
+  width: 200px;
+  height: 200px;
 
+  &:hover {
+    transition: 0.3s;
+    background: url(${UploadNewPhoto});
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+  }
+`;
 
-                <h2 style = {h2}>Change password</h2>
+const HeaderOne = styled.h2`
+  font-family: Source Sans Pro;
+  font-size: 30px;
+  font-weight: bold;
+  margin-top: 2%;
+  margin-bottom: 1%;
+`;
 
-                <InputField>
-                    <label htmlFor="loginEmail">Password</label>
-                    <TextField
-                        type="text"
-                        id="loginEmail"
-                        placeholder = "Enter your current password"
-                        
-                    />
-                </InputField>
-                <InputField>
-                    <label htmlFor="loginEmail">New password</label>
-                    <TextField
-                        type="text"
-                        id="loginEmail"
-                        placeholder = "Enter a new password"
-                        
-                    />
-                </InputField>
-                <InputField>
-                    <label htmlFor="loginEmail">Confirm new password</label>
-                    <TextField
-                        type="text"
-                        id="loginEmail"
-                        placeholder = "Re-enter the new password"
-                        
-                    />
-                </InputField>
-                <br></br>
-                <div><Button>Save new password</Button></div>
-                
-                <h2 style = {h2}>Organization details</h2>
-
-
-                <InputField>
-                    <label htmlFor="loginEmail">Website</label>
-                    <TextField
-                        type="text"
-                        id="loginEmail"
-                 
-                        
-                    />
-                </InputField>
-                <InputField>
-                    <label htmlFor="loginEmail">Postal Code</label>
-                    <TextField
-                        type="text"
-                        id="loginEmail"
-                     
-                        
-                    />
-                </InputField>
-                <InputField>
-                    <label htmlFor="loginEmail">Description</label>
-                    <TextFieldBig
-                        type="text"
-                        id="loginEmail"
-                     
-                        
-                    />
-                </InputField>
-                <br></br>
-                <div><Button>Save details</Button></div>
-                <br></br>
-                <br></br>
-
-            </Left>
-
-            <Right>
-                <ButtonBase style = { btnbase}><Profile></Profile></ButtonBase>
-
-            </Right>
-        </Container>
-    );
-};
-const h1: React.CSSProperties = {
-    fontFamily : "Source Sans Pro",
- 
-};
-const h2: React.CSSProperties = {
-    fontFamily : "Source Sans Pro",
-    
-    
-};
-const btnbase: React.CSSProperties = {
-    width: "200px",
-    height: "200px",
-}
+const HeaderTwo = styled.h2`
+  font-family: Source Sans Pro;
+  font-size: 24px;
+  font-weight: normal;
+  margin-bottom: -2%;
+`;
 
 export default AccountSettings;
