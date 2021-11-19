@@ -1,51 +1,53 @@
 name: Deploy to Firebase Hosting
 
 "on":
-    push:
-        branches:
-            - main
+  push:
+    branches:
+      - main
 
 jobs:
-    build_and_deploy:
-        runs-on: ubuntu-latest
+  build_and_deploy:
+    runs-on: ubuntu-latest
 
-        strategy:
-            matrix:
-                node-version: [14.x]
+    strategy:
+      matrix:
+        node-version: [14.x]
 
-        steps:
-            - name: Checkout repository
-              uses: actions/checkout@v2
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
 
-            - name: Set up Node.js ${{ matrix.node-version }}
-              uses: actions/setup-node@v2
-              with:
-                  node-version: ${{ matrix.node-version }}
+      - name: Set up SSH Key
+        uses: webfactory/ssh-agent@v0.5.3
+        with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
-            - name: Install dependencies for Webapp
-              run: npm install
+      - name: Set up Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{ matrix.node-version }}
 
-            - name: Install dependencies for Firbase Access
-              run: npm install
-              working-directory: ./src/firebase-access
+      - name: Install dependencies for Webapp
+        run: npm install
 
-            - name: Build
-              run: npm run build:dev
-              working-directory: .
-              env:
-                  REACT_APP_FIRESTORE_API_KEY: ${{ secrets.REACT_APP_FIRESTORE_API_KEY }}
-                  REACT_APP_FIRESTORE_AUTH_DOMAIN: ${{ secrets.REACT_APP_FIRESTORE_AUTH_DOMAIN }}
-                  REACT_APP_FIRESTORE_PROJECT_ID: ${{ secrets.REACT_APP_FIRESTORE_PROJECT_ID }}
-                  REACT_APP_FIRESTORE_STORAGE_BUCKET: ${{ secrets.REACT_APP_FIRESTORE_STORAGE_BUCKET }}
-                  REACT_APP_FIRESTORE_MESSAGING_SENDER_ID: ${{ secrets.REACT_APP_FIRESTORE_MESSAGING_SENDER_ID }}
-                  REACT_APP_FIRESTORE_APP_ID: ${{ secrets.REACT_APP_FIRESTORE_APP_ID }}
-                  REACT_APP_FIRESTORE_MEASUREMENT_ID: ${{ secrets.REACT_APP_FIRESTORE_MEASUREMENT_ID }}
+      - name: Build
+        run: npm run build:dev
+        working-directory: .
+        env:
+          REACT_APP_FIRESTORE_API_KEY: ${{ secrets.REACT_APP_FIRESTORE_API_KEY }}
+          REACT_APP_FIRESTORE_AUTH_DOMAIN: ${{ secrets.REACT_APP_FIRESTORE_AUTH_DOMAIN }}
+          REACT_APP_FIRESTORE_PROJECT_ID: ${{ secrets.REACT_APP_FIRESTORE_PROJECT_ID }}
+          REACT_APP_FIRESTORE_STORAGE_BUCKET: ${{ secrets.REACT_APP_FIRESTORE_STORAGE_BUCKET }}
+          REACT_APP_FIRESTORE_MESSAGING_SENDER_ID: ${{ secrets.REACT_APP_FIRESTORE_MESSAGING_SENDER_ID }}
+          REACT_APP_FIRESTORE_APP_ID: ${{ secrets.REACT_APP_FIRESTORE_APP_ID }}
+          REACT_APP_FIRESTORE_MEASUREMENT_ID: ${{ secrets.REACT_APP_FIRESTORE_MEASUREMENT_ID }}
+          REACT_APP_GOOGLE_KEY: ${{ secrets.REACT_APP_GOOGLE_KEY }}
 
-            - name: Deploy to Firebase Hosting
-              uses: FirebaseExtended/action-hosting-deploy@v0
-              with:
-                  repoToken: "${{ secrets.GITHUB_TOKEN }}"
-                  firebaseServiceAccount: "${{ secrets.FIREBASE_SERVICE_ACCOUNT_ICONTRIBUTE_DEV }}"
-                  channelId: live
-                  projectId: icontribute-dev
-                  target: icontribute-dev
+      - name: Deploy to Firebase Hosting
+        uses: FirebaseExtended/action-hosting-deploy@v0
+        with:
+          repoToken: "${{ secrets.GITHUB_TOKEN }}"
+          firebaseServiceAccount: "${{ secrets.FIREBASE_SERVICE_ACCOUNT_ICONTRIBUTE_DEV }}"
+          channelId: live
+          projectId: icontribute-dev
+          target: icontribute-dev
