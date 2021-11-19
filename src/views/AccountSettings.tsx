@@ -86,17 +86,17 @@ const AccountSettings = () => {
   );
   //Modal-Code-End
 
-  const currUser = useSelector((state: RootState) => state.newOrganization);
-  console.log("Current User: ", currUser);
+  const { userProfile } = useSelector((state: RootState) => state.user);
+  console.log("Current User: ", userProfile);
 
   const [currUserWebsite, setcurrUserWebsite] = React.useState(
-    currUser.website
+    userProfile.website
   );
   const [currUserPostalCode, setcurrUserPostalCode] = React.useState(
-    currUser.postalCode
+    userProfile.postalCode
   );
   const [currUserDescription, setcurrUserDescription] = React.useState(
-    currUser.description
+    userProfile.description
   );
 
   const WebsiteChangeListener = (event: any) => {
@@ -109,7 +109,9 @@ const AccountSettings = () => {
     setcurrUserDescription(event.target.value);
   };
 
-  const [currProfilePic, setCurrProfilePic] = useState(currUser.profilePicture);
+  const [currProfilePic, setCurrProfilePic] = useState(
+    userProfile.profilePicture
+  );
 
   const [saveDetailsNoti, setSaveDetailsNoti] = useState("");
   const [saveDetailsNotiColor, setSaveDetailsNotiColor] = useState("");
@@ -142,7 +144,7 @@ const AccountSettings = () => {
 
         <StaticInputField
           label="Email"
-          value={currUser.email}
+          value={userProfile.email}
         ></StaticInputField>
         <PasswordChangeNoti isDisplayed={isPasswordChangeNotiDisplayed}>
           A link has been sent to your email to reset your passwords.

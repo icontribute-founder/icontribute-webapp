@@ -22,6 +22,10 @@ const Dashboard = () => {
     (state: RootState) => state.opportunities
   );
 
+  const { userProfile } = useSelector((state: RootState) => state.user);
+
+  console.log("list of event ids", userProfile.event);
+
   if (opportunities.length > 0) {
     console.log("Volunteer Oppotunities: ", opportunities);
     dispatch(setExistingOpportunity(opportunities[indexSelected]));

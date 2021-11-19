@@ -7,10 +7,10 @@ import { useSelector } from "react-redux";
 import { RootState } from "../store";
 
 const Notifications = () => {
-  const currUser = useSelector((state: RootState) => state.newOrganization);
+  const { userProfile } = useSelector((state: RootState) => state.user);
 
   let notificationCollection = [];
-  notificationCollection = currUser.notifications;
+  notificationCollection = userProfile.notifications;
 
   let readNotifications: any = [];
   let unreadNotifications: any = [];
