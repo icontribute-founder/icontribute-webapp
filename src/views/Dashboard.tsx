@@ -11,7 +11,7 @@ import Map from "../components/Map";
 import EmptyDashboard from "./EmptyDashboard";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../store";
-import { getOpportunities, selectOpportunity } from "../features/opportunities";
+import { getOpportunitiesByIds, selectOpportunity } from "../features/opportunities";
 import { setAction, setExistingOpportunity } from "../features/opportunity";
 
 const Dashboard = () => {
@@ -22,7 +22,10 @@ const Dashboard = () => {
     (state: RootState) => state.opportunities
   );
 
+  const { userProfile } = useSelector((state: RootState) => state.user);
+
   if (opportunities.length > 0) {
+    console.log("Volunteer Oppotunities: ", opportunities);
     dispatch(setExistingOpportunity(opportunities[indexSelected]));
   }
 
@@ -51,7 +54,7 @@ const Dashboard = () => {
   };
 
   useEffect(() => {
-    dispatch(getOpportunities());
+    dispatch(getOpportunitiesByIds({eventIds: userProfile.event}));
   }, [dispatch]);
 
   if (loading || error !== null) return "";

@@ -7,10 +7,10 @@ import { useSelector } from "react-redux";
 import { RootState } from "../store";
 
 const Notifications = () => {
-  const currUser = useSelector((state: RootState) => state.newOrganization);
+  const { userProfile } = useSelector((state: RootState) => state.user);
 
   let notificationCollection = [];
-  notificationCollection = currUser.notifications;
+  notificationCollection = userProfile.notifications;
 
   let readNotifications: any = [];
   let unreadNotifications: any = [];
@@ -84,7 +84,8 @@ const HeaderContainer = styled.div`
 
 const HeaderOne = styled.h2`
   font-family: Source Sans Pro;
-  margin-left: 2%;
+  margin-top: 2%;
+  margin-left: 4%;
   margith-right: 2%;
   font-size: 30px;
   font-weight: bold;
@@ -92,9 +93,9 @@ const HeaderOne = styled.h2`
 
 const HeaderTwo = styled.h2`
   font-family: Source Sans Pro;
-  margin-left: 2%;
+  margin-left: 4%;
   margith-right: 2%;
-  font-size: 30px;
+  font-size: 24px;
   font-weight: normal;
 `;
 

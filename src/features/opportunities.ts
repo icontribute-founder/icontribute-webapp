@@ -24,6 +24,14 @@ export const getOpportunities = createAsyncThunk<
   return await opportunityCollection.getOpportunities();
 });
 
+export const getOpportunitiesByIds = createAsyncThunk<
+  any,
+  { eventIds: any },
+  { rejectValue: any }
+>("opportunities/getOpportunitiesByIds", async ({ eventIds }, thunkApi) => {
+  return await opportunityCollection.getOpportunitiesByIds(eventIds);
+});
+
 export const deleteOpportunity = createAsyncThunk<
   any,
   { eventId: string },
@@ -52,6 +60,20 @@ export const opportunities = createSlice({
     });
 
     builder.addCase(getOpportunities.rejected, (state, { payload }) => {
+      state.loading = false;
+      state.error = payload;
+    });
+
+    builder.addCase(getOpportunitiesByIds.pending, (state) => {
+      state.loading = true;
+    });
+
+    builder.addCase(getOpportunitiesByIds.fulfilled, (state, { payload }) => {
+      state.loading = false;
+      state.opportunities = payload;
+    });
+
+    builder.addCase(getOpportunitiesByIds.rejected, (state, { payload }) => {
       state.loading = false;
       state.error = payload;
     });

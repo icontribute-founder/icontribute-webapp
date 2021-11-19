@@ -21,7 +21,6 @@ const NotificationCard = (props: NotificationCardProps) => {
   let sourceProfilePicture = props.sourceProfilePicture;
   let sourceUserName = props.sourceUserName;
   let type = props.type;
-  
 
   return (
     //<NotificationContainer selected={selected} onClick={onClick}>
@@ -35,7 +34,8 @@ const NotificationCard = (props: NotificationCardProps) => {
         </ImageContainer>
 
         <HeaderThree>
-          Congratulations! <b>{sourceUserName}</b> has applied for the <b>{eventName}</b> event.
+          Congratulations! <b>{sourceUserName}</b> has applied for the{" "}
+          <b>{eventName}</b> event.
         </HeaderThree>
       </TextContainer>
 
@@ -46,14 +46,14 @@ const NotificationCard = (props: NotificationCardProps) => {
 
 const NotificationContainer = styled.div`
   padding: 15px;
-  background: #EDECFF;
+  background: #edecff;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-left: 2.5%;
+  margin-left: 4%;
   margin-right: 5%;
   margin-top: 0.5%;
-  box-shadow: 0 2px 2px 0px rgba(28, 28, 27, .3);
+  box-shadow: 0 2px 2px 0px rgba(28, 28, 27, 0.3);
   color: black;
   padding: 3px;
 `;
@@ -61,25 +61,25 @@ const NotificationContainer = styled.div`
 const TextContainer = styled.div`
   flex-direction: row;
   align-items: center;
-  background: #EDECFF;
+  background: #edecff;
   display: flex;
-  margin-left: 3%;
+  margin-left: 5%;
   width: 1300px;
 `;
 
 const ImageContainer = styled.div`
   flex-direction: row;
   align-items: center;
-  background: #EDECFF;
+  background: #edecff;
   display: flex;
   margin-right: 10%;
 `;
 
 const StyledImage = styled.img`
-    width: 50;
-    height: 50;
-    border-radius: 90;
-    border-color: Colors.black;
+  width: 50;
+  height: 50;
+  border-radius: 90;
+  border-color: Colors.black;
 `;
 
 const HeaderThree = styled.h3`
