@@ -96,6 +96,9 @@ const Summary = () => {
     image = URL.createObjectURL(eventImage);
   }
 
+  let opportunityDetails = useSelector((state: RootState) => state.opportunity);
+  console.log("Opportunity Details: ", opportunityDetails);
+
   return (
     <EditableCard>
       <Grid container spacing={3}>

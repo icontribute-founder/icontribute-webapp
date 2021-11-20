@@ -72,6 +72,9 @@ export const opportunitySlice = createSlice({
         state.opportunity.categories.push(category);
       }
     },
+    updateCompany: (state, action: PayloadAction<string>) => {
+      state.opportunity.companyName = action.payload;
+    },
     updateTitle: (state, action: PayloadAction<string>) => {
       state.opportunity.eventName = action.payload;
     },
@@ -161,6 +164,7 @@ export const opportunitySlice = createSlice({
 
 export const {
   setAction,
+  updateCompany,
   updateTitle,
   updateDescription,
   updateLocation,
