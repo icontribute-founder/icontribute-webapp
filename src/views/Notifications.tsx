@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import Notification from "../models/Notification";
-import NotificationCard from "../components/NotificationCard";
+import NotifcationCard from "../components/NotificationCard"
 import UnreadNotificationCard from "../components/UnreadNotificationCard";
 import { useSelector } from "react-redux";
 import { RootState } from "../store";
@@ -32,24 +32,6 @@ const Notifications = () => {
 
       {unreadNotifications.map((element: Notification) => {
         return (
-          <NotificationCard
-            key={element.eventID}
-            date={element.date}
-            eventID={element.eventID}
-            eventName={element.eventName}
-            read={element.read}
-            sourceEmail={element.sourceEmail}
-            sourceProfilePicture={element.sourceProfilePicture}
-            sourceUserName={element.sourceUserName}
-            type={element.type}
-          ></NotificationCard>
-        );
-      })}
-
-      <HeaderTwo>Old Notifications</HeaderTwo>
-
-      {readNotifications.map((element: Notification) => {
-        return (
           <UnreadNotificationCard
             key={element.eventID}
             date={element.date}
@@ -61,6 +43,24 @@ const Notifications = () => {
             sourceUserName={element.sourceUserName}
             type={element.type}
           ></UnreadNotificationCard>
+        );
+      })}
+
+      <HeaderTwo>Old Notifications</HeaderTwo>
+
+      {readNotifications.map((element: Notification) => {
+        return (
+          <NotifcationCard
+            key={element.eventID}
+            date={element.date}
+            eventID={element.eventID}
+            eventName={element.eventName}
+            read={element.read}
+            sourceEmail={element.sourceEmail}
+            sourceProfilePicture={element.sourceProfilePicture}
+            sourceUserName={element.sourceUserName}
+            type={element.type}
+          ></NotifcationCard>
         );
       })}
 

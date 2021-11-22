@@ -7,6 +7,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "../store";
 import EditableCard from "./EditableCard";
 
+
 const Title = styled.h3`
   font-weight: bold;
   font-size: 24px;
@@ -67,6 +68,7 @@ const Deadline = () => {
   const day = date.getDate();
   const month = date.getMonth() + 1;
   const year = date.getFullYear();
+
   return (
     <div>
       <DeadlineLabel>Application Deadline:</DeadlineLabel>

@@ -46,14 +46,14 @@ const UnreadNotificationCard = (props: NotificationCardProps) => {
 
 const NotificationContainer = styled.div`
   padding: 15px;
-  background: white;
+  background: #edecff;
   display: flex;
   align-items: center;
   justify-content: space-between;
   margin-left: 4%;
   margin-right: 5%;
   margin-top: 0.5%;
-  box-shadow: 1px 2px 3px 1px rgba(28, 28, 27, 0.3);
+  box-shadow: 0 2px 2px 0px rgba(28, 28, 27, 0.3);
   color: black;
   padding: 3px;
 `;
@@ -61,18 +61,18 @@ const NotificationContainer = styled.div`
 const TextContainer = styled.div`
   flex-direction: row;
   align-items: center;
-  background: white;
+  background: #edecff;
   display: flex;
-  margin-left: 3%;
+  margin-left: 5%;
   width: 1300px;
 `;
 
 const ImageContainer = styled.div`
   flex-direction: row;
   align-items: center;
-  background: white;
+  background: #edecff;
   display: flex;
-  margin-right: 10%;
+  margin-right: 5%;
 `;
 
 const StyledImage = styled.img`
