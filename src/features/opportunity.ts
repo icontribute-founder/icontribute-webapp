@@ -81,6 +81,15 @@ export const opportunitySlice = createSlice({
     updateDescription: (state, action: PayloadAction<string>) => {
       state.opportunity.description = action.payload;
     },
+    updateRequirements: (state, action: PayloadAction<string>) => {
+      state.opportunity.requirements = action.payload;
+    },
+    updateRole: (state, action: PayloadAction<string>) => {
+      state.opportunity.role = action.payload;
+    },
+    updateNotes: (state, action: PayloadAction<string>) => {
+      state.opportunity.notes = action.payload;
+    },
     updateHostingType: (state, action: PayloadAction<HostingType>) => {
       state.opportunity.type = action.payload;
     },
@@ -114,6 +123,9 @@ export const opportunitySlice = createSlice({
         eventName,
         address,
         description,
+        requirements,
+        role,
+        notes,
         virtual,
         categories,
         date,
@@ -128,6 +140,9 @@ export const opportunitySlice = createSlice({
       state.opportunity.address = address;
       state.opportunity.coordinates = coordinates;
       state.opportunity.description = description;
+      state.opportunity.requirements = requirements;
+      state.opportunity.role = role;
+      state.opportunity.notes = notes;
       state.opportunity.virtual = virtual;
       state.opportunity.deadline = deadline;
       state.opportunity.date = date;
@@ -163,6 +178,9 @@ export const {
   setAction,
   updateTitle,
   updateDescription,
+  updateRequirements,
+  updateRole,
+  updateNotes,
   updateLocation,
   updateCategories,
   updateHostingType,
