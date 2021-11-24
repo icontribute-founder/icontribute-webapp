@@ -32,10 +32,10 @@ const NotifMoreOptions = () => {
 
 
   const options = [
-    { name: "Mark as Read",handler: handleMarkAsRead },
+    { name: "Mark as read",handler: handleMarkAsRead },
     { name: "View Applicant's Profile",handler: handleAppProf },
     { name: "Remove this notification",handler: handleRemove },
-    { name: "Report Issue", handler: handleReport },
+    { name: "Report issue", handler: handleReport },
   ];
 
   const handleClick = (event: any) => {
