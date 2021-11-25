@@ -9,7 +9,9 @@ import { RootState } from "../store";
 import { HeaderOne } from "./SignUp";
 import { Subtitle } from "../components/styles";
 import { useHistory, useParams } from "react-router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { updateCompany } from "../features/opportunity";
+
 import { ArrowBackIos } from "@material-ui/icons";
 
 const SaveButtonContainer = styled.div`
@@ -59,12 +61,14 @@ type OpportunityParams = {
 
 const Opportunity = () => {
   const history = useHistory();
+  const dispatch = useDispatch();
 
   const { action } = useParams<OpportunityParams>();
 
   const [imageUploading, setImageUploading] = useState(false);
 
   const handleOnClick = (e: any) => {
+    console.log("Event Details: ", e);
     e.preventDefault();
     history.push("/new-opportunity-review");
   };
@@ -72,6 +76,13 @@ const Opportunity = () => {
   const {
     opportunity: { eventName, address },
   } = useSelector((state: RootState) => state.opportunity);
+
+  const { userProfile } = useSelector((state: RootState) => state.user);
+
+  useEffect(() => {
+    dispatch(updateCompany(userProfile.companyName));
+  }, [dispatch]);
+
 
   let title: string;
   switch (action) {
