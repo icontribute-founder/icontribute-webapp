@@ -5,6 +5,9 @@ import {
   updateDescription,
   updateImage,
   updateLocation,
+  updateNotes,
+  updateRequirements,
+  updateRole,
   updateTitle,
 } from "../../features/opportunity";
 import { Shift } from "@icontribute-founder/firebase-access";
@@ -18,7 +21,7 @@ import InputField from "../common/InputField";
 const OpportunityDetails = ({ setImageUploading }: any) => {
   const dispatch = useDispatch();
   const {
-    opportunity: { eventName, address, description, shift },
+    opportunity: { eventName, address, description, requirements, role, notes, shift },
   } = useSelector((state: RootState) => state.opportunity);
 
   const [orgImage, setOrgImage] = useState<any>();
@@ -46,6 +49,15 @@ const OpportunityDetails = ({ setImageUploading }: any) => {
 
   const handleDescriptionOnChange = (e: any) => {
     dispatch(updateDescription(e.target.value));
+  };
+  const handleRequirementsOnChange = (e: any) => {
+    dispatch(updateRequirements(e.target.value));
+  };
+  const handleRoleOnChange = (e: any) => {
+    dispatch(updateRole(e.target.value));
+  };
+  const handleNotesOnChange = (e: any) => {
+    dispatch(updateNotes(e.target.value));
   };
 
   const content = (
@@ -80,6 +92,42 @@ const OpportunityDetails = ({ setImageUploading }: any) => {
         onChange={handleDescriptionOnChange}
         value={description}
         placeholder="Enter position’s primary duties and responsibilities"
+        fullWidth
+        rows={8}
+      />
+
+      <InputField
+        label="Mandatory Requirements"
+        type="textarea"
+        name="opportunity-details-requirements"
+        id="opportunity-details-requirements"
+        onChange={handleRequirementsOnChange}
+        value={requirements}
+        placeholder="Begin Typing..."
+        fullWidth
+        rows={8}
+      />
+
+      <InputField
+        label="What will the volunteer accomplish throughout the role"
+        type="textarea"
+        name="opportunity-details-role"
+        id="opportunity-details-role"
+        onChange={handleRoleOnChange}
+        value={role}
+        placeholder="Begin Typing..."
+        fullWidth
+        rows={8}
+      />
+
+      <InputField
+        label="Other things to note"
+        type="textarea"
+        name="opportunity-details-notes"
+        id="opportunity-details-notes"
+        onChange={handleNotesOnChange}
+        value={notes}
+        placeholder="Begin Typing..."
         fullWidth
         rows={8}
       />
