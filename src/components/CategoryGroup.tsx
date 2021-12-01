@@ -72,9 +72,11 @@ const CategoryGroup = () => {
     { category: EventCategory.Animal, svg: <AnimalIcon /> },
     { category: EventCategory.Other, svg: <OtherIcon /> },
   ];
-  const {
-    opportunity: { categories },
-  } = useSelector((state: RootState) => state.opportunity);
+  const { opportunity } = useSelector((state: RootState) => state.opportunity);
+
+  const { categories } = opportunity;
+
+  console.log(opportunity);
 
   const dispatch = useDispatch();
 

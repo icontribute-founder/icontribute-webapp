@@ -81,6 +81,12 @@ export const opportunitySlice = createSlice({
     updateLocation: (state, action: PayloadAction<string>) => {
       state.opportunity.address = action.payload;
     },
+    updateCoordinates: (
+      state,
+      action: PayloadAction<typeof defaultEvent.coordinates>
+    ) => {
+      state.opportunity.coordinates = action.payload;
+    },
     updateDescription: (state, action: PayloadAction<string>) => {
       state.opportunity.description = action.payload;
     },
@@ -110,7 +116,10 @@ export const opportunitySlice = createSlice({
     },
     reset: () => initialState,
     setExistingOpportunity: (state, action) => {
-      let opportunity = action.payload === null ? initialState : action.payload;
+      let opportunity =
+        action.payload === null ? initialState.opportunity : action.payload;
+
+      console.log(opportunity);
 
       const {
         eventID,
@@ -134,7 +143,7 @@ export const opportunitySlice = createSlice({
       state.opportunity.virtual = virtual;
       state.opportunity.deadline = deadline;
       state.opportunity.date = date;
-      // state.opportunity.categories = categories;
+      state.opportunity.categories = categories;
     },
   },
   extraReducers: (builder) => {
@@ -168,6 +177,7 @@ export const {
   updateTitle,
   updateDescription,
   updateLocation,
+  updateCoordinates,
   updateCategories,
   updateHostingType,
   updateVirtual,

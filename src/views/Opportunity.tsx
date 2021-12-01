@@ -83,7 +83,6 @@ const Opportunity = () => {
     dispatch(updateCompany(userProfile.companyName));
   }, [dispatch]);
 
-
   let title: string;
   switch (action) {
     case "create":
