@@ -11,6 +11,7 @@ interface AuthenticationI {
   error: string;
   loginLoading: boolean;
   loadingLocalUser: boolean;
+  resetLoading: boolean;
   signupLoading: boolean;
 }
 
@@ -21,6 +22,7 @@ const initialState: AuthenticationI = {
   error: "",
   loginLoading: false,
   signupLoading: false,
+  resetLoading: false,
   loadingLocalUser: false,
 };
 
@@ -79,6 +81,19 @@ export const signup = createAsyncThunk<
     return thunkApi.rejectWithValue({ code: "bad" });
   }
 });
+
+export const resetPassword = createAsyncThunk<void, { email: string }, any>(
+  "user/resetPassword",
+  async ({ email }, thunkApi) => {
+    // send password reset email
+    try {
+      await auth.resetPassword(email);
+    } catch (error) {
+      console.log(error);
+      return thunkApi.rejectWithValue({ code: "bad" });
+    }
+  }
+);
 
 export const userSlice = createSlice({
   name: "user",
@@ -157,6 +172,17 @@ export const userSlice = createSlice({
     });
     builder.addCase(signup.rejected, (state, { payload }) => {
       state.signupLoading = false;
+    });
+
+    // reset password
+    builder.addCase(resetPassword.pending, (state) => {
+      state.resetLoading = true;
+    });
+    builder.addCase(resetPassword.fulfilled, (state, { payload }) => {
+      state.resetLoading = false;
+    });
+    builder.addCase(resetPassword.rejected, (state, { payload }) => {
+      state.resetLoading = false;
     });
   },
 });

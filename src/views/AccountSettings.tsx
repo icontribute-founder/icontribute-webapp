@@ -9,7 +9,7 @@ import ImageDropzone from "../components/FormElements/ImageDropzone";
 import CloseIcon from "@material-ui/icons/Close";
 
 import { RootState } from "../store";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import StaticInputField from "../components/FormElements/StaticInputField";
 import { uploadImage } from "@icontribute-founder/firebase-access";
@@ -18,6 +18,7 @@ import { storage } from "../configure";
 //Modal-Code-Start
 import { makeStyles, Theme, createStyles } from "@material-ui/core/styles";
 import Modal from "@material-ui/core/Modal";
+import { resetPassword } from "../features/user";
 function getModalStyle() {
   const top = 50;
   const left = 50;
@@ -41,6 +42,7 @@ const useStyles = makeStyles((theme: Theme) =>
 //Modal-Code-End
 
 const AccountSettings = () => {
+  const dispatch = useDispatch();
   //Modal-Code-Start
   const classes = useStyles();
   // getModalStyle is not a pure function, we roll the style only on the first render
@@ -134,6 +136,11 @@ const AccountSettings = () => {
   const resetPasswordHandler = () => {
     setIsPasswordChangeNotiDisplayed(true);
     //Need to request a pasword change to the user email here -----;
+    if (process.env.REACT_APP_ENV === "development") {
+      dispatch(resetPassword({ email: process.env.REACT_APP_TEST_EMAIL! }));
+    } else {
+      dispatch(resetPassword({ email: userProfile.email }));
+    }
   };
 
   return (
