@@ -125,8 +125,9 @@ export const opportunitySlice = createSlice({
     },
     reset: () => initialState,
     setExistingOpportunity: (state, action) => {
-      let opportunity =
-        action.payload === null ? initialState.opportunity : action.payload;
+      let opportunity = !action.payload
+        ? initialState.opportunity
+        : action.payload;
 
       console.log(opportunity);
 

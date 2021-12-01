@@ -203,36 +203,6 @@ const Summary = () => {
       }
     };
     getCoords(address);
-    // const app_id = "AfFrODN6FHZJMhB0Xk2n";
-    // const app_code = "nBx_mqNULkfLWAY5W2AjOA";
-    // axios
-    //   .get("https://geocoder.api.here.com/6.2/geocode.json", {
-    //     params: {
-    //       app_id,
-    //       app_code,
-    //       searchtext:
-    //         "6700 Century Ave, Suite 100 Mississauga, Ontario, CANADA",
-    //     },
-    //   })
-    //   .then(function ({ data }) {
-    //     const { Response } = data;
-    //     if (Response && Response.View && Response.View.length > 0) {
-    //       const result = Response.View[0].Result;
-    //       if (result && result.length > 0) {
-    //         if (result[0].Location) {
-    //           const { Latitude, Longitude } =
-    //             result[0].Location.DisplayPosition;
-    //           console.log({ Latitude, Longitude });
-    //           dispatch(
-    //             updateCoordinates({
-    //               latitude: Latitude,
-    //               longitude: Longitude,
-    //             })
-    //           );
-    //         }
-    //       }
-    //     }
-    //   });
   }, []);
 
   let image = "https://i.postimg.cc/m2gmWsvX/default-Opportunity.png";

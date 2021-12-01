@@ -52,12 +52,17 @@ const Dashboard = () => {
 
   useEffect(() => {
     dispatch(getOpportunitiesByIds({ eventIds: userProfile.event }));
-  }, [dispatch]);
+  }, []);
 
   if (loading || error !== null) return "";
 
   if (opportunities.length === 0) {
     return <EmptyDashboard />;
+  }
+
+  if (indexSelected >= opportunities.length) {
+    dispatch(selectOpportunity(0));
+    return <></>;
   }
 
   const formatDateTime = (date: Date) => {
