@@ -15,7 +15,19 @@ import InteractiveButton from "../components/Buttons/InteractiveButton";
 import axios from "axios";
 import FormData from "form-data";
 import SignupGraphic from "../components/Svgs/SignupGraphic";
+import { useDispatch, useSelector } from "react-redux";
+import { signup } from "../features/user";
+import { defaultEvent, Company } from "@icontribute-founder/firebase-access";
 
+
+
+import { LightBlueButton } from "../components/styles";
+import Slides from "../components/Slides";
+
+import { login } from "../features/user";
+import { RootState } from "../store";
+
+/*
 interface SignupDetails {
   email: string;
   password: string;
@@ -26,9 +38,12 @@ interface SignupDetails {
   description: string;
   orgImageUrl: string;
 }
+*/
 
 const SignUp = ({ setShowSignup }: any) => {
   const history = useHistory();
+
+  const dispatch = useDispatch();
 
   const handleBackClick = () => {
     setShowSignup(false);
@@ -43,9 +58,8 @@ const SignUp = ({ setShowSignup }: any) => {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [errorVisible, setErrorVisible] = useState("none");
   const [submitDisabled, setSubmitDisabled] = useState(true);
-  const [signupDetails, setSignupDetails] = useState<SignupDetails>({
+  const [signupDetails, setSignupDetails] = useState<Company>({
     email: "",
-    password: "",
     isRegisteredCRA: "",
     organizationName: "",
     website: "",
@@ -57,7 +71,7 @@ const SignUp = ({ setShowSignup }: any) => {
   useEffect(() => {
     if (
       signupDetails.description === "" ||
-      signupDetails.password === "" ||
+      password === "" ||
       signupDetails.email === "" ||
       signupDetails.postalCode === "" ||
       errorVisible === "block" ||
@@ -146,9 +160,15 @@ const SignUp = ({ setShowSignup }: any) => {
           ...prevState,
           orgImageUrl: res.data.imagePath,
         }));
+        dispatch(
+          signup({ company: signupDetails, password: password })
+        );
+        history.push("/signup-confirm");
+        console.log("I am submitting")
       })
       .catch((err) => console.log(err));
   };
+
 
   /* ============================================================================================================================== */
   /* This section will be used to call an API and send the sign up details to, currently this object is just logged in the console. */
@@ -173,7 +193,9 @@ const SignUp = ({ setShowSignup }: any) => {
               placeholder="Enter your organization email"
               name="email"
               id="email"
+              type = "text"
               onChange={handleFormChange}
+              value = {signupDetails.email}
             />
             <InputField
               label="Create a Password"
@@ -183,6 +205,7 @@ const SignUp = ({ setShowSignup }: any) => {
               id="password"
               checkMarkVisible={passwordCheckMark}
               onChange={passwordChange}
+              value = {password}
             />
             <InputField
               label="Confirm Password"
@@ -193,6 +216,7 @@ const SignUp = ({ setShowSignup }: any) => {
               checkMarkVisible={passwordConfirmCheckMark}
               errorVisible={errorVisible}
               onChange={onConfirmPasswordChange}
+              value = {confirmPassword}
             />
             <HeaderTwo>Organization details</HeaderTwo>
             <Paragraph>
@@ -231,6 +255,7 @@ const SignUp = ({ setShowSignup }: any) => {
               name="organizationName"
               id="organizationName"
               onChange={handleFormChange}
+              value = {signupDetails.organizationName}
             />
             <InputField
               label="Website"
@@ -238,6 +263,7 @@ const SignUp = ({ setShowSignup }: any) => {
               name="website"
               id="website"
               onChange={handleFormChange}
+              value = {signupDetails.website}
             />
             <InputField
               label="Postal Code"
@@ -245,6 +271,7 @@ const SignUp = ({ setShowSignup }: any) => {
               name="postalCode"
               id="postalCode"
               onChange={handleFormChange}
+              value = {signupDetails.postalCode}
             />
             <TextareaField
               label="Description"
@@ -253,6 +280,7 @@ const SignUp = ({ setShowSignup }: any) => {
               onChange={handleFormChange}
               placeholder="ie.We connect people who are looking for local volunteer opportunities to nonprofits who are actively recruiting"
               rows={8}
+              value = {signupDetails.description}
             />
             <HeaderThree>Upload an account photo or logo</HeaderThree>
           </Grid>
