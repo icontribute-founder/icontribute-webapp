@@ -97,6 +97,9 @@ const Dashboard = () => {
     eventName,
     companyName,
     description,
+    requirements,
+    role,
+    notes,
     address,
     eventImage,
     categories,
@@ -169,9 +172,15 @@ const Dashboard = () => {
         <Paragraph>{description}</Paragraph>
       </TextGroup>
 
-      <HeaderTwo>Location</HeaderTwo>
-      <SubHeader>{address}</SubHeader>
-      {center ? <Map center={center}></Map> : <></>}
+      <TextGroup style={{ paddingTop: "0px" }}>
+        <HeaderTwo>Requirements</HeaderTwo>
+        <Paragraph>{requirements}</Paragraph>
+      </TextGroup>
+
+      <TextGroup style={{ paddingTop: "0px" }}>
+        <HeaderTwo>Role</HeaderTwo>
+        <Paragraph>{role}</Paragraph>
+      </TextGroup>
 
       {shift.map((s: any, i: number) => (
         <TextGroup key={`dashboard-shift-${i}`}>
@@ -185,6 +194,15 @@ const Dashboard = () => {
           )}
         </TextGroup>
       ))}
+
+      <HeaderTwo>Location</HeaderTwo>
+      <SubHeader>{address}</SubHeader>
+      {center ? <Map center={center}></Map> : <></>}
+
+      <TextGroup style={{ paddingTop: "0px" }}>
+        <HeaderTwo>Additional notes</HeaderTwo>
+        <Paragraph>{notes}</Paragraph>
+      </TextGroup>
 
       <HeaderThree>Applicants</HeaderThree>
 

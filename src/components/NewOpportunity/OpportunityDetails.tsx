@@ -17,11 +17,21 @@ import ImageDropzone from "../FormElements/ImageDropzone";
 import ShiftCard from "../ShiftCard";
 import Section from "./Section";
 import InputField from "../common/InputField";
+import { HostingType } from "@icontribute-founder/firebase-access";
 
 const OpportunityDetails = ({ setImageUploading }: any) => {
   const dispatch = useDispatch();
   const {
-    opportunity: { eventName, address, description, requirements, role, notes, shift },
+    opportunity: {
+      eventName,
+      address,
+      description,
+      requirements,
+      role,
+      notes,
+      shift,
+      type
+    },
   } = useSelector((state: RootState) => state.opportunity);
 
   const [orgImage, setOrgImage] = useState<any>();
@@ -85,7 +95,7 @@ const OpportunityDetails = ({ setImageUploading }: any) => {
         onChange={handleLocationOnChange}
       />
       <InputField
-        label="Description"
+        label="Description*"
         type="textarea"
         name="opportunity-details-description"
         id="opportunity-details-description"
@@ -97,25 +107,25 @@ const OpportunityDetails = ({ setImageUploading }: any) => {
       />
 
       <InputField
-        label="Mandatory Requirements"
+        label="Mandatory Requirements *"
         type="textarea"
         name="opportunity-details-requirements"
         id="opportunity-details-requirements"
         onChange={handleRequirementsOnChange}
         value={requirements}
-        placeholder="Begin Typing..."
+        placeholder="Enter the necessary requirements"
         fullWidth
         rows={8}
       />
 
       <InputField
-        label="What will the volunteer accomplish throughout the role"
+        label="What will the volunteer accomplish throughout the role *"
         type="textarea"
         name="opportunity-details-role"
         id="opportunity-details-role"
         onChange={handleRoleOnChange}
         value={role}
-        placeholder="Begin Typing..."
+        placeholder="Enter the possible tasks given"
         fullWidth
         rows={8}
       />
@@ -127,22 +137,29 @@ const OpportunityDetails = ({ setImageUploading }: any) => {
         id="opportunity-details-notes"
         onChange={handleNotesOnChange}
         value={notes}
-        placeholder="Begin Typing..."
+        placeholder="Enter anything that volunteers should know"
         fullWidth
         rows={8}
       />
 
-      <h3>Shift</h3>
-      <Grid container spacing={2}>
-        {shift.map((s: Shift, i: number) => (
-          <Grid item md={6} key={`grid-shift-${i}`}>
-            <ShiftCard shift={s} index={i} />
+      {type !== HostingType.External ? (
+        <div>
+          <h3>Shift</h3>
+          <Grid container spacing={2}>
+            {shift.map((s: Shift, i: number) => (
+              <Grid item md={6} key={`grid-shift-${i}`}>
+                <ShiftCard shift={s} index={i} />
+              </Grid>
+            ))}
+            <Grid item md={6}>
+              <ShiftCard />
+            </Grid>
           </Grid>
-        ))}
-        <Grid item md={6}>
-          <ShiftCard />
-        </Grid>
-      </Grid>
+        </div>
+      ) : (
+        ""
+      )}
+
       <h4>Upload Photo (Optional)</h4>
       <ImageDropzone setOrgImage={handleImageOnChange} />
     </>

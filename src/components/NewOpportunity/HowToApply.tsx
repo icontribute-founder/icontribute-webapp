@@ -8,12 +8,13 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import { RootState } from "../../store";
-import { updateHostingType } from "../../features/opportunity";
+import { updateHostingType, updateUrl } from "../../features/opportunity";
 
 import Section from "./Section";
 import { HostingType } from "@icontribute-founder/firebase-access";
 import ExternalIcon from "../Svgs/ExternalIcon";
 import InternalIcon from "../Svgs/InternalIcon";
+import InputField from "../common/InputField";
 
 const HostingTypeDescription = styled.p`
   font-style: normal;
@@ -51,19 +52,25 @@ const PrimaryRadio = <Radio color="primary" />;
 const HowToApply = () => {
   const dispatch = useDispatch();
   const {
-    opportunity: { type: hostingType },
+    opportunity: { type: hostingType, url, type},
   } = useSelector((state: RootState) => state.opportunity);
 
   const handleRadioChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     switch ((e.target as HTMLInputElement).value) {
       case HostingType.Internal:
         return dispatch(updateHostingType(HostingType.Internal));
-      case HostingType.External:
+      case HostingType.External:{
+        dispatch(updateUrl(""));
         return dispatch(updateHostingType(HostingType.External));
+      }
       default:
         return;
     }
   };
+
+  const handleUrlOnChange = (e: any) => {
+    dispatch(updateUrl(e.target.value));
+  }
 
   const content = (
     <RadioGroup
@@ -96,6 +103,20 @@ const HowToApply = () => {
             Provide a link to you website. We’ll redirect applicants to your
             organization's website to apply for an opportunity.
           </HostingTypeDescription>
+          
+          {type === HostingType.External ? 
+          (
+          <InputField
+            label="Website URL*"
+            type="text"
+            placeholder="example.org.com"
+            fullWidth={true}
+            onChange={handleUrlOnChange}
+            value={url}
+            id="opportunity-details-url"
+          />
+          ) : ''}
+          
         </Grid>
       </Grid>
     </RadioGroup>
