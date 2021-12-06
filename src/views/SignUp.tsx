@@ -40,7 +40,7 @@ interface SignupDetails {
 }
 */
 
-const SignUp = ({ setShowSignup }: any) => {
+const SignUp = ({ setShowSignup, setShowSignupConfirm }: any) => {
   const history = useHistory();
 
   const dispatch = useDispatch();
@@ -66,6 +66,7 @@ const SignUp = ({ setShowSignup }: any) => {
     postalCode: "",
     description: "",
     orgImageUrl: "",
+    event:[],
   });
 
   useEffect(() => {
@@ -163,8 +164,10 @@ const SignUp = ({ setShowSignup }: any) => {
         dispatch(
           signup({ company: signupDetails, password: password })
         );
-        history.push("/signup-confirm");
-        console.log("I am submitting")
+
+
+        setShowSignup(false);
+        setShowSignupConfirm(true);
       })
       .catch((err) => console.log(err));
   };
