@@ -13,6 +13,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../store";
 import { getOpportunitiesByIds, selectOpportunity } from "../features/opportunities";
 import { setAction, setExistingOpportunity } from "../features/opportunity";
+import {HostingType} from "@icontribute-founder/firebase-access";
 
 const Dashboard = () => {
   const history = useHistory();
@@ -106,6 +107,8 @@ const Dashboard = () => {
     shift,
     deadline,
     date,
+    url,
+    type,
   } = opportunities[indexSelected];
 
   let eventImageUrl = "";
@@ -139,7 +142,7 @@ const Dashboard = () => {
       <TextGroup>
         <Grid container>
           <Grid item xs={6}>
-            <HeaderThree>{eventName}</HeaderThree>
+            <BlueHeaderThree>{eventName}</BlueHeaderThree>
             <HeaderTwo>{companyName}</HeaderTwo>
 
             {categories.map((category: any, i: number) => (
@@ -165,10 +168,22 @@ const Dashboard = () => {
             </SubHeader>
           </Grid>
         </Grid>
+      <hr />
+      </TextGroup>
+      {type === HostingType.Internal ? (
+        <TextGroup style={{ paddingTop: "0px" }}>
+        <HeaderTwo>Application details</HeaderTwo>
+        <Paragraph>Through external website ({url})</Paragraph>
+      </TextGroup>
+      ) : ''}
+
+<TextGroup style={{ paddingTop: "0px" }}>
+        <HeaderTwo>Application details</HeaderTwo>
+        <Paragraph>Through external website ({url})</Paragraph>
       </TextGroup>
 
       <TextGroup style={{ paddingTop: "0px" }}>
-        <HeaderTwo>Organization details</HeaderTwo>
+        <HeaderTwo>Opportunity details</HeaderTwo>
         <Paragraph>{description}</Paragraph>
       </TextGroup>
 
@@ -320,6 +335,14 @@ const EventsListContainer = styled.div`
   overflow-y: scroll;
   overflow-x: hidden;
   scroll-behaviour: smooth;
+`;
+
+const BlueHeaderThree = styled.h3`
+font-size: 20px;
+font-weight: bold;
+margin: 0px;
+
+color: #2836d1;
 `;
 
 export const Location = styled.h4`
