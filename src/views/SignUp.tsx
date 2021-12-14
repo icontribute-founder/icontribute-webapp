@@ -18,6 +18,7 @@ import SignupGraphic from "../components/Svgs/SignupGraphic";
 import { useDispatch, useSelector } from "react-redux";
 import { signup } from "../features/user";
 import { defaultEvent, Company } from "@icontribute-founder/firebase-access";
+import default_photo from "../assets/images/default_photo.png";
 
 
 
@@ -148,7 +149,26 @@ const SignUp = ({ setShowSignup, setShowSignupConfirm }: any) => {
     e.preventDefault();
     const url = "https://icontribute-api-dev-server.herokuapp.com/images/";
     let formData = new FormData();
-    formData.append("photo", orgImage[0], "image.jpg");
+    if (orgImage){
+      formData.append("photo", orgImage[0], "image.jpg");
+    }
+    else{
+      //needs to be of type blob
+      const parts = [
+        new Blob([], {
+          type: 'text/plain'
+        }),
+        ' Same way as you do with blob',
+        new Uint16Array([33])
+      ];
+      
+      const file = new File(parts, 'sample.txt');
+      const test_object = {path:"figure out the path", name: "a name", lastModified: 1638485464958, lastModifiedDate: 'Thu Dec 02 2021 17:51:04 GMT-0500 (Eastern Standard Time)', webkitRelativePath: ''}
+      var f = new File([], "filename");
+      //{path: '16464545-test-written-in-black-on-white-computer-keys-3d-illustration-isolated-background.webp', name: '16464545-test-written-in-black-on-white-computer-keys-3d-illustration-isolated-background.webp', lastModified: 1638485464958, lastModifiedDate: Thu Dec 02 2021 17:51:04 GMT-0500 (Eastern Standard Time), webkitRelativePath: '', …}
+      formData.append("photo", f, "image.jpg");
+    }
+    
     await axios
       .post(url, formData, {
         headers: {
@@ -175,7 +195,7 @@ const SignUp = ({ setShowSignup, setShowSignupConfirm }: any) => {
 
   /* ============================================================================================================================== */
   /* This section will be used to call an API and send the sign up details to, currently this object is just logged in the console. */
-  console.log(signupDetails);
+  //console.log(signupDetails);
   /* ============================================================================================================================== */
 
   return (
