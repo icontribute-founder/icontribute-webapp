@@ -62,12 +62,20 @@ const SignUp = ({ setShowSignup, setShowSignupConfirm }: any) => {
   const [signupDetails, setSignupDetails] = useState<Company>({
     email: "",
     isRegisteredCRA: "",
-    organizationName: "",
-    website: "",
+    companyName: "",
+    url: "",
     postalCode: "",
     description: "",
-    orgImageUrl: "",
+    //orgImageUrl: "",
     event:[],
+    rating:0,
+    reviews:[],
+    categories:[],
+    notifications:[],
+    verified:false,
+    profilePicture:"",
+    backgroundPicture:""
+
   });
 
   useEffect(() => {
@@ -78,8 +86,8 @@ const SignUp = ({ setShowSignup, setShowSignupConfirm }: any) => {
       signupDetails.postalCode === "" ||
       errorVisible === "block" ||
       signupDetails.isRegisteredCRA === "" ||
-      signupDetails.organizationName === "" ||
-      signupDetails.website === "" ||
+      signupDetails.companyName === "" ||
+      signupDetails.url === "" ||
       orgImage === null
     ) {
       setSubmitDisabled(true);
@@ -179,7 +187,7 @@ const SignUp = ({ setShowSignup, setShowSignupConfirm }: any) => {
       .then((res) => {
         setSignupDetails((prevState) => ({
           ...prevState,
-          orgImageUrl: res.data.imagePath,
+          profilePicture: res.data.imagePath,
         }));
         dispatch(
           signup({ company: signupDetails, password: password })
@@ -275,18 +283,18 @@ const SignUp = ({ setShowSignup, setShowSignupConfirm }: any) => {
             <InputField
               label="Organization Name"
               placeholder="ie. iContribute"
-              name="organizationName"
-              id="organizationName"
+              name="companyName"
+              id="companyName"
               onChange={handleFormChange}
-              value = {signupDetails.organizationName}
+              value = {signupDetails.companyName}
             />
             <InputField
               label="Website"
               placeholder="ie. https://icontribute.community"
-              name="website"
-              id="website"
+              name="url"
+              id="url"
               onChange={handleFormChange}
-              value = {signupDetails.website}
+              value = {signupDetails.url}
             />
             <InputField
               label="Postal Code"
