@@ -8,13 +8,44 @@ import MenuItem from "@material-ui/core/MenuItem";
 import Menu from "@material-ui/core/Menu";
 import DeletePopUp from "./DeletePopUp";
 import { setAction } from "../features/opportunity";
+import { useSelector } from "react-redux";
+import { RootState } from "../store";
+import { user } from "../configure";
+import { markNotificationRead } from "../features/user";
 
-const NotifMoreOptions = () => {
+const NotifMoreOptions = (props: any) => {
+  const { userProfile } = useSelector((state: RootState) => state.user);
+  let notificationCollection: any[] = [];
+  notificationCollection = userProfile.notifications;
+
   const dispatch = useDispatch();
   const history = useHistory();
   const [anchorEl, setAnchorEl] = useState(null);
 
-  const handleMarkAsRead = () => {
+  const notificationProps = props.notificationProps;
+  const notification = {
+    sourceEmail: notificationProps.sourceEmail,
+    eventID: notificationProps.eventID,
+    eventName: notificationProps.eventName,
+    sourceUserName: notificationProps.sourceUserName,
+    read: notificationProps.read,
+    type: notificationProps.type,
+    date: notificationProps.date,
+    sourceProfilePicture: notificationProps.sourceProfilePicture,
+  };
+
+  const handleMarkAsRead = async () => {
+    try{
+      await user.markNotificationRead(userProfile.id, {
+        ...notification,
+        date: notification.date.toDate(),
+      });
+
+      dispatch(markNotificationRead(notification.eventID));
+    }
+    catch(error){
+      console.log(error);
+    }
     handleClose();
   };
 
@@ -30,11 +61,12 @@ const NotifMoreOptions = () => {
     handleClose();
   };
 
+  const handleMarkAsReadMsg:string = notification.read=== false ? "Mark as read" : "Mark as unread";
 
   const options = [
-    { name: "Mark as read",handler: handleMarkAsRead },
-    { name: "View Applicant's Profile",handler: handleAppProf },
-    { name: "Remove this notification",handler: handleRemove },
+    { name: handleMarkAsReadMsg, handler: handleMarkAsRead },
+    { name: "View Applicant's Profile", handler: handleAppProf },
+    { name: "Remove this notification", handler: handleRemove },
     { name: "Report issue", handler: handleReport },
   ];
 
@@ -68,7 +100,6 @@ const NotifMoreOptions = () => {
           </MenuItem>
         ))}
       </Menu>
-      
     </StyledMoreOptions>
   );
 };
