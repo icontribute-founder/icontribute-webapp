@@ -205,7 +205,7 @@ const Dashboard = () => {
       </TextGroup>
 
       {shift.map((s: any, i: number) => (
-        <TextGroup key={`dashboard-shift-${i}`}>
+        <TextGroup key={`dashboard-shift-${i}`} style={{ paddingTop: "0px" }}>
           <HeaderTwo>Shift {i + 1}</HeaderTwo>
           <Paragraph>Start: {formatDateTime(new Date(s.start))}</Paragraph>
           <Paragraph>End: {formatDateTime(new Date(s.end))}</Paragraph>
@@ -229,6 +229,7 @@ const Dashboard = () => {
       <HeaderThree>Applicants</HeaderThree>
 
       <Paragraph>There are no applicants</Paragraph>
+      <br /><br />
     </SelectedOpportunity>
   );
 
