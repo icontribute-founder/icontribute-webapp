@@ -11,9 +11,12 @@ import Map from "../components/Map";
 import EmptyDashboard from "./EmptyDashboard";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../store";
-import { getOpportunitiesByIds, selectOpportunity } from "../features/opportunities";
+import {
+  getOpportunitiesByIds,
+  selectOpportunity,
+} from "../features/opportunities";
 import { setAction, setExistingOpportunity } from "../features/opportunity";
-import {HostingType} from "@icontribute-founder/firebase-access";
+import { HostingType } from "@icontribute-founder/firebase-access";
 
 const Dashboard = () => {
   const history = useHistory();
@@ -55,7 +58,7 @@ const Dashboard = () => {
   };
 
   useEffect(() => {
-    dispatch(getOpportunitiesByIds({eventIds: userProfile.event}));
+    dispatch(getOpportunitiesByIds({ eventIds: userProfile.event }));
   }, [dispatch]);
 
   if (loading || error !== null) return "";
@@ -168,19 +171,23 @@ const Dashboard = () => {
             </SubHeader>
           </Grid>
         </Grid>
-      <hr />
+        <hr />
       </TextGroup>
-      {type === HostingType.Internal ? (
+      {
+        //UNCOMMENT the below statements when the type getting from database is not undefined
+        //type === HostingType.External ? (
         <TextGroup style={{ paddingTop: "0px" }}>
-        <HeaderTwo>Application details</HeaderTwo>
-        <Paragraph>Through external website ({url})</Paragraph>
-      </TextGroup>
-      ) : ''}
-
-<TextGroup style={{ paddingTop: "0px" }}>
-        <HeaderTwo>Application details</HeaderTwo>
-        <Paragraph>Through external website ({url})</Paragraph>
-      </TextGroup>
+          <HeaderTwo>Application details</HeaderTwo>
+          <Paragraph>
+            Through external website (
+            <a target="parent" href={"//" + url}>
+              {url}
+            </a>
+            ){" "}
+          </Paragraph>
+        </TextGroup>
+        //):("")
+      }
 
       <TextGroup style={{ paddingTop: "0px" }}>
         <HeaderTwo>Opportunity details</HeaderTwo>
@@ -338,11 +345,11 @@ const EventsListContainer = styled.div`
 `;
 
 const BlueHeaderThree = styled.h3`
-font-size: 20px;
-font-weight: bold;
-margin: 0px;
+  font-size: 20px;
+  font-weight: bold;
+  margin: 0px;
 
-color: #2836d1;
+  color: #2836d1;
 `;
 
 export const Location = styled.h4`
