@@ -66,7 +66,7 @@ const BasicDetails = () => {
         />
       </RadioGroup>
       <h3>Which category do your opportunity fall under?</h3>
-      <Subtitle>Select up to 3 categories (Minimum 1 category must be selected)</Subtitle>
+      <Subtitle>Select up to 3 categories. At least 1 category must be selected.</Subtitle>
       <CategoryGroup />
     </>
   );
