@@ -113,6 +113,7 @@ const AccountSettings = () => {
     userProfile.profilePicture
   );
 
+
   const [saveDetailsNoti, setSaveDetailsNoti] = useState("");
   const [saveDetailsNotiColor, setSaveDetailsNotiColor] = useState("");
   const [isSaveDetailsNotiDisplayed, setIsSaveDetailsNotiDisplayed] =
@@ -267,7 +268,7 @@ const SaveButtonEventNoti = styled.p<{
 `;
 
 const ProfileImage = styled.div<{ currProfilePic: string }>`
-  background: url(${(props) => props.currProfilePic});
+  background: url(${(props) => (props.currProfilePic ? props.currProfilePic : "https://i.postimg.cc/Zn3DvjXF/Untitled.png")});
   background-repeat: no-repeat;
   background-position: center;
   background-size: contain;
