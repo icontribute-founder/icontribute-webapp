@@ -116,7 +116,7 @@ const Summary = () => {
         <Grid item md={5}>
           <BasicDetails>
             <H3>{eventName}</H3>
-            <div style={{ marginTop: "52px" }}>
+            <div style={{ marginTop: "0px" }}>
               <TimeText>
                 <img
                   src={calendarIcon}
