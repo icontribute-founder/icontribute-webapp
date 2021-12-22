@@ -106,6 +106,7 @@ const HowToApply = () => {
           
           {type === HostingType.External ? 
           (
+<<<<<<< HEAD
           <InputField
             label="Website URL*"
             type="text"
@@ -115,6 +116,19 @@ const HowToApply = () => {
             value={url}
             id="opportunity-details-url"
           />
+=======
+          <div style={{ marginBottom: "-30px" }}>
+            <InputField
+              label="Website URL*"
+              type="text"
+              placeholder="example.org.com"
+              fullWidth={true}
+              onChange={handleUrlOnChange}
+              value={url}
+              id="opportunity-details-url"
+            />
+          </div>
+>>>>>>> main
           ) : ''}
           
         </Grid>

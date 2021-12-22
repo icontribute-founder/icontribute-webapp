@@ -11,9 +11,16 @@ import Map from "../components/Map";
 import EmptyDashboard from "./EmptyDashboard";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../store";
-import { getOpportunitiesByIds, selectOpportunity } from "../features/opportunities";
+import {
+  getOpportunitiesByIds,
+  selectOpportunity,
+} from "../features/opportunities";
 import { setAction, setExistingOpportunity } from "../features/opportunity";
+<<<<<<< HEAD
 import {HostingType} from "@icontribute-founder/firebase-access";
+=======
+import { HostingType } from "@icontribute-founder/firebase-access";
+>>>>>>> main
 
 const Dashboard = () => {
   const history = useHistory();
@@ -55,7 +62,7 @@ const Dashboard = () => {
   };
 
   useEffect(() => {
-    dispatch(getOpportunitiesByIds({eventIds: userProfile.event}));
+    dispatch(getOpportunitiesByIds({ eventIds: userProfile.event }));
   }, [dispatch]);
 
   if (loading || error !== null) return "";
@@ -168,6 +175,7 @@ const Dashboard = () => {
             </SubHeader>
           </Grid>
         </Grid>
+<<<<<<< HEAD
       <hr />
       </TextGroup>
       {type === HostingType.Internal ? (
@@ -180,6 +188,27 @@ const Dashboard = () => {
 <TextGroup style={{ paddingTop: "0px" }}>
         <HeaderTwo>Application details</HeaderTwo>
         <Paragraph>Through external website ({url})</Paragraph>
+=======
+        <hr />
+      </TextGroup>
+        
+        <TextGroup style={{ paddingTop: "0px" }}>
+          <HeaderTwo>Application details</HeaderTwo>
+      {
+        //UNCOMMENT the below statements or use other ways to show opportunity application method (internal or external)
+        //But when variable "type" of Oppotunity (from database) is fixed (which is not "undefined")
+
+        //type === HostingType.External ? (
+          <Paragraph>
+            Through external website (
+            <a target="parent" href={"//" + url}>
+              {url}
+            </a>
+            ){" "}
+          </Paragraph>
+        //):("")
+      }
+>>>>>>> main
       </TextGroup>
 
       <TextGroup style={{ paddingTop: "0px" }}>
@@ -198,7 +227,7 @@ const Dashboard = () => {
       </TextGroup>
 
       {shift.map((s: any, i: number) => (
-        <TextGroup key={`dashboard-shift-${i}`}>
+        <TextGroup key={`dashboard-shift-${i}`} style={{ paddingTop: "0px" }}>
           <HeaderTwo>Shift {i + 1}</HeaderTwo>
           <Paragraph>Start: {formatDateTime(new Date(s.start))}</Paragraph>
           <Paragraph>End: {formatDateTime(new Date(s.end))}</Paragraph>
@@ -222,6 +251,7 @@ const Dashboard = () => {
       <HeaderThree>Applicants</HeaderThree>
 
       <Paragraph>There are no applicants</Paragraph>
+      <br /><br />
     </SelectedOpportunity>
   );
 
@@ -338,11 +368,19 @@ const EventsListContainer = styled.div`
 `;
 
 const BlueHeaderThree = styled.h3`
+<<<<<<< HEAD
 font-size: 20px;
 font-weight: bold;
 margin: 0px;
 
 color: #2836d1;
+=======
+  font-size: 20px;
+  font-weight: bold;
+  margin: 0px;
+
+  color: #2836d1;
+>>>>>>> main
 `;
 
 export const Location = styled.h4`

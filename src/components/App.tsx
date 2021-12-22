@@ -7,6 +7,7 @@ import { routes } from "../routes";
 import { RootState } from "../store";
 import Login from "../views/Login";
 import SignUp from "../views/SignUp";
+import SignUpConfirm from "../views/SignUpConfirm";
 import defaultTheme from "../themes";
 import { loadUser } from "../features/user";
 
@@ -26,6 +27,7 @@ const App = () => {
   );
 
   const [showSignup, setShowSignup] = useState(false);
+  const [showSignupConfirm, setShowSignupConfirm] = useState(false);
 
   const dispatch = useDispatch();
 
@@ -38,7 +40,11 @@ const App = () => {
   }
 
   if (showSignup) {
-    return <SignUp setShowSignup={setShowSignup} />;
+    return <SignUp setShowSignup={setShowSignup} setShowSignupConfirm={setShowSignupConfirm} />;
+  }
+
+  if (showSignupConfirm) {
+    return <SignUpConfirm setShowSignupConfirm={setShowSignupConfirm} />;
   }
 
   if (!loggedIn) {
