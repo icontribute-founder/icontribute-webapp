@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { Subtitle } from "../styles";
 
 const SectionContainer = styled.div`
-    margin-bottom: 60px;
+    margin-bottom: 0px;
 `;
 
 const Section = ({ title, subtitle, content }: any) => {

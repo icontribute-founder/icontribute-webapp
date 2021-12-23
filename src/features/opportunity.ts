@@ -105,6 +105,9 @@ export const opportunitySlice = createSlice({
     updateImage: (state, action: PayloadAction<File>) => {
       state.opportunity.eventImage = action.payload;
     },
+    updateUrl: (state, action: PayloadAction<string>) => {
+      state.opportunity.url = action.payload;
+    },
     newShift: (state, action: PayloadAction<Shift>) => {
       state.opportunity.shift.push(action.payload);
     },
@@ -134,6 +137,7 @@ export const opportunitySlice = createSlice({
         date,
         deadline,
         eventImage,
+        url,
         coordinates,
       } = opportunity;
 
@@ -149,6 +153,7 @@ export const opportunitySlice = createSlice({
       state.opportunity.virtual = virtual;
       state.opportunity.deadline = deadline;
       state.opportunity.date = date;
+      state.opportunity.url = url;
       // state.opportunity.categories = categories;
     },
   },
@@ -191,6 +196,7 @@ export const {
   updateVirtual,
   updateDeadline,
   updateImage,
+  updateUrl,
   newShift,
   editShift,
   removeShift,

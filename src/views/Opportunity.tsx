@@ -11,6 +11,7 @@ import { Subtitle } from "../components/styles";
 import { useHistory, useParams } from "react-router";
 import { useEffect, useState } from "react";
 import { updateCompany } from "../features/opportunity";
+import { HostingType } from "@icontribute-founder/firebase-access";
 
 import { ArrowBackIos } from "@material-ui/icons";
 
@@ -74,7 +75,17 @@ const Opportunity = () => {
   };
 
   const {
-    opportunity: { eventName, address },
+    opportunity: {
+      eventName,
+      address,
+      description,
+      requirements,
+      role,
+      categories,
+      type,
+      shift,
+      url,
+    },
   } = useSelector((state: RootState) => state.opportunity);
 
   const { userProfile } = useSelector((state: RootState) => state.user);
@@ -82,7 +93,6 @@ const Opportunity = () => {
   useEffect(() => {
     dispatch(updateCompany(userProfile.companyName));
   }, [dispatch]);
-
 
   let title: string;
   switch (action) {
@@ -104,7 +114,15 @@ const Opportunity = () => {
     history.push("/");
   };
 
-  const canSubmit = eventName !== "" && address !== "" && !imageUploading;
+  const canSubmit =
+    eventName !== "" &&
+    address !== "" &&
+    requirements !== "" &&
+    role !== "" &&
+    description !== "" &&
+    categories.length > 0 &&
+    ((type !== HostingType.External && shift.length > 0) ||
+      (type === HostingType.External && url !== ""));
 
   return (
     <StyledOpportunity>
