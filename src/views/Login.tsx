@@ -74,7 +74,7 @@ interface AuthUser {
   password: string;
 }
 
-const Login = ({ setShowSignup }: any) => {
+const Login = ({ setShowSignup, setShowForgotPassword }: any) => {
   const dispatch = useDispatch();
   const { error, loggedIn } = useSelector((state: RootState) => state.user);
   const [credential, setCredential] = useState<AuthUser>({
@@ -86,6 +86,10 @@ const Login = ({ setShowSignup }: any) => {
 
   const handleSignup = () => {
     setShowSignup(true);
+  };
+
+  const handleForgotPassword = () => {
+    setShowForgotPassword(true);
   };
 
   const handleAccountSettingsClick = () => {
@@ -141,7 +145,9 @@ const Login = ({ setShowSignup }: any) => {
             value={credential.password}
           />
           <div style={{ marginBottom: "20px" }}>
-            <a href="#">Forget password?</a>
+            <a href="javascript:void(0);" onClick={handleForgotPassword}>
+              Forget password?
+            </a>
             <ErrorMessage>{error}</ErrorMessage>
           </div>
         </InputField>
