@@ -352,7 +352,6 @@ const BlueHeaderThree = styled.h3`
   font-size: 20px;
   font-weight: bold;
   margin: 0px;
-
   color: #2836d1;
 `;
 
@@ -385,7 +384,6 @@ export const HeaderThree = styled.h3`
   font-size: 20px;
   font-weight: bold;
   margin: 0px;
-
   color: #192226;
 `;
 
