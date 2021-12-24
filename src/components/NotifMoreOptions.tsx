@@ -36,7 +36,7 @@ const NotifMoreOptions = (props: any) => {
 
   const handleMarkAsRead = async () => {
     try{
-      await user.markNotificationRead(userProfile.id, {
+      await user.markNotificationRead(userProfile.email, {
         ...notification,
         date: notification.date.toDate(),
       });
@@ -65,9 +65,9 @@ const NotifMoreOptions = (props: any) => {
 
   const options = [
     { name: handleMarkAsReadMsg, handler: handleMarkAsRead },
-    { name: "View Applicant's Profile", handler: handleAppProf },
+    //{ name: "View Applicant's Profile", handler: handleAppProf },
     { name: "Remove this notification", handler: handleRemove },
-    { name: "Report issue", handler: handleReport },
+    //{ name: "Report issue", handler: handleReport },
   ];
 
   const handleClick = (event: any) => {
