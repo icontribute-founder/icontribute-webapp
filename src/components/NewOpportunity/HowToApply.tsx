@@ -52,14 +52,14 @@ const PrimaryRadio = <Radio color="primary" />;
 const HowToApply = () => {
   const dispatch = useDispatch();
   const {
-    opportunity: { type: hostingType, url, type},
+    opportunity: { type: hostingType, url, type },
   } = useSelector((state: RootState) => state.opportunity);
 
   const handleRadioChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     switch ((e.target as HTMLInputElement).value) {
       case HostingType.Internal:
         return dispatch(updateHostingType(HostingType.Internal));
-      case HostingType.External:{
+      case HostingType.External: {
         dispatch(updateUrl(""));
         return dispatch(updateHostingType(HostingType.External));
       }
@@ -70,7 +70,7 @@ const HowToApply = () => {
 
   const handleUrlOnChange = (e: any) => {
     dispatch(updateUrl(e.target.value));
-  }
+  };
 
   const content = (
     <RadioGroup
@@ -103,34 +103,22 @@ const HowToApply = () => {
             Provide a link to you website. We’ll redirect applicants to your
             organization's website to apply for an opportunity.
           </HostingTypeDescription>
-          
-          {type === HostingType.External ? 
-          (
-<<<<<<< HEAD
-          <InputField
-            label="Website URL*"
-            type="text"
-            placeholder="example.org.com"
-            fullWidth={true}
-            onChange={handleUrlOnChange}
-            value={url}
-            id="opportunity-details-url"
-          />
-=======
-          <div style={{ marginBottom: "-30px" }}>
-            <InputField
-              label="Website URL*"
-              type="text"
-              placeholder="example.org.com"
-              fullWidth={true}
-              onChange={handleUrlOnChange}
-              value={url}
-              id="opportunity-details-url"
-            />
-          </div>
->>>>>>> main
-          ) : ''}
-          
+
+          {type === HostingType.External ? (
+            <div style={{ marginBottom: "-30px" }}>
+              <InputField
+                label="Website URL*"
+                type="text"
+                placeholder="example.org.com"
+                fullWidth={true}
+                onChange={handleUrlOnChange}
+                value={url}
+                id="opportunity-details-url"
+              />
+            </div>
+          ) : (
+            ""
+          )}
         </Grid>
       </Grid>
     </RadioGroup>

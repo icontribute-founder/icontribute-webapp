@@ -17,10 +17,13 @@ import FormData from "form-data";
 import SignupGraphic from "../components/Svgs/SignupGraphic";
 import { useDispatch, useSelector } from "react-redux";
 import { signup } from "../features/user";
-import { defaultEvent, Company } from "@icontribute-founder/firebase-access";
+import {
+  defaultEvent,
+  Company,
+  UserType,
+  defaultCompany,
+} from "@icontribute-founder/firebase-access";
 import default_photo from "../assets/images/default_photo.png";
-
-
 
 import { LightBlueButton } from "../components/styles";
 import Slides from "../components/Slides";
@@ -59,24 +62,25 @@ const SignUp = ({ setShowSignup, setShowSignupConfirm }: any) => {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [errorVisible, setErrorVisible] = useState("none");
   const [submitDisabled, setSubmitDisabled] = useState(true);
-  const [signupDetails, setSignupDetails] = useState<Company>({
-    email: "",
-    isRegisteredCRA: "",
-    companyName: "",
-    url: "",
-    postalCode: "",
-    description: "",
-    //orgImageUrl: "",
-    event:[],
-    rating:0,
-    reviews:[],
-    categories:[],
-    notifications:[],
-    verified:false,
-    profilePicture:"",
-    backgroundPicture:""
-
-  });
+  const [signupDetails, setSignupDetails] = useState<Company>(defaultCompany);
+  // const [signupDetails, setSignupDetails] = useState<Company>({
+  //   email: "",
+  //   isRegisteredCRA: "",
+  //   companyName: "",
+  //   url: "",
+  //   postalCode: "",
+  //   description: "",
+  //   //orgImageUrl: "",
+  //   event: [],
+  //   rating: 0,
+  //   reviews: [],
+  //   categories: [],
+  //   notifications: [],
+  //   verified: false,
+  //   profilePicture: "",
+  //   backgroundPicture: "",
+  //   type: UserType.COMPANY,
+  // });
 
   useEffect(() => {
     if (
@@ -157,26 +161,32 @@ const SignUp = ({ setShowSignup, setShowSignupConfirm }: any) => {
     e.preventDefault();
     const url = "https://icontribute-api-dev-server.herokuapp.com/images/";
     let formData = new FormData();
-    if (orgImage){
+    if (orgImage) {
       formData.append("photo", orgImage[0], "image.jpg");
-    }
-    else{
+    } else {
       //needs to be of type blob
       const parts = [
         new Blob([], {
-          type: 'text/plain'
+          type: "text/plain",
         }),
-        ' Same way as you do with blob',
-        new Uint16Array([33])
+        " Same way as you do with blob",
+        new Uint16Array([33]),
       ];
-      
-      const file = new File(parts, 'sample.txt');
-      const test_object = {path:"figure out the path", name: "a name", lastModified: 1638485464958, lastModifiedDate: 'Thu Dec 02 2021 17:51:04 GMT-0500 (Eastern Standard Time)', webkitRelativePath: ''}
+
+      const file = new File(parts, "sample.txt");
+      const test_object = {
+        path: "figure out the path",
+        name: "a name",
+        lastModified: 1638485464958,
+        lastModifiedDate:
+          "Thu Dec 02 2021 17:51:04 GMT-0500 (Eastern Standard Time)",
+        webkitRelativePath: "",
+      };
       var f = new File([], "filename");
       //{path: '16464545-test-written-in-black-on-white-computer-keys-3d-illustration-isolated-background.webp', name: '16464545-test-written-in-black-on-white-computer-keys-3d-illustration-isolated-background.webp', lastModified: 1638485464958, lastModifiedDate: Thu Dec 02 2021 17:51:04 GMT-0500 (Eastern Standard Time), webkitRelativePath: '', …}
       formData.append("photo", f, "image.jpg");
     }
-    
+
     await axios
       .post(url, formData, {
         headers: {
@@ -189,17 +199,13 @@ const SignUp = ({ setShowSignup, setShowSignupConfirm }: any) => {
           ...prevState,
           profilePicture: res.data.imagePath,
         }));
-        dispatch(
-          signup({ company: signupDetails, password: password })
-        );
-
+        dispatch(signup({ company: signupDetails, password: password }));
 
         setShowSignup(false);
         setShowSignupConfirm(true);
       })
       .catch((err) => console.log(err));
   };
-
 
   /* ============================================================================================================================== */
   /* This section will be used to call an API and send the sign up details to, currently this object is just logged in the console. */
@@ -224,9 +230,9 @@ const SignUp = ({ setShowSignup, setShowSignupConfirm }: any) => {
               placeholder="Enter your organization email"
               name="email"
               id="email"
-              type = "text"
+              type="text"
               onChange={handleFormChange}
-              value = {signupDetails.email}
+              value={signupDetails.email}
             />
             <InputField
               label="Create a Password"
@@ -236,7 +242,7 @@ const SignUp = ({ setShowSignup, setShowSignupConfirm }: any) => {
               id="password"
               checkMarkVisible={passwordCheckMark}
               onChange={passwordChange}
-              value = {password}
+              value={password}
             />
             <InputField
               label="Confirm Password"
@@ -247,7 +253,7 @@ const SignUp = ({ setShowSignup, setShowSignupConfirm }: any) => {
               checkMarkVisible={passwordConfirmCheckMark}
               errorVisible={errorVisible}
               onChange={onConfirmPasswordChange}
-              value = {confirmPassword}
+              value={confirmPassword}
             />
             <HeaderTwo>Organization details</HeaderTwo>
             <Paragraph>
@@ -286,7 +292,7 @@ const SignUp = ({ setShowSignup, setShowSignupConfirm }: any) => {
               name="companyName"
               id="companyName"
               onChange={handleFormChange}
-              value = {signupDetails.companyName}
+              value={signupDetails.companyName}
             />
             <InputField
               label="Website"
@@ -294,7 +300,7 @@ const SignUp = ({ setShowSignup, setShowSignupConfirm }: any) => {
               name="url"
               id="url"
               onChange={handleFormChange}
-              value = {signupDetails.url}
+              value={signupDetails.url}
             />
             <InputField
               label="Postal Code"
@@ -302,7 +308,7 @@ const SignUp = ({ setShowSignup, setShowSignupConfirm }: any) => {
               name="postalCode"
               id="postalCode"
               onChange={handleFormChange}
-              value = {signupDetails.postalCode}
+              value={signupDetails.postalCode}
             />
             <TextareaField
               label="Description"
@@ -311,7 +317,7 @@ const SignUp = ({ setShowSignup, setShowSignupConfirm }: any) => {
               onChange={handleFormChange}
               placeholder="ie.We connect people who are looking for local volunteer opportunities to nonprofits who are actively recruiting"
               rows={8}
-              value = {signupDetails.description}
+              value={signupDetails.description}
             />
             <HeaderThree>Upload an account photo or logo</HeaderThree>
           </Grid>

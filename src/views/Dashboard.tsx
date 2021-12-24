@@ -16,11 +16,7 @@ import {
   selectOpportunity,
 } from "../features/opportunities";
 import { setAction, setExistingOpportunity } from "../features/opportunity";
-<<<<<<< HEAD
-import {HostingType} from "@icontribute-founder/firebase-access";
-=======
 import { HostingType } from "@icontribute-founder/firebase-access";
->>>>>>> main
 
 const Dashboard = () => {
   const history = useHistory();
@@ -175,20 +171,6 @@ const Dashboard = () => {
             </SubHeader>
           </Grid>
         </Grid>
-<<<<<<< HEAD
-      <hr />
-      </TextGroup>
-      {type === HostingType.Internal ? (
-        <TextGroup style={{ paddingTop: "0px" }}>
-        <HeaderTwo>Application details</HeaderTwo>
-        <Paragraph>Through external website ({url})</Paragraph>
-      </TextGroup>
-      ) : ''}
-
-<TextGroup style={{ paddingTop: "0px" }}>
-        <HeaderTwo>Application details</HeaderTwo>
-        <Paragraph>Through external website ({url})</Paragraph>
-=======
         <hr />
       </TextGroup>
         
@@ -208,7 +190,6 @@ const Dashboard = () => {
           </Paragraph>
         //):("")
       }
->>>>>>> main
       </TextGroup>
 
       <TextGroup style={{ paddingTop: "0px" }}>
@@ -368,19 +349,10 @@ const EventsListContainer = styled.div`
 `;
 
 const BlueHeaderThree = styled.h3`
-<<<<<<< HEAD
-font-size: 20px;
-font-weight: bold;
-margin: 0px;
-
-color: #2836d1;
-=======
   font-size: 20px;
   font-weight: bold;
   margin: 0px;
-
   color: #2836d1;
->>>>>>> main
 `;
 
 export const Location = styled.h4`
@@ -412,7 +384,6 @@ export const HeaderThree = styled.h3`
   font-size: 20px;
   font-weight: bold;
   margin: 0px;
-
   color: #192226;
 `;
 
