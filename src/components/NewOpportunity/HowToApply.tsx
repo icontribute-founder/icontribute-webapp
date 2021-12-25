@@ -49,7 +49,7 @@ const RadioLabel = ({ label, svg }: any) => {
 
 const PrimaryRadio = <Radio color="primary" />;
 
-const HowToApply = () => {
+const HowToApply = (props:any) => {
   const dispatch = useDispatch();
   const {
     opportunity: { type: hostingType, url, type },
@@ -113,6 +113,7 @@ const HowToApply = () => {
                 fullWidth={true}
                 onChange={handleUrlOnChange}
                 value={url}
+                errorMessage={props.isHandleDisplayErrorMsg && !url ? "Please enter the website URL":""}
                 id="opportunity-details-url"
               />
             </div>
@@ -126,6 +127,7 @@ const HowToApply = () => {
 
   return (
     <Section
+      id="section-how-to-apply"
       title="How to apply"
       subtitle="Choose to receive applications through iContribute or redirect
                 volunteers to an external link."

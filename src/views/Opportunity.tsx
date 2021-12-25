@@ -68,12 +68,6 @@ const Opportunity = () => {
 
   const [imageUploading, setImageUploading] = useState(false);
 
-  const handleOnClick = (e: any) => {
-    console.log("Event Details: ", e);
-    e.preventDefault();
-    history.push("/new-opportunity-review");
-  };
-
   const {
     opportunity: {
       eventName,
@@ -114,15 +108,42 @@ const Opportunity = () => {
     history.push("/");
   };
 
-  const canSubmit =
-    eventName !== "" &&
-    address !== "" &&
-    requirements !== "" &&
-    role !== "" &&
-    description !== "" &&
-    categories.length > 0 &&
-    ((type !== HostingType.External && shift.length > 0) ||
-      (type === HostingType.External && url !== ""));
+  const [isHandleDisplayErrorMsg, setIsHandleDisplayErrorMsg] = useState(false);
+
+  const handleOnClick = (e: any) => {
+    setIsHandleDisplayErrorMsg(true);
+    if (type === HostingType.External && !url) {
+      const scrollIntoItem = document.getElementById("section-how-to-apply");
+      if (scrollIntoItem) {
+        scrollIntoItem.scrollIntoView();
+      }
+    } else if (categories.length === 0) {
+      const scrollIntoItem = document.getElementById(
+        "section-basic-details-category"
+      );
+      if (scrollIntoItem) {
+        scrollIntoItem.scrollIntoView();
+      }
+    } else if (!eventName || !address || !requirements || !role || !description) {
+      const scrollIntoItem = document.getElementById(
+        "section-opportunity-details"
+      );
+      if (scrollIntoItem) {
+        scrollIntoItem.scrollIntoView();
+      }
+    } else if (type !== HostingType.External && shift.length === 0) {
+      const scrollIntoItem = document.getElementById(
+        "section-opportunity-details-shift"
+      );
+      if (scrollIntoItem) {
+        scrollIntoItem.scrollIntoView();
+      }
+    } else {
+      console.log("Event Details: ", e);
+      e.preventDefault();
+      history.push("/new-opportunity-review");
+    }
+  };
 
   return (
     <StyledOpportunity>
@@ -137,12 +158,15 @@ const Opportunity = () => {
           to find relevant and qualified candidates.
         </Subtitle>
         <ContentContainer>
-          <HowToApply />
+          <HowToApply isHandleDisplayErrorMsg={isHandleDisplayErrorMsg} />
           <BasicDetails />
-          <OpportunityDetails setImageUploading={setImageUploading} />
+          <OpportunityDetails
+            isHandleDisplayErrorMsg={isHandleDisplayErrorMsg}
+            setImageUploading={setImageUploading}
+          />
           <SaveButtonContainer>
             <InteractiveButton
-              disabled={!canSubmit}
+              //disabled={!canSubmit}
               text="Save & Preview"
               onClick={handleOnClick}
             />

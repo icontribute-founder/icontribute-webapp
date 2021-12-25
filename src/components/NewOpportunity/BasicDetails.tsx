@@ -65,7 +65,7 @@ const BasicDetails = () => {
           label="Virtual"
         />
       </RadioGroup>
-      <h3>Which category do your opportunity fall under?</h3>
+      <h3 id="section-basic-details-category">Which category do your opportunity fall under?</h3>
       <Subtitle>Select up to 3 categories. At least 1 category must be selected.</Subtitle>
       <CategoryGroup />
     </>
