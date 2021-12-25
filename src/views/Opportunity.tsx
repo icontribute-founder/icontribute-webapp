@@ -166,7 +166,6 @@ const Opportunity = () => {
           />
           <SaveButtonContainer>
             <InteractiveButton
-              //disabled={!canSubmit}
               text="Save & Preview"
               onClick={handleOnClick}
             />

@@ -1,5 +1,5 @@
 import { Grid } from "@material-ui/core";
-import { useState, useRef } from "react";
+import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   updateDescription,
