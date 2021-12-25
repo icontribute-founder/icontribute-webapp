@@ -133,12 +133,12 @@ export const userSlice = createSlice({
           break;
       }
     });
-
-    //logout *YOU NEED TO DO THIS*
     
     builder.addCase(logout.fulfilled, (state, { payload }) => {
       state.loggedIn = false;
       state.loadingLocalUser = false;
+      state.userAuth = null;
+      state.userProfile = null;
     });
     
 
