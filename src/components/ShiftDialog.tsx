@@ -97,9 +97,9 @@ const ShiftDialog = ({
     setShift({ ...shift, end: new Date(e).getTime() });
   };
 
-  const handleRecurrenceOnChange = (e: any) => {
-    setShift({ ...shift, recurring: e.target.value });
-  };
+  // const handleRecurrenceOnChange = (e: any) => {
+  //   setShift({ ...shift, recurring: e.target.value });
+  // };
 
   const handleOnSave = () => {
     if (edit) {
@@ -154,31 +154,31 @@ const ShiftDialog = ({
                 minDateMessage="Date should not be before start date."
               />
             </Grid>
-            <Grid item md={12}>
+            {/* <Grid item md={12}>
               <FormControl variant="outlined" fullWidth>
                 <InputLabel id={`recurrence-select-label-${index}`}>
                   Recurrence
                 </InputLabel>
-                {/* <Select
-                                    labelId={`recurrence-select-label-${index}`}
-                                    id={`recurrence-select-${index}`}
-                                    value={shift.recurrence}
-                                    onChange={handleRecurrenceOnChange}
-                                    label="Recurrence"
-                                >
-                                    <MenuItem value="DOES_NOT_REPEAT">
-                                        Does not repeat
-                                    </MenuItem>
-                                    <MenuItem value="DAILY">Daily</MenuItem>
-                                    <MenuItem value="WEEKLY_ON_THURSDAY">
-                                        Weekly on Thursday
-                                    </MenuItem>
-                                    <MenuItem value="EVERY_WEEKDAY">
-                                        Every weekday (Monday to Friday)
-                                    </MenuItem>
-                                </Select> */}
+                <Select
+                    labelId={`recurrence-select-label-${index}`}
+                    id={`recurrence-select-${index}`}
+                    value={shift.recurrence}
+                    onChange={handleRecurrenceOnChange}
+                    label="Recurrence"
+                >
+                    <MenuItem value="DOES_NOT_REPEAT">
+                        Does not repeat
+                    </MenuItem>
+                    <MenuItem value="DAILY">Daily</MenuItem>
+                    <MenuItem value="WEEKLY_ON_THURSDAY">
+                        Weekly on Thursday
+                    </MenuItem>
+                    <MenuItem value="EVERY_WEEKDAY">
+                        Every weekday (Monday to Friday)
+                    </MenuItem>
+                </Select>
               </FormControl>
-            </Grid>
+            </Grid> */}
           </Grid>
         </MuiPickersUtilsProvider>
       </MuiDialogContent>
