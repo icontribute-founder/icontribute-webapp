@@ -11,6 +11,7 @@ import { Subtitle } from "../components/styles";
 import { useHistory, useParams } from "react-router";
 import { useEffect, useState } from "react";
 import { updateCompany } from "../features/opportunity";
+import { HostingType } from "@icontribute-founder/firebase-access";
 
 import { ArrowBackIos } from "@material-ui/icons";
 
@@ -67,14 +68,18 @@ const Opportunity = () => {
 
   const [imageUploading, setImageUploading] = useState(false);
 
-  const handleOnClick = (e: any) => {
-    console.log("Event Details: ", e);
-    e.preventDefault();
-    history.push("/new-opportunity-review");
-  };
-
   const {
-    opportunity: { eventName, address },
+    opportunity: {
+      eventName,
+      address,
+      description,
+      requirements,
+      role,
+      categories,
+      type,
+      shift,
+      url,
+    },
   } = useSelector((state: RootState) => state.opportunity);
 
   const { userProfile } = useSelector((state: RootState) => state.user);
@@ -103,7 +108,42 @@ const Opportunity = () => {
     history.push("/");
   };
 
-  const canSubmit = eventName !== "" && address !== "" && !imageUploading;
+  const [isHandleDisplayErrorMsg, setIsHandleDisplayErrorMsg] = useState(false);
+
+  const handleOnClick = (e: any) => {
+    setIsHandleDisplayErrorMsg(true);
+    if (type === HostingType.External && !url) {
+      const scrollIntoItem = document.getElementById("section-how-to-apply");
+      if (scrollIntoItem) {
+        scrollIntoItem.scrollIntoView();
+      }
+    } else if (categories.length === 0) {
+      const scrollIntoItem = document.getElementById(
+        "section-basic-details-category"
+      );
+      if (scrollIntoItem) {
+        scrollIntoItem.scrollIntoView();
+      }
+    } else if (!eventName || !address || !requirements || !role || !description) {
+      const scrollIntoItem = document.getElementById(
+        "section-opportunity-details"
+      );
+      if (scrollIntoItem) {
+        scrollIntoItem.scrollIntoView();
+      }
+    } else if (type !== HostingType.External && shift.length === 0) {
+      const scrollIntoItem = document.getElementById(
+        "section-opportunity-details-shift"
+      );
+      if (scrollIntoItem) {
+        scrollIntoItem.scrollIntoView();
+      }
+    } else {
+      console.log("Event Details: ", e);
+      e.preventDefault();
+      history.push("/new-opportunity-review");
+    }
+  };
 
   return (
     <StyledOpportunity>
@@ -118,12 +158,14 @@ const Opportunity = () => {
           to find relevant and qualified candidates.
         </Subtitle>
         <ContentContainer>
-          <HowToApply />
+          <HowToApply isHandleDisplayErrorMsg={isHandleDisplayErrorMsg} />
           <BasicDetails />
-          <OpportunityDetails setImageUploading={setImageUploading} />
+          <OpportunityDetails
+            isHandleDisplayErrorMsg={isHandleDisplayErrorMsg}
+            setImageUploading={setImageUploading}
+          />
           <SaveButtonContainer>
             <InteractiveButton
-              disabled={!canSubmit}
               text="Save & Preview"
               onClick={handleOnClick}
             />

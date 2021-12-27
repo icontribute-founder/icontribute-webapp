@@ -92,6 +92,16 @@ const ContentContainer = styled.div`
   margin-top: 10px;
 `;
 
+const ExternalLink = styled.a`
+  color: #192226;
+  font-family: Source Sans Pro;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 16px;
+  margin-bottom: 20px;
+  text-decoration: none;
+`
+
 const monthToString = (month: number) => {
   switch (month) {
     case 1:
@@ -156,6 +166,9 @@ const Summary = () => {
       date,
       deadline,
       categories,
+      role,
+      requirements,
+      notes,
     },
   } = useSelector((state: RootState) => state.opportunity);
 
@@ -266,6 +279,30 @@ const Summary = () => {
           </ContentContainer>
         </Grid>
         <Grid item xs={12}>
+          <H4>Requirements</H4>
+          <ContentContainer>
+            <ShowMoreText lines={3} more="Show more" less="Show less">
+              {requirements}
+            </ShowMoreText>
+          </ContentContainer>
+        </Grid>
+        <Grid item xs={12}>
+          <H4>Role</H4>
+          <ContentContainer>
+            <ShowMoreText lines={3} more="Show more" less="Show less">
+              {role}
+            </ShowMoreText>
+          </ContentContainer>
+        </Grid>
+        {notes === "" ? <></> : <Grid item xs={12}>
+          <H4>Notes</H4>
+          <ContentContainer>
+            <ShowMoreText lines={3} more="Show more" less="Show less">
+              {notes}
+            </ShowMoreText>
+          </ContentContainer>
+        </Grid>}
+        <Grid item xs={12}>
           <H4>Location</H4>
           <ContentContainer>
             <SubHeader>
@@ -286,13 +323,14 @@ const Summary = () => {
 
 const OpportunityReview = () => {
   const {
-    opportunity: { type },
+    opportunity: { type, url },
   } = useSelector((state: RootState) => state.opportunity);
 
   const typeContent =
     type === "redirect" ? (
       <>
         <Subtitle>External Website</Subtitle>
+        <ExternalLink href={url}>{url}</ExternalLink>
         <Content>
           Provide a link to you website. We’ll redirect applicants to your
           organization's website to apply for an opportunity.

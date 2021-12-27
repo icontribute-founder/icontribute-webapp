@@ -8,12 +8,13 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import { RootState } from "../../store";
-import { updateHostingType } from "../../features/opportunity";
+import { updateHostingType, updateUrl } from "../../features/opportunity";
 
 import Section from "./Section";
 import { HostingType } from "@icontribute-founder/firebase-access";
 import ExternalIcon from "../Svgs/ExternalIcon";
 import InternalIcon from "../Svgs/InternalIcon";
+import InputField from "../common/InputField";
 
 const HostingTypeDescription = styled.p`
   font-style: normal;
@@ -48,21 +49,27 @@ const RadioLabel = ({ label, svg }: any) => {
 
 const PrimaryRadio = <Radio color="primary" />;
 
-const HowToApply = () => {
+const HowToApply = (props:any) => {
   const dispatch = useDispatch();
   const {
-    opportunity: { type: hostingType },
+    opportunity: { type: hostingType, url, type },
   } = useSelector((state: RootState) => state.opportunity);
 
   const handleRadioChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     switch ((e.target as HTMLInputElement).value) {
       case HostingType.Internal:
         return dispatch(updateHostingType(HostingType.Internal));
-      case HostingType.External:
+      case HostingType.External: {
+        dispatch(updateUrl(""));
         return dispatch(updateHostingType(HostingType.External));
+      }
       default:
         return;
     }
+  };
+
+  const handleUrlOnChange = (e: any) => {
+    dispatch(updateUrl(e.target.value));
   };
 
   const content = (
@@ -96,6 +103,23 @@ const HowToApply = () => {
             Provide a link to you website. We’ll redirect applicants to your
             organization's website to apply for an opportunity.
           </HostingTypeDescription>
+
+          {type === HostingType.External ? (
+            <div style={{ marginBottom: "-30px" }}>
+              <InputField
+                label="Website URL*"
+                type="text"
+                placeholder="example.org.com"
+                fullWidth={true}
+                onChange={handleUrlOnChange}
+                value={url}
+                errorMessage={props.isHandleDisplayErrorMsg && !url ? "Please enter the website URL":""}
+                id="opportunity-details-url"
+              />
+            </div>
+          ) : (
+            ""
+          )}
         </Grid>
       </Grid>
     </RadioGroup>
@@ -103,6 +127,7 @@ const HowToApply = () => {
 
   return (
     <Section
+      id="section-how-to-apply"
       title="How to apply"
       subtitle="Choose to receive applications through iContribute or redirect
                 volunteers to an external link."

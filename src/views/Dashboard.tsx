@@ -15,6 +15,7 @@ import {
   selectOpportunity,
 } from "../features/opportunities";
 import { setAction, setExistingOpportunity } from "../features/opportunity";
+import { HostingType } from "@icontribute-founder/firebase-access";
 
 const Dashboard = () => {
   const history = useHistory();
@@ -99,12 +100,17 @@ const Dashboard = () => {
     eventName,
     companyName,
     description,
+    requirements,
+    role,
+    notes,
     address,
     eventImage,
     categories,
     shift,
     deadline,
     date,
+    url,
+    type,
   } = opportunities[indexSelected];
 
   let eventImageUrl = "";
@@ -138,7 +144,7 @@ const Dashboard = () => {
       <TextGroup>
         <Grid container>
           <Grid item xs={6}>
-            <HeaderThree>{eventName}</HeaderThree>
+            <BlueHeaderThree>{eventName}</BlueHeaderThree>
             <HeaderTwo>{companyName}</HeaderTwo>
 
             {categories.map((category: any, i: number) => (
@@ -164,19 +170,45 @@ const Dashboard = () => {
             </SubHeader>
           </Grid>
         </Grid>
+        <hr />
+      </TextGroup>
+        
+        <TextGroup style={{ paddingTop: "0px" }}>
+          <HeaderTwo>Application details</HeaderTwo>
+      {
+        type === HostingType.External ? (
+          <Paragraph>
+            Through external website (
+            <a target="parent" href={"//" + url}>
+              {url}
+            </a>
+            ){" "}
+          </Paragraph>
+        ):(
+          <Paragraph>
+            Through iContribute Application
+          </Paragraph>
+        )
+      }
       </TextGroup>
 
       <TextGroup style={{ paddingTop: "0px" }}>
-        <HeaderTwo>Organization details</HeaderTwo>
+        <HeaderTwo>Opportunity details</HeaderTwo>
         <Paragraph>{description}</Paragraph>
       </TextGroup>
 
-      <HeaderTwo>Location</HeaderTwo>
-      <SubHeader>{address}</SubHeader>
-      {center ? <Map center={center}></Map> : <></>}
+      <TextGroup style={{ paddingTop: "0px" }}>
+        <HeaderTwo>Requirements</HeaderTwo>
+        <Paragraph>{requirements}</Paragraph>
+      </TextGroup>
+
+      <TextGroup style={{ paddingTop: "0px" }}>
+        <HeaderTwo>Role</HeaderTwo>
+        <Paragraph>{role}</Paragraph>
+      </TextGroup>
 
       {shift.map((s: any, i: number) => (
-        <TextGroup key={`dashboard-shift-${i}`}>
+        <TextGroup key={`dashboard-shift-${i}`} style={{ paddingTop: "0px" }}>
           <HeaderTwo>Shift {i + 1}</HeaderTwo>
           <Paragraph>Start: {formatDateTime(new Date(s.start))}</Paragraph>
           <Paragraph>End: {formatDateTime(new Date(s.end))}</Paragraph>
@@ -188,9 +220,19 @@ const Dashboard = () => {
         </TextGroup>
       ))}
 
+      <HeaderTwo>Location</HeaderTwo>
+      <SubHeader>{address}</SubHeader>
+      {center ? <Map center={center}></Map> : <></>}
+
+      <TextGroup style={{ paddingTop: "0px" }}>
+        <HeaderTwo>Additional notes</HeaderTwo>
+        <Paragraph>{notes}</Paragraph>
+      </TextGroup>
+
       <HeaderThree>Applicants</HeaderThree>
 
       <Paragraph>There are no applicants</Paragraph>
+      <br /><br />
     </SelectedOpportunity>
   );
 
@@ -304,6 +346,13 @@ const EventsListContainer = styled.div`
   scroll-behaviour: smooth;
 `;
 
+const BlueHeaderThree = styled.h3`
+  font-size: 20px;
+  font-weight: bold;
+  margin: 0px;
+  color: #2836d1;
+`;
+
 export const Location = styled.h4`
   font-size: 14px;
   font-weight: 400;
@@ -333,7 +382,6 @@ export const HeaderThree = styled.h3`
   font-size: 20px;
   font-weight: bold;
   margin: 0px;
-
   color: #192226;
 `;
 

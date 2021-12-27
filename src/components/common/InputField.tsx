@@ -3,6 +3,7 @@ import styled from "styled-components";
 
 const Wrapper = styled.div`
     position: relative;
+    margin: 30px 0px;
 `;
 
 interface InputProps {
@@ -31,7 +32,6 @@ const Input = styled.input<InputProps>(
         font-size: 16px;
         color: ${input.color};
         background-color: ${input.backgroundColor.default};
-        margin: 30px 0px;
 
         // &:hover {
         //     background-color: ${input.backgroundColor.hover};
@@ -56,7 +56,7 @@ const TextArea = styled.textarea<InputProps>(
         border-bottom: 1px solid #757575;
         width: ${fullWidth ? "100%" : "auto"};
         height: auto;
-        border: 1px solid #babcbd;
+        border: 1px solid ${hasError ? label.color.error : "#babcbd"};
         box-sizing: border-box;
         border-radius: 8px;
         padding: 18px 18px 15px 15px;
@@ -65,7 +65,6 @@ const TextArea = styled.textarea<InputProps>(
         font-size: 16px;
         color: ${input.color};
         background-color: ${input.backgroundColor.default};
-        margin: 30px 0px;
 
         // &:hover {
         //     background-color: ${input.backgroundColor.hover};

@@ -2,12 +2,12 @@ import styled from "styled-components";
 import { Subtitle } from "../styles";
 
 const SectionContainer = styled.div`
-    margin-bottom: 60px;
+    margin-bottom: 0px;
 `;
 
-const Section = ({ title, subtitle, content }: any) => {
+const Section = ({id, title, subtitle, content }: any) => {
     return (
-        <SectionContainer>
+        <SectionContainer id={id}>
             <h2>{title}</h2>
             <Subtitle>{subtitle}</Subtitle>
             {content}

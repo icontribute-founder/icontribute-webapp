@@ -17,11 +17,28 @@ import ImageDropzone from "../FormElements/ImageDropzone";
 import ShiftCard from "../ShiftCard";
 import Section from "./Section";
 import InputField from "../common/InputField";
+import { HostingType } from "@icontribute-founder/firebase-access";
+import styled from "styled-components";
 
-const OpportunityDetails = ({ setImageUploading }: any) => {
+const ErrorMessage = styled.p`
+  color: #d63334;
+  margin-left: 0px;
+  line-height: 24px;
+`;
+
+const OpportunityDetails = ({ setImageUploading, isHandleDisplayErrorMsg}: any) => {
   const dispatch = useDispatch();
   const {
-    opportunity: { eventName, address, description, requirements, role, notes, shift },
+    opportunity: {
+      eventName,
+      address,
+      description,
+      requirements,
+      role,
+      notes,
+      shift,
+      type
+    },
   } = useSelector((state: RootState) => state.opportunity);
 
   const [orgImage, setOrgImage] = useState<any>();
@@ -69,6 +86,7 @@ const OpportunityDetails = ({ setImageUploading }: any) => {
         name="opportunity-details-title"
         id="opportunity-details-title"
         value={eventName}
+        errorMessage={isHandleDisplayErrorMsg && !eventName ?"Please enter the title of the opportunity" : ""}
         // checkMarkVisible={passwordConfirmCheckMark}
         // errorVisible={errorVisible}
         fullWidth
@@ -81,41 +99,45 @@ const OpportunityDetails = ({ setImageUploading }: any) => {
         name="opportunity-details-location"
         id="opportunity-details-location"
         value={address}
+        errorMessage={isHandleDisplayErrorMsg && !address ?"Please enter the location of the opportunity":""}
         fullWidth
         onChange={handleLocationOnChange}
       />
       <InputField
-        label="Description"
+        label="Description*"
         type="textarea"
         name="opportunity-details-description"
         id="opportunity-details-description"
         onChange={handleDescriptionOnChange}
         value={description}
+        errorMessage={isHandleDisplayErrorMsg && !description ?"Please enter the description of the opportunity":""}
         placeholder="Enter position’s primary duties and responsibilities"
         fullWidth
         rows={8}
       />
 
       <InputField
-        label="Mandatory Requirements"
+        label="Mandatory Requirements *"
         type="textarea"
         name="opportunity-details-requirements"
         id="opportunity-details-requirements"
         onChange={handleRequirementsOnChange}
         value={requirements}
-        placeholder="Begin Typing..."
+        errorMessage={isHandleDisplayErrorMsg && !requirements ?"Please enter the requirements of the opportunity":""}
+        placeholder="Enter the necessary requirements"
         fullWidth
         rows={8}
       />
 
       <InputField
-        label="What will the volunteer accomplish throughout the role"
+        label="What will the volunteer accomplish throughout the role *"
         type="textarea"
         name="opportunity-details-role"
         id="opportunity-details-role"
         onChange={handleRoleOnChange}
         value={role}
-        placeholder="Begin Typing..."
+        errorMessage={isHandleDisplayErrorMsg && !role ? "Please enter the primary duties and responsibilities in this opportunity":""}
+        placeholder="Enter the possible tasks given"
         fullWidth
         rows={8}
       />
@@ -127,22 +149,30 @@ const OpportunityDetails = ({ setImageUploading }: any) => {
         id="opportunity-details-notes"
         onChange={handleNotesOnChange}
         value={notes}
-        placeholder="Begin Typing..."
+        placeholder="Enter anything that volunteers should know"
         fullWidth
         rows={8}
       />
 
-      <h3>Shift</h3>
-      <Grid container spacing={2}>
-        {shift.map((s: Shift, i: number) => (
-          <Grid item md={6} key={`grid-shift-${i}`}>
-            <ShiftCard shift={s} index={i} />
+      {type !== HostingType.External ? (
+        <div id="section-opportunity-details-shift">
+          <h3>Shift</h3>
+          {isHandleDisplayErrorMsg && shift.length===0 ? (<ErrorMessage>Please create at least 1 shift</ErrorMessage>) : ""}
+          <Grid container spacing={2}>
+            {shift.map((s: Shift, i: number) => (
+              <Grid item md={6} key={`grid-shift-${i}`}>
+                <ShiftCard shift={s} index={i} />
+              </Grid>
+            ))}
+            <Grid item md={6}>
+              <ShiftCard />
+            </Grid>
           </Grid>
-        ))}
-        <Grid item md={6}>
-          <ShiftCard />
-        </Grid>
-      </Grid>
+        </div>
+      ) : (
+        ""
+      )}
+
       <h4>Upload Photo (Optional)</h4>
       <ImageDropzone setOrgImage={handleImageOnChange} />
     </>
@@ -150,6 +180,7 @@ const OpportunityDetails = ({ setImageUploading }: any) => {
 
   return (
     <Section
+      id="section-opportunity-details"
       title="Opportunity Details"
       subtitle="Let the applicants know more about the open role and their
             primary responsibilities."

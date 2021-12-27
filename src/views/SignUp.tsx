@@ -15,7 +15,23 @@ import InteractiveButton from "../components/Buttons/InteractiveButton";
 import axios from "axios";
 import FormData from "form-data";
 import SignupGraphic from "../components/Svgs/SignupGraphic";
+import { useDispatch, useSelector } from "react-redux";
+import { signup } from "../features/user";
+import {
+  defaultEvent,
+  Company,
+  UserType,
+  defaultCompany,
+} from "@icontribute-founder/firebase-access";
+import default_photo from "../assets/images/default_photo.png";
 
+import { LightBlueButton } from "../components/styles";
+import Slides from "../components/Slides";
+
+import { login } from "../features/user";
+import { RootState } from "../store";
+
+/*
 interface SignupDetails {
   email: string;
   password: string;
@@ -26,9 +42,12 @@ interface SignupDetails {
   description: string;
   orgImageUrl: string;
 }
+*/
 
-const SignUp = ({ setShowSignup }: any) => {
+const SignUp = ({ setShowSignup, setShowSignupConfirm }: any) => {
   const history = useHistory();
+
+  const dispatch = useDispatch();
 
   const handleBackClick = () => {
     setShowSignup(false);
@@ -43,27 +62,36 @@ const SignUp = ({ setShowSignup }: any) => {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [errorVisible, setErrorVisible] = useState("none");
   const [submitDisabled, setSubmitDisabled] = useState(true);
-  const [signupDetails, setSignupDetails] = useState<SignupDetails>({
-    email: "",
-    password: "",
-    isRegisteredCRA: "",
-    organizationName: "",
-    website: "",
-    postalCode: "",
-    description: "",
-    orgImageUrl: "",
-  });
+  const [signupDetails, setSignupDetails] = useState<Company>(defaultCompany);
+  // const [signupDetails, setSignupDetails] = useState<Company>({
+  //   email: "",
+  //   isRegisteredCRA: "",
+  //   companyName: "",
+  //   url: "",
+  //   postalCode: "",
+  //   description: "",
+  //   //orgImageUrl: "",
+  //   event: [],
+  //   rating: 0,
+  //   reviews: [],
+  //   categories: [],
+  //   notifications: [],
+  //   verified: false,
+  //   profilePicture: "",
+  //   backgroundPicture: "",
+  //   type: UserType.COMPANY,
+  // });
 
   useEffect(() => {
     if (
       signupDetails.description === "" ||
-      signupDetails.password === "" ||
+      password === "" ||
       signupDetails.email === "" ||
       signupDetails.postalCode === "" ||
       errorVisible === "block" ||
       signupDetails.isRegisteredCRA === "" ||
-      signupDetails.organizationName === "" ||
-      signupDetails.website === "" ||
+      signupDetails.companyName === "" ||
+      signupDetails.url === "" ||
       orgImage === null
     ) {
       setSubmitDisabled(true);
@@ -133,7 +161,32 @@ const SignUp = ({ setShowSignup }: any) => {
     e.preventDefault();
     const url = "https://icontribute-api-dev-server.herokuapp.com/images/";
     let formData = new FormData();
-    formData.append("photo", orgImage[0], "image.jpg");
+    if (orgImage) {
+      formData.append("photo", orgImage[0], "image.jpg");
+    } else {
+      //needs to be of type blob
+      const parts = [
+        new Blob([], {
+          type: "text/plain",
+        }),
+        " Same way as you do with blob",
+        new Uint16Array([33]),
+      ];
+
+      const file = new File(parts, "sample.txt");
+      const test_object = {
+        path: "figure out the path",
+        name: "a name",
+        lastModified: 1638485464958,
+        lastModifiedDate:
+          "Thu Dec 02 2021 17:51:04 GMT-0500 (Eastern Standard Time)",
+        webkitRelativePath: "",
+      };
+      var f = new File([], "filename");
+      //{path: '16464545-test-written-in-black-on-white-computer-keys-3d-illustration-isolated-background.webp', name: '16464545-test-written-in-black-on-white-computer-keys-3d-illustration-isolated-background.webp', lastModified: 1638485464958, lastModifiedDate: Thu Dec 02 2021 17:51:04 GMT-0500 (Eastern Standard Time), webkitRelativePath: '', …}
+      formData.append("photo", f, "image.jpg");
+    }
+
     await axios
       .post(url, formData, {
         headers: {
@@ -144,15 +197,19 @@ const SignUp = ({ setShowSignup }: any) => {
       .then((res) => {
         setSignupDetails((prevState) => ({
           ...prevState,
-          orgImageUrl: res.data.imagePath,
+          profilePicture: res.data.imagePath,
         }));
+        dispatch(signup({ company: signupDetails, password: password }));
+
+        setShowSignup(false);
+        setShowSignupConfirm(true);
       })
       .catch((err) => console.log(err));
   };
 
   /* ============================================================================================================================== */
   /* This section will be used to call an API and send the sign up details to, currently this object is just logged in the console. */
-  console.log(signupDetails);
+  //console.log(signupDetails);
   /* ============================================================================================================================== */
 
   return (
@@ -173,7 +230,9 @@ const SignUp = ({ setShowSignup }: any) => {
               placeholder="Enter your organization email"
               name="email"
               id="email"
+              type="text"
               onChange={handleFormChange}
+              value={signupDetails.email}
             />
             <InputField
               label="Create a Password"
@@ -183,6 +242,7 @@ const SignUp = ({ setShowSignup }: any) => {
               id="password"
               checkMarkVisible={passwordCheckMark}
               onChange={passwordChange}
+              value={password}
             />
             <InputField
               label="Confirm Password"
@@ -193,6 +253,7 @@ const SignUp = ({ setShowSignup }: any) => {
               checkMarkVisible={passwordConfirmCheckMark}
               errorVisible={errorVisible}
               onChange={onConfirmPasswordChange}
+              value={confirmPassword}
             />
             <HeaderTwo>Organization details</HeaderTwo>
             <Paragraph>
@@ -228,16 +289,18 @@ const SignUp = ({ setShowSignup }: any) => {
             <InputField
               label="Organization Name"
               placeholder="ie. iContribute"
-              name="organizationName"
-              id="organizationName"
+              name="companyName"
+              id="companyName"
               onChange={handleFormChange}
+              value={signupDetails.companyName}
             />
             <InputField
               label="Website"
               placeholder="ie. https://icontribute.community"
-              name="website"
-              id="website"
+              name="url"
+              id="url"
               onChange={handleFormChange}
+              value={signupDetails.url}
             />
             <InputField
               label="Postal Code"
@@ -245,6 +308,7 @@ const SignUp = ({ setShowSignup }: any) => {
               name="postalCode"
               id="postalCode"
               onChange={handleFormChange}
+              value={signupDetails.postalCode}
             />
             <TextareaField
               label="Description"
@@ -253,6 +317,7 @@ const SignUp = ({ setShowSignup }: any) => {
               onChange={handleFormChange}
               placeholder="ie.We connect people who are looking for local volunteer opportunities to nonprofits who are actively recruiting"
               rows={8}
+              value={signupDetails.description}
             />
             <HeaderThree>Upload an account photo or logo</HeaderThree>
           </Grid>

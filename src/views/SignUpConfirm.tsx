@@ -1,14 +1,13 @@
 import styled from "styled-components";
 import { useHistory } from "react-router-dom";
 import SignupImage from "../assets/images/signup-confirm-image.svg";
+import { LightBlueButton } from "../components/styles";
 import Button from "../components/common/Button";
 
-const SignUpConfirm = () => {
-
-    const history = useHistory();
+const SignUpConfirm = ({ setShowSignupConfirm }: any) => {
 
     const handleDashboardClick = () => {
-        history.push("/");
+        setShowSignupConfirm(false);
     };
 
     return (
@@ -38,9 +37,7 @@ const SignUpConfirm = () => {
 
                     </ParaContainer>
 
-                    <DashboardButton onClick={handleDashboardClick}>
-                        Return to home
-                    </DashboardButton>
+                    <LoginButton onClick={handleDashboardClick}>Return to home</LoginButton>
 
                 </FirstDiv>
 
@@ -95,11 +92,17 @@ const SubHeader = styled.h4`
     margin: 9px 0 0 0;
 `;
 
-const DashboardButton = styled(Button)`
-    margin-top: 30px;
-`;
-
 const ImageContainer = styled.div`
     width: 400px;
     display: inline-block;
+`;
+
+const LoginButton = styled(LightBlueButton)`
+  background: #2836D1;
+  width: 197px;
+  height: 40px;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.05);
+  font-size: 16px;
+  line-height: 24px;
+  color: #fefeff;
 `;
