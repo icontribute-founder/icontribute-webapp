@@ -1,7 +1,7 @@
 import { AuthErrorCodes, UserCredential } from "@firebase/auth";
 import { FirebaseError } from "@firebase/util";
 import { Company } from "@icontribute-founder/firebase-access";
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { auth, user } from "../configure";
 
 interface AuthenticationI {
@@ -82,6 +82,7 @@ export const signup = createAsyncThunk<
   }
 });
 
+
 export const resetPassword = createAsyncThunk<void, { email: string }, any>(
   "user/resetPassword",
   async ({ email }, thunkApi) => {
@@ -95,10 +96,35 @@ export const resetPassword = createAsyncThunk<void, { email: string }, any>(
   }
 );
 
+export const logout = createAsyncThunk<
+  void
+>("user/logout", async (_, thunkApi) => {
+  try {
+    await auth.logout();
+    sessionStorage.setItem("user", "");
+  } catch (error) {
+    if (error instanceof FirebaseError) {
+      return thunkApi.rejectWithValue({ code: error.code });
+    }
+    return thunkApi.rejectWithValue({ code: "unknown" });
+  }
+});
+
 export const userSlice = createSlice({
   name: "user",
   initialState,
-  reducers: {},
+  reducers: {
+    markNotificationRead: (state, action: PayloadAction<string>) => {
+      const eventID = action.payload;
+
+      for(let i = 0; i< state.userProfile.notifications.length; i++){
+        if(state.userProfile.notifications[i].eventID === eventID){
+          state.userProfile.notifications[i].read = true;
+          break;
+        };
+      }
+    }
+  },
   extraReducers: (builder) => {
     // login
     builder.addCase(login.pending, (state) => {
@@ -131,6 +157,14 @@ export const userSlice = createSlice({
           break;
       }
     });
+    
+    builder.addCase(logout.fulfilled, (state, { payload }) => {
+      state.loggedIn = false;
+      state.loadingLocalUser = false;
+      state.userAuth = null;
+      state.userProfile = null;
+    });
+    
 
     // load user from session storage
     builder.addCase(loadUser.pending, (state) => {
@@ -188,5 +222,6 @@ export const userSlice = createSlice({
 });
 
 // export const { addUser, removeUser } = userSlice.actions;
+export const {markNotificationRead} = userSlice.actions;
 
 export default userSlice.reducer;

@@ -18,8 +18,15 @@ import ShiftCard from "../ShiftCard";
 import Section from "./Section";
 import InputField from "../common/InputField";
 import { HostingType } from "@icontribute-founder/firebase-access";
+import styled from "styled-components";
 
-const OpportunityDetails = ({ setImageUploading }: any) => {
+const ErrorMessage = styled.p`
+  color: #d63334;
+  margin-left: 0px;
+  line-height: 24px;
+`;
+
+const OpportunityDetails = ({ setImageUploading, isHandleDisplayErrorMsg}: any) => {
   const dispatch = useDispatch();
   const {
     opportunity: {
@@ -79,6 +86,7 @@ const OpportunityDetails = ({ setImageUploading }: any) => {
         name="opportunity-details-title"
         id="opportunity-details-title"
         value={eventName}
+        errorMessage={isHandleDisplayErrorMsg && !eventName ?"Please enter the title of the opportunity" : ""}
         // checkMarkVisible={passwordConfirmCheckMark}
         // errorVisible={errorVisible}
         fullWidth
@@ -91,6 +99,7 @@ const OpportunityDetails = ({ setImageUploading }: any) => {
         name="opportunity-details-location"
         id="opportunity-details-location"
         value={address}
+        errorMessage={isHandleDisplayErrorMsg && !address ?"Please enter the location of the opportunity":""}
         fullWidth
         onChange={handleLocationOnChange}
       />
@@ -101,6 +110,7 @@ const OpportunityDetails = ({ setImageUploading }: any) => {
         id="opportunity-details-description"
         onChange={handleDescriptionOnChange}
         value={description}
+        errorMessage={isHandleDisplayErrorMsg && !description ?"Please enter the description of the opportunity":""}
         placeholder="Enter position’s primary duties and responsibilities"
         fullWidth
         rows={8}
@@ -113,6 +123,7 @@ const OpportunityDetails = ({ setImageUploading }: any) => {
         id="opportunity-details-requirements"
         onChange={handleRequirementsOnChange}
         value={requirements}
+        errorMessage={isHandleDisplayErrorMsg && !requirements ?"Please enter the requirements of the opportunity":""}
         placeholder="Enter the necessary requirements"
         fullWidth
         rows={8}
@@ -125,6 +136,7 @@ const OpportunityDetails = ({ setImageUploading }: any) => {
         id="opportunity-details-role"
         onChange={handleRoleOnChange}
         value={role}
+        errorMessage={isHandleDisplayErrorMsg && !role ? "Please enter the primary duties and responsibilities in this opportunity":""}
         placeholder="Enter the possible tasks given"
         fullWidth
         rows={8}
@@ -143,8 +155,9 @@ const OpportunityDetails = ({ setImageUploading }: any) => {
       />
 
       {type !== HostingType.External ? (
-        <div>
+        <div id="section-opportunity-details-shift">
           <h3>Shift</h3>
+          {isHandleDisplayErrorMsg && shift.length===0 ? (<ErrorMessage>Please create at least 1 shift</ErrorMessage>) : ""}
           <Grid container spacing={2}>
             {shift.map((s: Shift, i: number) => (
               <Grid item md={6} key={`grid-shift-${i}`}>
@@ -167,6 +180,7 @@ const OpportunityDetails = ({ setImageUploading }: any) => {
 
   return (
     <Section
+      id="section-opportunity-details"
       title="Opportunity Details"
       subtitle="Let the applicants know more about the open role and their
             primary responsibilities."

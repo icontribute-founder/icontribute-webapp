@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import Pfp from "../assets/images/notifPfp";
-import { BsThreeDotsVertical } from "react-icons/bs";
+import NotifMoreOptions from "../components/NotifMoreOptions";
 
 interface NotificationCardProps {
   date: Date;
@@ -39,7 +39,7 @@ const UnreadNotificationCard = (props: NotificationCardProps) => {
         </HeaderThree>
       </TextContainer>
 
-      <BsThreeDotsVertical style={{ width: "35px" }}></BsThreeDotsVertical>
+      <NotifMoreOptions notificationProps={props} ></NotifMoreOptions>
     </NotificationContainer>
   );
 };

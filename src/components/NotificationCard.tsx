@@ -39,7 +39,7 @@ const NotificationCard = (props: NotificationCardProps) => {
         </HeaderThree>
       </TextContainer>
 
-      <NotifMoreOptions  ></NotifMoreOptions>
+      <NotifMoreOptions notificationProps={props}></NotifMoreOptions>
     </NotificationContainer>
   );
 };

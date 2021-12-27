@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 import styled from "styled-components";
 import UploadNewPhoto from "../assets/images/UploadNewPhoto.png";
+import DefaultProfilePhoto from "../assets/images/default_photo.png";
 import InputField from "../components/FormElements/InputField";
 import TextareaField from "../components/FormElements/TextareaField";
 import Button from "../components/common/Button";
@@ -112,7 +113,7 @@ const AccountSettings = () => {
   };
 
   const [currProfilePic, setCurrProfilePic] = useState(
-    userProfile.profilePicture
+    userProfile.profilePicture ? userProfile.profilePicture : DefaultProfilePhoto
   );
 
 
