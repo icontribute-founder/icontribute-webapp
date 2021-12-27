@@ -49,7 +49,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
+    "build": "NODE_ENV=development react-scripts build",
     "build:dev": "CI=false npm run build",
     "refresh:wrapper": "npm i git+ssh://git@github.com/icontribute-founder/firebase-wrapper.git#dist",
     "deploy:firebase": "npm run build && firebase login && firebase deploy",
