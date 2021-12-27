@@ -80,6 +80,23 @@ export const signup = createAsyncThunk<
   }
 });
 
+
+export const logout = createAsyncThunk<
+  void
+>("user/logout", async (_, thunkApi) => {
+  try {
+    await auth.logout();
+    sessionStorage.setItem("user", "");
+  } catch (error) {
+    if (error instanceof FirebaseError) {
+      return thunkApi.rejectWithValue({ code: error.code });
+    }
+    return thunkApi.rejectWithValue({ code: "unknown" });
+  }
+});
+
+
+
 export const userSlice = createSlice({
   name: "user",
   initialState,
@@ -127,6 +144,14 @@ export const userSlice = createSlice({
           break;
       }
     });
+    
+    builder.addCase(logout.fulfilled, (state, { payload }) => {
+      state.loggedIn = false;
+      state.loadingLocalUser = false;
+      state.userAuth = null;
+      state.userProfile = null;
+    });
+    
 
     // load user from session storage
     builder.addCase(loadUser.pending, (state) => {
@@ -169,6 +194,9 @@ export const userSlice = createSlice({
     builder.addCase(signup.rejected, (state, { payload }) => {
       state.signupLoading = false;
     });
+
+    
+
   },
 });
 
