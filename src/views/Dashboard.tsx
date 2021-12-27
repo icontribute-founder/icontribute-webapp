@@ -177,10 +177,7 @@ const Dashboard = () => {
         <TextGroup style={{ paddingTop: "0px" }}>
           <HeaderTwo>Application details</HeaderTwo>
       {
-        //UNCOMMENT the below statements or use other ways to show opportunity application method (internal or external)
-        //But when variable "type" of Oppotunity (from database) is fixed (which is not "undefined")
-
-        //type === HostingType.External ? (
+        type === HostingType.External ? (
           <Paragraph>
             Through external website (
             <a target="parent" href={"//" + url}>
@@ -188,7 +185,11 @@ const Dashboard = () => {
             </a>
             ){" "}
           </Paragraph>
-        //):("")
+        ):(
+          <Paragraph>
+            Through iContribute Application
+          </Paragraph>
+        )
       }
       </TextGroup>
 
