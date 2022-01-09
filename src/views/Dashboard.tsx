@@ -11,15 +11,12 @@ import EmptyDashboard from "./EmptyDashboard";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../store";
 import {
-  getOpportunities,
   getOpportunitiesByIds,
   selectOpportunity,
 } from "../features/opportunities";
 import { setAction, setExistingOpportunity } from "../features/opportunity";
 import { HostingType } from "@icontribute-founder/firebase-access";
 
-
-import { user } from "../configure";
 
 const Dashboard = () => {
   const history = useHistory();
@@ -48,28 +45,7 @@ const Dashboard = () => {
     dispatch(setAction("create"));
     history.push("/opportunity/create");
   };
-   const handleOnClick2 = async(e:any) => {
-    //console.log("HANDLING CLICK")
-    //dispatch(getOpportunitiesByIds({ eventIds: userProfile.event }));
-    //this gave me James' information for some reasson
-    //dispatch(getOpportunities());
-    
-    //does something but not when i want it to? 
-    //maybe can only work in useEffect
-    ////dispatch(getOpportunitiesByIds({ eventIds: userProfile.event }));
-    //dispatch(setExistingOpportunity(opportunities[indexSelected]));
-
-    e.preventDefault();
-    const new_arr = await user.getCompany(userProfile.email);
-    //new_arr[0] = userProfile.event[0]
-    //new_arr[1] = userProfile.event[1]
-    //userProfile.assign()
-    if (new_arr != null){
-      console.log("WITHIN HANDLE CLICK",userProfile.event)
-      dispatch(getOpportunitiesByIds({ eventIds: new_arr.event }));
-    } 
-    
-  };
+   
 
   const handleCardOnClick = (e: any, i: number, props: any) => {
     dispatch(selectOpportunity(i));
@@ -80,11 +56,7 @@ const Dashboard = () => {
   };
 
   useEffect(() => {
-    console.log("I AM CALLING THIS 2")
-    //if this is not called the opportunities are empty so why can i not call this in a non use effect
-    console.log("WITHIN USE EFFECT",userProfile.event)
     dispatch(getOpportunitiesByIds({ eventIds: userProfile.event }));
-    
   }, []);
 
   if (loading || error !== null) return "";
@@ -161,7 +133,6 @@ const Dashboard = () => {
       </LeftBox>
       <RightBox>
         <Button onClick={handleOnClick}>Create a new opportunity</Button>
-        <Button onClick={handleOnClick2}>Test refresh</Button>
       </RightBox>
     </HeaderContainer>
   );
