@@ -4,8 +4,16 @@ import { useHistory } from "react-router-dom";
 import OpportunityCreatedSvg from "../assets/images/opportunityCreated.svg";
 import { BlueButton, LightBlueButton } from "../components/styles";
 import { useState } from "react";
-import { useSelector } from "react-redux";
 import { RootState } from "../store";
+import { useDispatch, useSelector } from "react-redux";
+
+import {
+  getOpportunities,
+  getOpportunitiesByIds,
+  selectOpportunity,
+} from "../features/opportunities";
+
+import { user } from "../configure";
 
 const OpportunityConfirmPage = () => {
   let opportunityDetails = useSelector((state: RootState) => state.opportunity);
@@ -16,8 +24,22 @@ const OpportunityConfirmPage = () => {
     opportunityDetails.opportunity.companyName
   );
 
+ 
+  const { userProfile } = useSelector((state: RootState) => state.user);
+  const userId = userProfile.email;
+  const dispatch = useDispatch();
+
   const history = useHistory();
-  const handleDashboardClick = () => {
+
+
+  const handleDashboardClick = async(e:any) => {
+    e.preventDefault();
+    const new_arr = await user.getCompany(userProfile.email);
+    console.log("THIS IS WITHIN NEW ARRAY",new_arr)
+    if (new_arr != null){
+      console.log("WITHIN HANDLE CLICK",userProfile.event)
+      dispatch(getOpportunitiesByIds({ eventIds: new_arr.event }));
+    } 
     history.push("/");
   };
   const handleShareClick = () => {
