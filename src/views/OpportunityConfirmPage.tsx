@@ -33,25 +33,20 @@ const OpportunityConfirmPage = () => {
 
 
   const handleDashboardClick = async(e:any) => {
-    e.preventDefault();
-    const new_arr = await user.getCompany(userProfile.email);
-    console.log("THIS IS WITHIN NEW ARRAY",new_arr)
-    if (new_arr != null){
-      console.log("WITHIN HANDLE CLICK",userProfile.event)
-      dispatch(getOpportunitiesByIds({ eventIds: new_arr.event }));
-    } 
+    updateDash();
     history.push("/");
   };
   const handleShareClick = async(e:any)=> {
-    e.preventDefault();
-    const new_arr = await user.getCompany(userProfile.email);
-    console.log("THIS IS WITHIN NEW ARRAY",new_arr)
-    if (new_arr != null){
-      console.log("WITHIN HANDLE CLICK",userProfile.event)
-      dispatch(getOpportunitiesByIds({ eventIds: new_arr.event }));
-    } 
+    updateDash();
     history.push("/");
   };
+
+  const updateDash = async()=> {
+    const new_arr = await user.getCompany(userProfile.email);
+    if (new_arr != null){
+      dispatch(getOpportunitiesByIds({ eventIds: new_arr.event }));
+    } 
+  }
 
   return (
     <Box
