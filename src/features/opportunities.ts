@@ -16,14 +16,6 @@ const initialState: OpportunitiesI = {
   error: null,
 };
 
-export const getOpportunities = createAsyncThunk<
-  any,
-  void,
-  { rejectValue: any }
->("opportunities/getOpportunities", async (_, thunkApi) => {
-  return await opportunityCollection.getOpportunities();
-});
-
 export const getOpportunitiesByIds = createAsyncThunk<
   any,
   { eventIds: any },
@@ -34,12 +26,16 @@ export const getOpportunitiesByIds = createAsyncThunk<
 
 export const deleteOpportunity = createAsyncThunk<
   any,
-  { eventId: string },
+  { userProfile: any; eventId: string },
   { rejectValue: any }
->("opportunity/deleteOpportunity", async ({ eventId }, thunkApi) => {
-  await opportunityCollection.deleteOpportunity(eventId);
-  return await opportunityCollection.getOpportunities();
-});
+>(
+  "opportunity/deleteOpportunity",
+  async ({ userProfile, eventId }, thunkApi) => {
+    await opportunityCollection.deleteOpportunity(eventId);
+    const eventIds = userProfile.event.filter((id: string) => id !== eventId);
+    return await opportunityCollection.getOpportunitiesByIds(eventIds);
+  }
+);
 
 export const opportunities = createSlice({
   name: "opportunities",
@@ -50,20 +46,6 @@ export const opportunities = createSlice({
     },
   },
   extraReducers: (builder) => {
-    builder.addCase(getOpportunities.pending, (state) => {
-      state.loading = true;
-    });
-
-    builder.addCase(getOpportunities.fulfilled, (state, { payload }) => {
-      state.opportunities = payload;
-      state.loading = false;
-    });
-
-    builder.addCase(getOpportunities.rejected, (state, { payload }) => {
-      state.loading = false;
-      state.error = payload;
-    });
-
     builder.addCase(getOpportunitiesByIds.pending, (state) => {
       state.loading = true;
     });

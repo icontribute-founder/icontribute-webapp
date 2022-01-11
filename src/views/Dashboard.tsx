@@ -59,7 +59,7 @@ const Dashboard = () => {
 
   useEffect(() => {
     dispatch(getOpportunitiesByIds({ eventIds: userProfile.event }));
-  }, [dispatch]);
+  }, []);
 
   if (loading || error !== null) return "";
 
@@ -173,11 +173,10 @@ const Dashboard = () => {
         </Grid>
         <hr />
       </TextGroup>
-        
-        <TextGroup style={{ paddingTop: "0px" }}>
-          <HeaderTwo>Application details</HeaderTwo>
-      {
-        type === HostingType.External ? (
+
+      <TextGroup style={{ paddingTop: "0px" }}>
+        <HeaderTwo>Application details</HeaderTwo>
+        {type === HostingType.External ? (
           <Paragraph>
             Through external website (
             <a target="parent" href={"//" + url}>
@@ -185,12 +184,9 @@ const Dashboard = () => {
             </a>
             ){" "}
           </Paragraph>
-        ):(
-          <Paragraph>
-            Through iContribute Application
-          </Paragraph>
-        )
-      }
+        ) : (
+          <Paragraph>Through iContribute Application</Paragraph>
+        )}
       </TextGroup>
 
       <TextGroup style={{ paddingTop: "0px" }}>
@@ -233,7 +229,8 @@ const Dashboard = () => {
       <HeaderThree>Applicants</HeaderThree>
 
       <Paragraph>There are no applicants</Paragraph>
-      <br /><br />
+      <br />
+      <br />
     </SelectedOpportunity>
   );
 

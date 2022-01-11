@@ -6,13 +6,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router";
 import { RootState } from "../store";
 import { BlueButton, LightBlueButton } from "../components/styles";
-import { opportunityCollection } from "../configure";
-import {
-  createOpportunity,
-  editOpportunity,
-  reset,
-} from "../features/opportunity";
-import { getOpportunities } from "../features/opportunities";
+import { createOpportunity, editOpportunity } from "../features/opportunity";
+import { getOpportunitiesByIds } from "../features/opportunities";
 
 const Content = styled.div`
   margin-top: 16px;
@@ -52,7 +47,10 @@ const ReviewOpportunity = () => {
     (state: RootState) => state.opportunity
   );
 
-  const userId = "info@girlsinscience.ca";
+  const { userProfile } = useSelector((state: RootState) => state.user);
+
+  console.log(userProfile);
+
   const handleSave = () => {
     console.log("save");
   };
@@ -60,7 +58,7 @@ const ReviewOpportunity = () => {
   const handlePublish = () => {
     switch (action) {
       case "create":
-        dispatch(createOpportunity({ userId, opportunity }));
+        dispatch(createOpportunity({ userId: userProfile.email, opportunity }));
         break;
       case "edit":
         dispatch(
@@ -70,7 +68,7 @@ const ReviewOpportunity = () => {
       default:
         break;
     }
-    dispatch(getOpportunities());
+    dispatch(getOpportunitiesByIds({ eventIds: userProfile.event }));
     history.push("/new-opportunity-confirm");
   };
 
