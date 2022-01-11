@@ -1,4 +1,3 @@
-import { useJsApiLoader } from "@react-google-maps/api";
 import { useEffect, useState } from "react";
 import { useHistory } from "react-router";
 import styled from "styled-components";
@@ -21,7 +20,7 @@ import { HostingType } from "@icontribute-founder/firebase-access";
 const Dashboard = () => {
   const history = useHistory();
   const dispatch = useDispatch();
-  // const [deleteModalOpen, setDeleteModalOpen] = useState(false);
+
   const { loading, opportunities, indexSelected, error } = useSelector(
     (state: RootState) => state.opportunities
   );
@@ -44,11 +43,6 @@ const Dashboard = () => {
     history.push("/opportunity/create");
   };
 
-  const { isLoaded: isMapLoaded } = useJsApiLoader({
-    id: "google-map-script",
-    googleMapsApiKey: process.env.REACT_APP_GOOGLE_KEY!,
-  });
-
   const handleCardOnClick = (e: any, i: number, props: any) => {
     dispatch(selectOpportunity(i));
     setCenter({
@@ -65,6 +59,11 @@ const Dashboard = () => {
 
   if (opportunities.length === 0) {
     return <EmptyDashboard />;
+  }
+
+  if (indexSelected >= opportunities.length) {
+    dispatch(selectOpportunity(0));
+    return <></>;
   }
 
   const formatDateTime = (date: Date) => {
@@ -234,10 +233,10 @@ const Dashboard = () => {
     </SelectedOpportunity>
   );
 
-  return isMapLoaded ? (
+  return (
     <OrganizationDashboardPage>
       {header}
-      <SignupContainer>
+      <DashboardContainer>
         <Grid container>
           <Grid item xs={6}>
             <EventsListContainer>{ListEventCardComponents}</EventsListContainer>
@@ -247,10 +246,8 @@ const Dashboard = () => {
             {selectedOpportunityView}
           </Grid>
         </Grid>
-      </SignupContainer>
+      </DashboardContainer>
     </OrganizationDashboardPage>
-  ) : (
-    <></>
   );
 };
 
@@ -287,16 +284,16 @@ const RightBox = styled.div`
 `;
 
 const HeaderOne = styled.h1`
-    font-family: Source Sans Pro;
-    font-weight: bold;
-    text-align: left";
+  font-family: Source Sans Pro;
+  font-weight: bold;
+  text-align: left";
 `;
 
 const HeaderFour = styled.h3`
-    font-family: Source Sans Pro;
-    text-align: left";
-    margin-bottom: -2%;
-    margin-bottom: 1%;
+  font-family: Source Sans Pro;
+  text-align: left";
+  margin-bottom: -2%;
+  margin-bottom: 1%;
 `;
 
 const SelectedOpportunity = styled.div`
@@ -308,7 +305,7 @@ const SelectedOpportunity = styled.div`
   overflow-x: hidden;
 `;
 
-const SignupContainer = styled.div`
+const DashboardContainer = styled.div`
   font-family: Source Sans Pro;
   width: fit-content;
   margin: auto;

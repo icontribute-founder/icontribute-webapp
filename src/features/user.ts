@@ -74,6 +74,7 @@ export const signup = createAsyncThunk<
       company.email,
       password
     );
+    await auth.verifyUser();
     await user.createCompany(company);
     return { userAuth, userProfile: company };
   } catch (error) {

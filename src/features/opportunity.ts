@@ -37,10 +37,18 @@ export const createOpportunity = createAsyncThunk<
   { rejectValue: any }
 >(
   "opportunity/createOpportunity",
+
   async ({ userId, opportunity }, thunkApi) => {
-    await opportunityCollection.createOpportunity(userId, {
-      ...opportunity,
-    });
+    console.log("opportunity", opportunity);
+    console.log("userId", userId);
+    
+    try {
+      await opportunityCollection.createOpportunity(userId, {
+        ...opportunity,
+      });
+    } catch (error) {
+      console.log(error);
+    }
     return { ...initialState };
   }
 );
@@ -80,6 +88,12 @@ export const opportunitySlice = createSlice({
     },
     updateLocation: (state, action: PayloadAction<string>) => {
       state.opportunity.address = action.payload;
+    },
+    updateCoordinates: (
+      state,
+      action: PayloadAction<typeof defaultEvent.coordinates>
+    ) => {
+      state.opportunity.coordinates = action.payload;
     },
     updateDescription: (state, action: PayloadAction<string>) => {
       state.opportunity.description = action.payload;
@@ -122,7 +136,11 @@ export const opportunitySlice = createSlice({
     },
     reset: () => initialState,
     setExistingOpportunity: (state, action) => {
-      let opportunity = action.payload === null ? initialState : action.payload;
+      let opportunity = !action.payload
+        ? initialState.opportunity
+        : action.payload;
+
+      console.log(opportunity);
 
       const {
         eventID,
@@ -153,6 +171,7 @@ export const opportunitySlice = createSlice({
       state.opportunity.virtual = virtual;
       state.opportunity.deadline = deadline;
       state.opportunity.date = date;
+      state.opportunity.categories = categories;
       state.opportunity.url = url;
       // state.opportunity.categories = categories;
     },
@@ -191,6 +210,7 @@ export const {
   updateRole,
   updateNotes,
   updateLocation,
+  updateCoordinates,
   updateCategories,
   updateHostingType,
   updateVirtual,

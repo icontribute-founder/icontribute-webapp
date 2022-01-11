@@ -1,11 +1,10 @@
 import { Container } from "@material-ui/core";
 import OpportunityReview from "../components/OpportunityReview";
 import styled from "styled-components";
-import { Box } from "@material-ui/core";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router";
 import { RootState } from "../store";
-import { BlueButton, LightBlueButton } from "../components/styles";
+import { BlueButton } from "../components/styles";
 import { createOpportunity, editOpportunity } from "../features/opportunity";
 import { getOpportunitiesByIds } from "../features/opportunities";
 
@@ -32,11 +31,8 @@ const Subtitle = styled.p`
 
 const PublishButton = styled(BlueButton)`
   width: 168px;
-`;
-
-const SaveButton = styled(LightBlueButton)`
-  width: 168px;
-  margin-right: 12px;
+  float: right;
+  margin-bottom: 20px;
 `;
 
 const ReviewOpportunity = () => {
@@ -49,16 +45,12 @@ const ReviewOpportunity = () => {
 
   const { userProfile } = useSelector((state: RootState) => state.user);
 
-  console.log(userProfile);
-
-  const handleSave = () => {
-    console.log("save");
-  };
+  const userId = userProfile.email;
 
   const handlePublish = () => {
     switch (action) {
       case "create":
-        dispatch(createOpportunity({ userId: userProfile.email, opportunity }));
+        dispatch(createOpportunity({ userId, opportunity }));
         break;
       case "edit":
         dispatch(
@@ -83,10 +75,7 @@ const ReviewOpportunity = () => {
       <Content>
         <OpportunityReview />
       </Content>
-      <Box display="flex" justifyContent="flex-end" mt={5} mb={5}>
-        <SaveButton onClick={handleSave}>Save as Draft</SaveButton>
-        <PublishButton onClick={handlePublish}>Publish</PublishButton>
-      </Box>
+      <PublishButton onClick={handlePublish}>Publish</PublishButton>
     </Container>
   );
 };

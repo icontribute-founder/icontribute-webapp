@@ -44,6 +44,9 @@ export const opportunities = createSlice({
     selectOpportunity: (state, action: PayloadAction<number>) => {
       state.indexSelected = action.payload;
     },
+    addOpportunity: (state, { payload }) => {
+      state.opportunities.push(payload);
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(getOpportunitiesByIds.pending, (state) => {
@@ -77,6 +80,6 @@ export const opportunities = createSlice({
   },
 });
 
-export const { selectOpportunity } = opportunities.actions;
+export const { selectOpportunity, addOpportunity } = opportunities.actions;
 
 export default opportunities.reducer;
