@@ -8,9 +8,7 @@ import { RootState } from "../store";
 import { useDispatch, useSelector } from "react-redux";
 
 import {
-  getOpportunities,
   getOpportunitiesByIds,
-  selectOpportunity,
 } from "../features/opportunities";
 
 import { user } from "../configure";

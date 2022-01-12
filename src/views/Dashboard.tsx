@@ -17,7 +17,6 @@ import {
 import { setAction, setExistingOpportunity } from "../features/opportunity";
 import { HostingType } from "@icontribute-founder/firebase-access";
 
-
 const Dashboard = () => {
   const history = useHistory();
   const dispatch = useDispatch();
