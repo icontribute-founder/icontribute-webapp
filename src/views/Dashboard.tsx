@@ -29,9 +29,6 @@ const Dashboard = () => {
   const { userProfile } = useSelector((state: RootState) => state.user);
 
   if (opportunities.length > 0) {
-    console.log("Volunteer Oppotunities: ", opportunities);
-    console.log("I AM CALLING THIS 3")
-    //can be updated without this
     dispatch(setExistingOpportunity(opportunities[indexSelected]));
   }
 
