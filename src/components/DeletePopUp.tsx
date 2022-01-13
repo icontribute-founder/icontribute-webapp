@@ -15,6 +15,7 @@ const DeletePopUp = ({ handleCancel }: DeletePopUpProps) => {
   const { opportunities, indexSelected } = useSelector(
     (state: RootState) => state.opportunities
   );
+  const { userProfile } = useSelector((state: RootState) => state.user);
 
   if (!opportunities || opportunities.length === 0) {
     return <></>;
@@ -30,8 +31,12 @@ const DeletePopUp = ({ handleCancel }: DeletePopUpProps) => {
 
   const handleDeleteOpportunityButtonOnClick = () => {
     dispatch(
-      deleteOpportunity({ eventId: opportunities[indexSelected].eventID })
+      deleteOpportunity({
+        userProfile,
+        eventId: opportunities[indexSelected].eventID,
+      })
     );
+
     handleCancel();
   };
 

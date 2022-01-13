@@ -6,7 +6,7 @@ import { useHistory } from "react-router";
 import { RootState } from "../store";
 import { BlueButton } from "../components/styles";
 import { createOpportunity, editOpportunity } from "../features/opportunity";
-import { getOpportunities } from "../features/opportunities";
+import { getOpportunitiesByIds } from "../features/opportunities";
 
 const Content = styled.div`
   margin-top: 16px;
@@ -60,7 +60,7 @@ const ReviewOpportunity = () => {
       default:
         break;
     }
-    dispatch(getOpportunities());
+    dispatch(getOpportunitiesByIds({ eventIds: userProfile.event }));
     history.push("/new-opportunity-confirm");
   };
 
