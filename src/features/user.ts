@@ -124,6 +124,26 @@ export const userSlice = createSlice({
           break;
         };
       }
+    },
+    markNotificationUnread: (state, action: PayloadAction<string>) => {
+      const eventID = action.payload;
+
+      for(let i = 0; i< state.userProfile.notifications.length; i++){
+        if(state.userProfile.notifications[i].eventID === eventID){
+          state.userProfile.notifications[i].read = false;
+          break;
+        };
+      }
+    },
+    deleteNotification: (state, action: PayloadAction<string>) => {
+      const eventID = action.payload;
+
+      for(let i = 0; i< state.userProfile.notifications.length; i++){
+        if(state.userProfile.notifications[i].eventID === eventID){
+          state.userProfile.notifications.splice(i,1);
+          break;
+        };
+      }
     }
   },
   extraReducers: (builder) => {
@@ -223,6 +243,7 @@ export const userSlice = createSlice({
 });
 
 // export const { addUser, removeUser } = userSlice.actions;
-export const {markNotificationRead} = userSlice.actions;
+export const {markNotificationRead, markNotificationUnread, deleteNotification} = userSlice.actions;
+
 
 export default userSlice.reducer;
