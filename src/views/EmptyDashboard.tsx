@@ -2,12 +2,20 @@ import { useHistory } from "react-router";
 import Button from "../components/common/Button";
 import styled from "styled-components";
 import DashboardGraphic from "../components/Svgs/DashboardGraphic";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../store";
 
 const EmptyDashboard = () => {
   const history = useHistory();
+  const { userProfile } = useSelector((state: RootState) => state.user);
 
   const handleOnClick = () => {
-    history.push("/opportunity/create");
+    console.log("User Profile: ", userProfile);
+
+    if(userProfile.verified)
+      history.push("/opportunity/create");
+    else
+      console.log("Organization is not verified!");
   };
 
   return (

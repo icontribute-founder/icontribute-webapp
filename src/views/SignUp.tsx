@@ -315,7 +315,7 @@ const SignUp = ({ setShowSignup, setShowSignupConfirm }: any) => {
               name="description"
               id="description"
               onChange={handleFormChange}
-              placeholder="ie.We connect people who are looking for local volunteer opportunities to nonprofits who are actively recruiting"
+              placeholder="Example: We connect people who are looking for local volunteer opportunities to non-profit organizations who are actively recruiting volunteers"
               rows={8}
               value={signupDetails.description}
             />
