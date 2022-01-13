@@ -4,8 +4,14 @@ import { useHistory } from "react-router-dom";
 import OpportunityCreatedSvg from "../assets/images/opportunityCreated.svg";
 import { BlueButton, LightBlueButton } from "../components/styles";
 import { useState } from "react";
-import { useSelector } from "react-redux";
 import { RootState } from "../store";
+import { useDispatch, useSelector } from "react-redux";
+
+import {
+  getOpportunitiesByIds,
+} from "../features/opportunities";
+
+import { user } from "../configure";
 
 const OpportunityConfirmPage = () => {
   let opportunityDetails = useSelector((state: RootState) => state.opportunity);
@@ -16,13 +22,29 @@ const OpportunityConfirmPage = () => {
     opportunityDetails.opportunity.companyName
   );
 
+ 
+  const { userProfile } = useSelector((state: RootState) => state.user);
+  const userId = userProfile.email;
+  const dispatch = useDispatch();
+
   const history = useHistory();
-  const handleDashboardClick = () => {
+
+
+  const handleDashboardClick = async(e:any) => {
+    updateDash();
     history.push("/");
   };
-  const handleShareClick = () => {
+  const handleShareClick = async(e:any)=> {
+    updateDash();
     history.push("/");
   };
+
+  const updateDash = async()=> {
+    const new_arr = await user.getCompany(userProfile.email);
+    if (new_arr != null){
+      dispatch(getOpportunitiesByIds({ eventIds: new_arr.event }));
+    } 
+  }
 
   return (
     <Box
