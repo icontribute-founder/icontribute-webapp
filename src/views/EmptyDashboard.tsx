@@ -10,8 +10,6 @@ const EmptyDashboard = () => {
   const { userProfile } = useSelector((state: RootState) => state.user);
 
   const handleOnClick = () => {
-    console.log("User Profile: ", userProfile);
-
     if(userProfile.verified)
       history.push("/opportunity/create");
     else

@@ -37,9 +37,15 @@ const Dashboard = () => {
   });
 
   const handleOnClick = () => {
-    dispatch(setExistingOpportunity(null));
-    dispatch(setAction("create"));
-    history.push("/opportunity/create");
+    console.log("User Profile: ", userProfile);
+    if(userProfile.verified) {
+      dispatch(setExistingOpportunity(null));
+      dispatch(setAction("create"));
+      history.push("/opportunity/create");  
+    }
+    else
+      console.log("Organization is not verified!");
+
   };
    
 
