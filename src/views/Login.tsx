@@ -146,7 +146,7 @@ const Login = ({ setShowSignup, setShowForgotPassword }: any) => {
           />
           <div style={{ marginBottom: "20px" }}>
             <a href="javascript:void(0);" onClick={handleForgotPassword}>
-              Forget password?
+              Forgot password?
             </a>
             <ErrorMessage>{error}</ErrorMessage>
           </div>
