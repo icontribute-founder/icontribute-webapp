@@ -24,7 +24,7 @@ const SignUpConfirm = ({ setShowSignupConfirm }: any) => {
                     <ParaContainer>
 
                         <ParaStyleOne>
-                            For the safety of our student volunteers, wee ensure that all organization accounts are registered under the Government of Canada before allowing you to post opportunities.
+                            For the safety of our student volunteers, we ensure that all organization accounts are registered under the Government of Canada before allowing you to post opportunities.
                         </ParaStyleOne>
 
                         <ParaStyleOne>
@@ -32,7 +32,7 @@ const SignUpConfirm = ({ setShowSignupConfirm }: any) => {
                         </ParaStyleOne>
 
                         <ParaStyleOne>
-                            If you don’t see the email within 72 hours, please contact our support team for assistance.
+                            If you don’t see the email within 72 hours, please contact our support team at icontribute.founder@gmail.com for assistance.
                         </ParaStyleOne>
 
                     </ParaContainer>
