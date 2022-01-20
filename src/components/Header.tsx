@@ -48,11 +48,7 @@ const ToolButton = styled.button`
   margin-left: 12px;
   background: none;
   border: none;
-  /*
-  &: hover {
-    cursor: pointer;
-  }
-  */
+  cursor: pointer;
 `;
 
 const Header = () => {
