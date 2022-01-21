@@ -14,12 +14,12 @@ import { useDispatch, useSelector } from "react-redux";
 
 import StaticInputField from "../components/FormElements/StaticInputField";
 import { uploadImage } from "@icontribute-founder/firebase-access";
-import { storage } from "../configure";
+import { storage, user } from "../configure";
 
 //Modal-Code-Start
 import { makeStyles, Theme, createStyles } from "@material-ui/core/styles";
 import Modal from "@material-ui/core/Modal";
-import { resetPassword } from "../features/user";
+import { resetPassword, updateUserDescription, updateUserPostalCode, updateUserProfilePicture, updateUserUrl } from "../features/user";
 function getModalStyle() {
   const top = 50;
   const left = 50;
@@ -70,6 +70,7 @@ const AccountSettings = () => {
             return;
           }
           setImageFile(file[0]);
+          console.log(file[0]);
         }}
       ></ImageDropzone>
       <ButtonCenter
@@ -80,7 +81,8 @@ const AccountSettings = () => {
           handleClose();
           const url = await uploadImage(imageFile, storage);
           setCurrProfilePic(url);
-          //NEED TO SAVE NEW URL OF PICTURE TO DATABASE HERE --------------------
+          dispatch(updateUserProfilePicture(url));
+          await user.updateCompany({email: userProfile.email, profilePicture: url});
         }}
       >
         Confirm
@@ -93,7 +95,7 @@ const AccountSettings = () => {
   console.log("Current User: ", userProfile);
 
   const [currUserWebsite, setcurrUserWebsite] = React.useState(
-    userProfile.website
+    userProfile.url
   );
   const [currUserPostalCode, setcurrUserPostalCode] = React.useState(
     userProfile.postalCode
@@ -121,7 +123,7 @@ const AccountSettings = () => {
   const [saveDetailsNotiColor, setSaveDetailsNotiColor] = useState("");
   const [isSaveDetailsNotiDisplayed, setIsSaveDetailsNotiDisplayed] =
     useState(false);
-  const SaveDetailsButtonHandler = () => {
+  const SaveDetailsButtonHandler = async() => {
     setIsSaveDetailsNotiDisplayed(true);
     if (currUserDescription === "") {
       setSaveDetailsNotiColor("#FC100D");
@@ -130,7 +132,11 @@ const AccountSettings = () => {
     }
     setSaveDetailsNotiColor("#4bb543");
     setSaveDetailsNoti("Details saved successfully");
-    //Need to update new details (3 state variables) to the db here -----;
+
+    dispatch(updateUserDescription(currUserDescription));
+    dispatch(updateUserUrl(currUserWebsite));
+    dispatch(updateUserPostalCode(currUserPostalCode));
+    await user.updateCompany({email: userProfile.email, description: currUserDescription, url: currUserWebsite, postalCode: currUserPostalCode});
   };
 
   const [isPasswordChangeNotiDisplayed, setIsPasswordChangeNotiDisplayed] =
