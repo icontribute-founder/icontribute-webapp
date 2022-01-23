@@ -11,7 +11,7 @@ import { setAction } from "../features/opportunity";
 import { useSelector } from "react-redux";
 import { RootState } from "../store";
 import { user } from "../configure";
-import { markNotificationRead } from "../features/user";
+import { markNotificationRead, markNotificationUnread, deleteNotification } from "../features/user";
 
 const NotifMoreOptions = (props: any) => {
   const { userProfile } = useSelector((state: RootState) => state.user);
@@ -34,16 +34,25 @@ const NotifMoreOptions = (props: any) => {
     sourceProfilePicture: notificationProps.sourceProfilePicture,
   };
 
-  const handleMarkAsRead = async () => {
-    try{
-      await user.markNotificationRead(userProfile.email, {
-        ...notification,
-        date: notification.date.toDate(),
-      });
+  const handleMarkAsReadOrUnread = async () => {
+    try {
+      if (notification.read === false) {
+        await user.markNotificationRead(userProfile.email, {
+          ...notification,
+          date: notification.date.toDate(),
+        });
 
-      dispatch(markNotificationRead(notification.eventID));
-    }
-    catch(error){
+        dispatch(markNotificationRead(notification.eventID));
+      }
+      else{
+        await user.markNotificationUnread(userProfile.email, {
+          ...notification,
+          date: notification.date.toDate(),
+        });
+
+        dispatch(markNotificationUnread(notification.eventID));
+      }
+    } catch (error) {
       console.log(error);
     }
     handleClose();
@@ -53,7 +62,13 @@ const NotifMoreOptions = (props: any) => {
     handleClose();
   };
 
-  const handleRemove = () => {
+  const handleRemove = async () => {
+    await user.deleteNotification(userProfile.email, {
+      ...notification,
+      date: notification.date.toDate(),
+    });
+
+    dispatch(deleteNotification(notification.eventID));
     handleClose();
   };
 
@@ -61,10 +76,11 @@ const NotifMoreOptions = (props: any) => {
     handleClose();
   };
 
-  const handleMarkAsReadMsg:string = notification.read=== false ? "Mark as read" : "Mark as unread";
+  const handleMarkAsReadOrUnreadMsg: string =
+    notification.read === false ? "Mark as read" : "Mark as unread";
 
   const options = [
-    { name: handleMarkAsReadMsg, handler: handleMarkAsRead },
+    { name: handleMarkAsReadOrUnreadMsg, handler: handleMarkAsReadOrUnread },
     //{ name: "View Applicant's Profile", handler: handleAppProf },
     { name: "Remove this notification", handler: handleRemove },
     //{ name: "Report issue", handler: handleReport },

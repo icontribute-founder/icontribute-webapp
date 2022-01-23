@@ -30,10 +30,10 @@ const Notifications = () => {
 
       <HeaderTwo>New Notifications</HeaderTwo>
 
-      {unreadNotifications.map((element: Notification) => {
+      {unreadNotifications.map((element: Notification, index:number) => {
         return (
           <UnreadNotificationCard
-            key={element.eventID}
+            key={index+element.eventID+element.date}
             date={element.date}
             eventID={element.eventID}
             eventName={element.eventName}
@@ -48,10 +48,10 @@ const Notifications = () => {
 
       <HeaderTwo>Old Notifications</HeaderTwo>
 
-      {readNotifications.map((element: Notification) => {
+      {readNotifications.map((element: Notification, index:number) => {
         return (
           <NotifcationCard
-            key={element.eventID}
+            key={index+element.eventID+element.date}
             date={element.date}
             eventID={element.eventID}
             eventName={element.eventName}

@@ -28,7 +28,7 @@ interface SlideProps {
 }
 
 const Slide = ({ slideItem }: SlideProps) => {
-    return <img src={slideItem.source} alt={slideItem.name} />;
+    return <img src={slideItem.source} alt={slideItem.name} width="90%" height = "90%" />;
 };
 
 const Slides = ({ interval = 5000 }) => {
