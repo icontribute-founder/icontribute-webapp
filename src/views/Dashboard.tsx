@@ -4,7 +4,6 @@ import styled from "styled-components";
 import { Grid } from "@material-ui/core";
 import SmallEventCard from "../components/SmallEventCard";
 import Button from "../components/common/Button";
-import Calendar from "../components/Svgs/CalendarIcon";
 import MoreOptions from "../components/MoreOptions";
 import Map from "../components/Map";
 import EmptyDashboard from "./EmptyDashboard";
@@ -41,7 +40,6 @@ const Dashboard = () => {
     dispatch(setAction("create"));
     history.push("/opportunity/create");
   };
-   
 
   const handleCardOnClick = (e: any, i: number, props: any) => {
     dispatch(selectOpportunity(i));
@@ -81,13 +79,13 @@ const Dashboard = () => {
     `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`;
 
   const ListEventCardComponents = opportunities.map((props: any, i: number) => {
-    const { eventName, eventImage, date, description, eventID } = props;
+    const { eventName, eventImage, dateCreated, description, eventID } = props;
     return (
       <SmallEventCard
         key={eventID}
         eventImage={eventImage}
         eventName={eventName}
-        date={new Date(date)}
+        date={new Date(dateCreated)}
         description={description}
         eventID={eventID}
         onClick={(e: any) => handleCardOnClick(e, i, props)}
@@ -109,6 +107,7 @@ const Dashboard = () => {
     shift,
     deadline,
     date,
+    dateCreated,
     url,
     type,
   } = opportunities[indexSelected];
@@ -162,8 +161,7 @@ const Dashboard = () => {
           >
             <MoreOptions />
             <SubHeader>
-              <Calendar />
-              {formatDate(new Date(date))}
+              Date Created: {formatDate(new Date(dateCreated))}
             </SubHeader>
             <SubHeader>
               Application Deadline: {formatDate(new Date(deadline))}
