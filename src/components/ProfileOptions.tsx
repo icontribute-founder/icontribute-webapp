@@ -32,10 +32,12 @@ const ProfileOptions = () => {
   };
 
   const handleHelpCentre = () => {
+    window.location.href = 'https://icontribute.community/#/'
     handleClose();
   };
 
   const handleAbout = () => {
+    window.location.href = 'https://icontribute.community/#/'
     handleClose();
   };
 
