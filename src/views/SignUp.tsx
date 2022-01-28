@@ -210,17 +210,15 @@ const SignUp = ({ setShowSignup, setShowSignupConfirm }: any) => {
     //     setShowSignupConfirm(true);
     //   })
     //   .catch((err) => console.log(err));
-    // let url = "";
-    // if (orgImage !== undefined && orgImage !== null) {
-    //   url = await uploadImage(orgImage, storage);
-    //   console.log(url);
-    // }
-    setSignupDetails((prevState) => ({
-      ...prevState,
-      profilePicture: "https://firebasestorage.googleapis.com/v0/b/icontribute-dev.appspot.com/o/images%2F07bea6fda29083f5cd288ac128b1737382a53e32.png?alt=media&token=9066df17-c5ea-497e-94cd-cdbcb6e090fa"
-    }));
+    let url = "";
+    if (orgImage !== undefined && orgImage !== null) {
+      url = await uploadImage(orgImage, storage);
+    }
 
-    dispatch(signup({ company: signupDetails, password: password }));
+    dispatch(signup({ company: {
+      ...signupDetails,
+      profilePicture: url
+    }, password: password }));
 
     setShowSignup(false);
     setShowSignupConfirm(true);
