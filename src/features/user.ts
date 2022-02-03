@@ -152,6 +152,12 @@ export const userSlice = createSlice({
       state.loginLoading = true;
     });
     builder.addCase(login.fulfilled, (state, { payload }) => {
+      if(payload.userProfile.type=="student"){
+        state.error = "You must have an organization account to log into this website.";
+        state.loginLoading = false;
+        sessionStorage.setItem("user", "");
+        return;
+      }
       console.log(payload);
       const { userAuth, userProfile } = payload;
       state.loginLoading = false;
@@ -168,10 +174,10 @@ export const userSlice = createSlice({
       state.loggedIn = false;
       switch (payload.code) {
         case INVALID_EMAIL:
-          state.error = "Please try again";
+          state.error = "This email is not a registered account.";
           break;
         case INVALID_PASSWORD:
-          state.error = "Please try again";
+          state.error = "The email or password you entered is incorrect. Please try again.";
           break;
         default:
           state.error = "Unknown Error";
