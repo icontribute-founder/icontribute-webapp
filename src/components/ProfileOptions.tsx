@@ -11,7 +11,7 @@ import { setAction } from "../features/opportunity";
 import { logout } from "../features/user";
 import { ExitToApp, Help, Info } from "@material-ui/icons";
 import { Divider } from "@material-ui/core";
-import smallLogo from "../assets/images/logo.png";
+import smallLogo from "../assets/images/icontribute_logo_only.svg";
 import ProfileButton from "../assets/images/profile_button.svg";
 
 const DropdownOption = styled.div`
