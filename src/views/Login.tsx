@@ -131,7 +131,7 @@ const Login = ({ setShowSignup, setShowForgotPassword }: any) => {
             value={credential.email}
           />
           <div style={{ marginBottom: "10px" }}>
-            <ErrorMessage>{error}</ErrorMessage>
+            {/* <ErrorMessage>{error}</ErrorMessage> */}
           </div>
         </InputField>
         <InputField>
