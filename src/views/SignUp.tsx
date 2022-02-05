@@ -31,6 +31,9 @@ import Slides from "../components/Slides";
 import { login } from "../features/user";
 import { RootState } from "../store";
 
+import { uploadImage } from "@icontribute-founder/firebase-access";
+import { storage } from "../configure";
+
 /*
 interface SignupDetails {
   email: string;
@@ -54,7 +57,7 @@ const SignUp = ({ setShowSignup, setShowSignupConfirm }: any) => {
     // history.goBack();
   };
 
-  const [orgImage, setOrgImage] = useState<any>();
+  const [orgImage, setOrgImage] = useState<File>();
   const [passwordCheckMark, setPasswordCheckMark] = useState("none");
   const [passwordConfirmCheckMark, setPasswordConfirmCheckMark] =
     useState("none");
@@ -159,52 +162,66 @@ const SignUp = ({ setShowSignup, setShowSignupConfirm }: any) => {
 
   const submitSignupDetails = async (e: any) => {
     e.preventDefault();
-    const url = "https://icontribute-api-dev-server.herokuapp.com/images/";
-    let formData = new FormData();
-    if (orgImage) {
-      formData.append("photo", orgImage[0], "image.jpg");
-    } else {
-      //needs to be of type blob
-      const parts = [
-        new Blob([], {
-          type: "text/plain",
-        }),
-        " Same way as you do with blob",
-        new Uint16Array([33]),
-      ];
 
-      const file = new File(parts, "sample.txt");
-      const test_object = {
-        path: "figure out the path",
-        name: "a name",
-        lastModified: 1638485464958,
-        lastModifiedDate:
-          "Thu Dec 02 2021 17:51:04 GMT-0500 (Eastern Standard Time)",
-        webkitRelativePath: "",
-      };
-      var f = new File([], "filename");
-      //{path: '16464545-test-written-in-black-on-white-computer-keys-3d-illustration-isolated-background.webp', name: '16464545-test-written-in-black-on-white-computer-keys-3d-illustration-isolated-background.webp', lastModified: 1638485464958, lastModifiedDate: Thu Dec 02 2021 17:51:04 GMT-0500 (Eastern Standard Time), webkitRelativePath: '', …}
-      formData.append("photo", f, "image.jpg");
+    // Old code to save image
+    // let formData = new FormData();
+    //const url = "https://icontribute-api-dev-server.herokuapp.com/images/";
+    // if (orgImage) {
+    //   formData.append("photo", orgImage[0], "image.jpg");
+    // } else {
+    //   //needs to be of type blob
+    //   const parts = [
+    //     new Blob([], {
+    //       type: "text/plain",
+    //     }),
+    //     " Same way as you do with blob",
+    //     new Uint16Array([33]),
+    //   ];
+
+    //   const file = new File(parts, "sample.txt");
+    //   const test_object = {
+    //     path: "figure out the path",
+    //     name: "a name",
+    //     lastModified: 1638485464958,
+    //     lastModifiedDate:
+    //       "Thu Dec 02 2021 17:51:04 GMT-0500 (Eastern Standard Time)",
+    //     webkitRelativePath: "",
+    //   };
+    //   var f = new File([], "filename");
+    //   //{path: '16464545-test-written-in-black-on-white-computer-keys-3d-illustration-isolated-background.webp', name: '16464545-test-written-in-black-on-white-computer-keys-3d-illustration-isolated-background.webp', lastModified: 1638485464958, lastModifiedDate: Thu Dec 02 2021 17:51:04 GMT-0500 (Eastern Standard Time), webkitRelativePath: '', …}
+    //   formData.append("photo", f, "image.jpg");
+    // }
+
+    // await axios
+    //   .post(url, formData, {
+    //     headers: {
+    //       "Content-Type": "multipart/form-data",
+    //       Accept: "application/json",
+    //     },
+    //   })
+    //   .then((res) => {
+    //     setSignupDetails((prevState) => ({
+    //       ...prevState,
+    //       profilePicture: res.data.imagePath,
+    //     }));
+    //     dispatch(signup({ company: signupDetails, password: password }));
+
+    //     setShowSignup(false);
+    //     setShowSignupConfirm(true);
+    //   })
+    //   .catch((err) => console.log(err));
+    let url = "";
+    if (orgImage !== undefined && orgImage !== null) {
+      url = await uploadImage(orgImage, storage);
     }
 
-    await axios
-      .post(url, formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-          Accept: "application/json",
-        },
-      })
-      .then((res) => {
-        setSignupDetails((prevState) => ({
-          ...prevState,
-          profilePicture: res.data.imagePath,
-        }));
-        dispatch(signup({ company: signupDetails, password: password }));
+    dispatch(signup({ company: {
+      ...signupDetails,
+      profilePicture: url
+    }, password: password }));
 
-        setShowSignup(false);
-        setShowSignupConfirm(true);
-      })
-      .catch((err) => console.log(err));
+    setShowSignup(false);
+    setShowSignupConfirm(true);
   };
 
   /* ============================================================================================================================== */
@@ -327,7 +344,15 @@ const SignUp = ({ setShowSignup, setShowSignupConfirm }: any) => {
             </ImageContainer>
           </Grid>
           <Grid item xs={8}>
-            <ImageDropzone setOrgImage={setOrgImage} />
+            <ImageDropzone
+              setOrgImage={async (file: any) => {
+                if (file === undefined || file === null) {
+                  setOrgImage(undefined);
+                  return;
+                }
+                setOrgImage(file[0]);
+              }}
+            />
           </Grid>
           <Grid item xs={12}>
             <SaveButtonContainer>

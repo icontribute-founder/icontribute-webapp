@@ -144,6 +144,18 @@ export const userSlice = createSlice({
           break;
         };
       }
+    },
+    updateUserUrl:(state, action: PayloadAction<String>)=>{
+      state.userProfile.url = action.payload;
+    },
+    updateUserDescription:(state, action: PayloadAction<String>)=>{
+      state.userProfile.description = action.payload;
+    },
+    updateUserPostalCode:(state, action: PayloadAction<String>)=>{
+      state.userProfile.postalCode = action.payload;
+    },
+    updateUserProfilePicture:(state, action: PayloadAction<String>)=>{
+      state.userProfile.profilePicture = action.payload;
     }
   },
   extraReducers: (builder) => {
@@ -243,7 +255,7 @@ export const userSlice = createSlice({
 });
 
 // export const { addUser, removeUser } = userSlice.actions;
-export const {markNotificationRead, markNotificationUnread, deleteNotification} = userSlice.actions;
+export const {markNotificationRead, markNotificationUnread, deleteNotification, updateUserUrl, updateUserDescription, updateUserPostalCode, updateUserProfilePicture} = userSlice.actions;
 
 
 export default userSlice.reducer;
