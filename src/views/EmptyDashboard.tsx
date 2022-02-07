@@ -2,12 +2,16 @@ import { useHistory } from "react-router";
 import Button from "../components/common/Button";
 import styled from "styled-components";
 import DashboardGraphic from "../components/Svgs/DashboardGraphic";
+import { reset } from "../features/opportunity";
+import { useDispatch } from "react-redux";
 
 const EmptyDashboard = () => {
   const history = useHistory();
+  const dispatch = useDispatch();
 
   const handleOnClick = () => {
     history.push("/opportunity/create");
+    dispatch(reset());
   };
 
   return (
