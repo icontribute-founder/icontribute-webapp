@@ -31,7 +31,7 @@ export const deleteOpportunity = createAsyncThunk<
 >(
   "opportunity/deleteOpportunity",
   async ({ userProfile, eventId }, thunkApi) => {
-    await opportunityCollection.deleteOpportunity(eventId);
+    await opportunityCollection.deleteOpportunity(eventId, userProfile.email);
     const eventIds = userProfile.event.filter((id: string) => id !== eventId);
     return await opportunityCollection.getOpportunitiesByIds(eventIds);
   }

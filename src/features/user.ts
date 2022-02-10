@@ -146,18 +146,18 @@ export const userSlice = createSlice({
       }
     },
 
-    updateUserUrl:(state, action: PayloadAction<String>)=>{
+    updateUserUrl: (state, action: PayloadAction<String>) => {
       state.userProfile.url = action.payload;
     },
-    updateUserDescription:(state, action: PayloadAction<String>)=>{
+    updateUserDescription: (state, action: PayloadAction<String>) => {
       state.userProfile.description = action.payload;
     },
-    updateUserPostalCode:(state, action: PayloadAction<String>)=>{
+    updateUserPostalCode: (state, action: PayloadAction<String>) => {
       state.userProfile.postalCode = action.payload;
     },
-    updateUserProfilePicture:(state, action: PayloadAction<String>)=>{
+    updateUserProfilePicture: (state, action: PayloadAction<String>) => {
       state.userProfile.profilePicture = action.payload;
-    }
+    },
   },
   extraReducers: (builder) => {
     // login
@@ -165,7 +165,7 @@ export const userSlice = createSlice({
       state.loginLoading = true;
     });
     builder.addCase(login.fulfilled, (state, { payload }) => {
-      if (payload.userProfile.type == "student") {
+      if (payload.userProfile.type === "student") {
         state.error =
           "You must have an organization account to log into this website.";
         state.loginLoading = false;
@@ -273,7 +273,10 @@ export const {
   markNotificationRead,
   markNotificationUnread,
   deleteNotification,
+  updateUserDescription,
+  updateUserPostalCode,
+  updateUserProfilePicture,
+  updateUserUrl,
 } = userSlice.actions;
-
 
 export default userSlice.reducer;
