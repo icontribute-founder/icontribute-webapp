@@ -83,7 +83,6 @@ export const signup = createAsyncThunk<
   }
 });
 
-
 export const resetPassword = createAsyncThunk<void, { email: string }, any>(
   "user/resetPassword",
   async ({ email }, thunkApi) => {
@@ -97,19 +96,20 @@ export const resetPassword = createAsyncThunk<void, { email: string }, any>(
   }
 );
 
-export const logout = createAsyncThunk<
-  void
->("user/logout", async (_, thunkApi) => {
-  try {
-    await auth.logout();
-    sessionStorage.setItem("user", "");
-  } catch (error) {
-    if (error instanceof FirebaseError) {
-      return thunkApi.rejectWithValue({ code: error.code });
+export const logout = createAsyncThunk<void>(
+  "user/logout",
+  async (_, thunkApi) => {
+    try {
+      await auth.logout();
+      sessionStorage.setItem("user", "");
+    } catch (error) {
+      if (error instanceof FirebaseError) {
+        return thunkApi.rejectWithValue({ code: error.code });
+      }
+      return thunkApi.rejectWithValue({ code: "unknown" });
     }
-    return thunkApi.rejectWithValue({ code: "unknown" });
   }
-});
+);
 
 export const userSlice = createSlice({
   name: "user",
@@ -118,33 +118,34 @@ export const userSlice = createSlice({
     markNotificationRead: (state, action: PayloadAction<string>) => {
       const eventID = action.payload;
 
-      for(let i = 0; i< state.userProfile.notifications.length; i++){
-        if(state.userProfile.notifications[i].eventID === eventID){
+      for (let i = 0; i < state.userProfile.notifications.length; i++) {
+        if (state.userProfile.notifications[i].eventID === eventID) {
           state.userProfile.notifications[i].read = true;
           break;
-        };
+        }
       }
     },
     markNotificationUnread: (state, action: PayloadAction<string>) => {
       const eventID = action.payload;
 
-      for(let i = 0; i< state.userProfile.notifications.length; i++){
-        if(state.userProfile.notifications[i].eventID === eventID){
+      for (let i = 0; i < state.userProfile.notifications.length; i++) {
+        if (state.userProfile.notifications[i].eventID === eventID) {
           state.userProfile.notifications[i].read = false;
           break;
-        };
+        }
       }
     },
     deleteNotification: (state, action: PayloadAction<string>) => {
       const eventID = action.payload;
 
-      for(let i = 0; i< state.userProfile.notifications.length; i++){
-        if(state.userProfile.notifications[i].eventID === eventID){
-          state.userProfile.notifications.splice(i,1);
+      for (let i = 0; i < state.userProfile.notifications.length; i++) {
+        if (state.userProfile.notifications[i].eventID === eventID) {
+          state.userProfile.notifications.splice(i, 1);
           break;
-        };
+        }
       }
     },
+
     updateUserUrl:(state, action: PayloadAction<String>)=>{
       state.userProfile.url = action.payload;
     },
@@ -164,6 +165,13 @@ export const userSlice = createSlice({
       state.loginLoading = true;
     });
     builder.addCase(login.fulfilled, (state, { payload }) => {
+      if (payload.userProfile.type == "student") {
+        state.error =
+          "You must have an organization account to log into this website.";
+        state.loginLoading = false;
+        sessionStorage.setItem("user", "");
+        return;
+      }
       console.log(payload);
       const { userAuth, userProfile } = payload;
       state.loginLoading = false;
@@ -173,31 +181,36 @@ export const userSlice = createSlice({
       state.error = "";
     });
     builder.addCase(login.rejected, (state, { payload }) => {
-      console.log(payload);
+      const { INVALID_EMAIL, INVALID_PASSWORD, USER_DELETED } = AuthErrorCodes;
 
-      const { INVALID_EMAIL, INVALID_PASSWORD } = AuthErrorCodes;
       state.loginLoading = false;
       state.loggedIn = false;
+      console.log(payload.code);
+
       switch (payload.code) {
         case INVALID_EMAIL:
-          state.error = "Please try again";
+          state.error = "This email is not a registered account.";
           break;
         case INVALID_PASSWORD:
-          state.error = "Please try again";
+          state.error =
+            "The email or password you entered is incorrect. Please try again.";
+          break;
+        case USER_DELETED:
+          state.error =
+            "The email or password you entered is incorrect. Please try again.";
           break;
         default:
           state.error = "Unknown Error";
           break;
       }
     });
-    
+
     builder.addCase(logout.fulfilled, (state, { payload }) => {
       state.loggedIn = false;
       state.loadingLocalUser = false;
       state.userAuth = null;
       state.userProfile = null;
     });
-    
 
     // load user from session storage
     builder.addCase(loadUser.pending, (state) => {
@@ -255,7 +268,12 @@ export const userSlice = createSlice({
 });
 
 // export const { addUser, removeUser } = userSlice.actions;
-export const {markNotificationRead, markNotificationUnread, deleteNotification, updateUserUrl, updateUserDescription, updateUserPostalCode, updateUserProfilePicture} = userSlice.actions;
+
+export const {
+  markNotificationRead,
+  markNotificationUnread,
+  deleteNotification,
+} = userSlice.actions;
 
 
 export default userSlice.reducer;
