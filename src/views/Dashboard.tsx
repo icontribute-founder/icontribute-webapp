@@ -15,6 +15,8 @@ import {
 } from "../features/opportunities";
 import { setAction, setExistingOpportunity } from "../features/opportunity";
 import { HostingType } from "@icontribute-founder/firebase-access";
+import loadinggif from '../assets/images/loading.gif'
+
 
 const Dashboard = () => {
   const history = useHistory();
@@ -53,7 +55,17 @@ const Dashboard = () => {
     dispatch(getOpportunitiesByIds({ eventIds: userProfile.event }));
   }, []);
 
-  if (loading || error !== null) return "";
+  if (error !== null) return "";
+
+  if (loading) {
+    return(
+    <div style={{display: 'flex',  justifyContent:'center', alignItems:'center', height:'50%'}}>
+      <img src={loadinggif} alt="loading..." />
+    </div>
+    );
+
+
+  };
 
   if (opportunities.length === 0) {
     return <EmptyDashboard />;
