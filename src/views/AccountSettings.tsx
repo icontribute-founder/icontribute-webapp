@@ -115,7 +115,7 @@ const AccountSettings = () => {
   };
 
   const [currProfilePic, setCurrProfilePic] = useState(
-    userProfile.profilePicture ? userProfile.profilePicture : DefaultProfilePhoto
+    userProfile.profilePicture
   );
 
 
