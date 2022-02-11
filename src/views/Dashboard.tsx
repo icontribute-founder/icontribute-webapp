@@ -13,7 +13,11 @@ import {
   getOpportunitiesByIds,
   selectOpportunity,
 } from "../features/opportunities";
-import { setAction, setExistingOpportunity } from "../features/opportunity";
+import {
+  reset,
+  setAction,
+  setExistingOpportunity,
+} from "../features/opportunity";
 import { HostingType } from "@icontribute-founder/firebase-access";
 import loadinggif from "../assets/images/loading.gif";
 
@@ -40,6 +44,7 @@ const Dashboard = () => {
     dispatch(setExistingOpportunity(null));
     dispatch(setAction("create"));
     history.push("/opportunity/create");
+    dispatch(reset());
   };
 
   const handleCardOnClick = (e: any, i: number, props: any) => {
