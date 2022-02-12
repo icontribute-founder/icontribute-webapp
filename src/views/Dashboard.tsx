@@ -19,7 +19,8 @@ import {
   setExistingOpportunity,
 } from "../features/opportunity";
 import { HostingType } from "@icontribute-founder/firebase-access";
-import loadinggif from "../assets/images/loading.gif";
+import loadinggif from "../assets/images/loading.gif"
+import Demo_Photo2 from "../assets/images/Demo_Photo2.png"
 
 const Dashboard = () => {
   const history = useHistory();
@@ -158,7 +159,7 @@ const Dashboard = () => {
       {eventImage ? (
         <StyledImage src={eventImageUrl} alt="EventImage" />
       ) : (
-        <></>
+        <StyledImage src={Demo_Photo2} alt="DefaultEventImage" />
       )}
 
       <TextGroup>
@@ -256,18 +257,22 @@ const Dashboard = () => {
     <OrganizationDashboardPage>
       {header}
       <DashboardContainer>
-        <Grid container>
-          <Grid item xs={6}>
+        <Grid container style={gridStyle}>
+          <Grid item xs={5} style={gridStyle}>
             <EventsListContainer>{ListEventCardComponents}</EventsListContainer>
           </Grid>
 
-          <Grid item xs={6}>
+          <Grid item xs={7} style={gridStyle}>
             {selectedOpportunityView}
           </Grid>
         </Grid>
       </DashboardContainer>
     </OrganizationDashboardPage>
   );
+};
+
+const gridStyle = {
+  height: "100%"
 };
 
 const HeaderContainer = styled.div`
@@ -305,19 +310,20 @@ const RightBox = styled.div`
 const HeaderOne = styled.h1`
   font-family: Source Sans Pro;
   font-weight: bold;
-  text-align: left";
+  text-align: left;
+  margin-top: 15px;
+  margin-bottom: 0px;
 `;
 
 const HeaderFour = styled.h3`
   font-family: Source Sans Pro;
   text-align: left";
-  margin-bottom: -2%;
-  margin-bottom: 1%;
+  margin-bottom: 5px;
 `;
 
 const SelectedOpportunity = styled.div`
   padding: 0px 14px;
-  height: 75vh;
+  height: 100%;
   background-color: white;
   scroll-behaviour: smooth;
   overflow-y: scroll;
@@ -326,7 +332,8 @@ const SelectedOpportunity = styled.div`
 
 const DashboardContainer = styled.div`
   font-family: Source Sans Pro;
-  width: fit-content;
+  width: 100%;
+  height: calc(100% - 108px);
   margin: auto;
   background: rgba(117, 122, 124, 0.08);
   overflow-y: hidden;
@@ -348,14 +355,15 @@ const OrganizationDashboardPage = styled.div`
 `;
 
 const StyledImage = styled.img`
+  display:block;
+  margin: auto;
   margin-top: 12px;
-  width: 100%;
   height: 300px;
   border-radius: 8px 8px 0px 0px;
 `;
 
 const EventsListContainer = styled.div`
-  height: 75vh;
+  height: 100%;
   font-family: Source Sans Pro;
   overflow-y: scroll;
   overflow-x: hidden;
