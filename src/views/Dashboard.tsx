@@ -13,10 +13,14 @@ import {
   getOpportunitiesByIds,
   selectOpportunity,
 } from "../features/opportunities";
-import { setAction, setExistingOpportunity } from "../features/opportunity";
+import {
+  reset,
+  setAction,
+  setExistingOpportunity,
+} from "../features/opportunity";
 import { HostingType } from "@icontribute-founder/firebase-access";
-import loadinggif from '../assets/images/loading.gif'
-import Demo_Photo2 from '../assets/images/Demo_Photo2.png'
+import loadinggif from "../assets/images/loading.gif"
+import Demo_Photo2 from "../assets/images/Demo_Photo2.png"
 
 const Dashboard = () => {
   const history = useHistory();
@@ -41,6 +45,7 @@ const Dashboard = () => {
     dispatch(setExistingOpportunity(null));
     dispatch(setAction("create"));
     history.push("/opportunity/create");
+    dispatch(reset());
   };
 
   const handleCardOnClick = (e: any, i: number, props: any) => {
@@ -58,14 +63,19 @@ const Dashboard = () => {
   if (error !== null) return "";
 
   if (loading) {
-    return(
-    <div style={{display: 'flex',  justifyContent:'center', alignItems:'center', height:'50%'}}>
-      <img src={loadinggif} alt="loading..." />
-    </div>
+    return (
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "50%",
+        }}
+      >
+        <img src={loadinggif} alt="loading..." />
+      </div>
     );
-
-
-  };
+  }
 
   if (opportunities.length === 0) {
     return <EmptyDashboard />;
