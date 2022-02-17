@@ -12,19 +12,25 @@ import LogoButton from "../assets/images/icontribute_logo_wtext.svg";
 const StyledHeader = styled.header`
   position: sticky;
   top: 0px;
+  padding-top: 0px;
   background-color: #2836d1;
   width: 100%;
   height: 65px;
   color: white;
   display: flex;
   justify-content: space-between;
-  margin-bottom: 20px;
+  margin-bottom: 0px;
   z-index: 1000;
 `;
 
+const ImageContainer = styled.header`
+  position: sticky;
+  margin-top: 30px;
+  height: 80px;
+  padding-top: 10px;
+`;
+
 const HeaderText = styled.button`
-
-
   margin-left: 12px;
   font-family: Montserrat;
   font-weight: 600;
@@ -34,9 +40,6 @@ const HeaderText = styled.button`
   background: none;
   border: none;
   align-items: center;
-
-  
-  
 `;
 
 const Tools = styled.div`
@@ -102,7 +105,9 @@ const Header = () => {
           handleOnClick("/");
         }}
       >
-       <img src={LogoButton} alt="logoButton" width = '90%'/>
+       <ImageContainer>
+          <img src={LogoButton} alt="logoButton" height = '90%' width = '100%'/>
+        </ImageContainer>
       </HeaderText>
       
       <Tools>
