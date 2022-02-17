@@ -40,6 +40,7 @@ const HeaderText = styled.button`
   background: none;
   border: none;
   align-items: center;
+  cursor: pointer;
 `;
 
 const Tools = styled.div`
