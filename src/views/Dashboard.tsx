@@ -228,11 +228,12 @@ const Dashboard = () => {
           <HeaderTwo>Shift {i + 1}</HeaderTwo>
           <Paragraph>Start: {formatDateTime(new Date(s.start))}</Paragraph>
           <Paragraph>End: {formatDateTime(new Date(s.end))}</Paragraph>
-          {s.repeating ? (
+          <Paragraph>Number of Participants: {(s.limit)}</Paragraph>
+          {/*s.repeating ? (
             <Paragraph>Repeats</Paragraph>
           ) : (
             <Paragraph>Does Not Repeat</Paragraph>
-          )}
+          )*/}
         </TextGroup>
       ))}
 
