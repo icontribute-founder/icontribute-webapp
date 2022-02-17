@@ -75,7 +75,7 @@ const ShiftCard = ({ shift, index = -1 }: ShiftCardProps) => {
                 <h4 style={{ margin: "0px" }}>Shift {index + 1}</h4>
                 <p>Start: {toDateString(shift?.start)}</p>
                 <p>End: {toDateString(shift?.end)}</p>
-                <p>{shift?.recurring}</p>
+                <p>Number of Participants: {(shift?.limit)}</p>
             </Card>
         ) : (
             ""

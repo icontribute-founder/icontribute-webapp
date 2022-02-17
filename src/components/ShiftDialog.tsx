@@ -97,9 +97,9 @@ const ShiftDialog = ({
     setShift({ ...shift, end: new Date(e).getTime() });
   };
 
-  // const handleRecurrenceOnChange = (e: any) => {
-  //   setShift({ ...shift, recurring: e.target.value });
-  // };
+   const handleLimitOnChange = (e: any) => {
+     setShift({ ...shift, limit: e.target.value });
+   };
 
   const handleOnSave = () => {
     if (edit) {
@@ -154,31 +154,41 @@ const ShiftDialog = ({
                 minDateMessage="Date should not be before start date."
               />
             </Grid>
-            {/* <Grid item md={12}>
+            <Grid item md={6}>
               <FormControl variant="outlined" fullWidth>
-                <InputLabel id={`recurrence-select-label-${index}`}>
-                  Recurrence
+                <InputLabel id={`limit-select-label-${index}`}>
+                  Number of Participants
                 </InputLabel>
                 <Select
-                    labelId={`recurrence-select-label-${index}`}
-                    id={`recurrence-select-${index}`}
-                    value={shift.recurrence}
-                    onChange={handleRecurrenceOnChange}
-                    label="Recurrence"
+                    labelId={`limit-select-label-${index}`}
+                    id={`limit-select-${index}`}
+                    value={shift.limit}
+                    onChange={handleLimitOnChange}
+                    label="Number of Participants"
                 >
-                    <MenuItem value="DOES_NOT_REPEAT">
-                        Does not repeat
-                    </MenuItem>
-                    <MenuItem value="DAILY">Daily</MenuItem>
-                    <MenuItem value="WEEKLY_ON_THURSDAY">
-                        Weekly on Thursday
-                    </MenuItem>
-                    <MenuItem value="EVERY_WEEKDAY">
-                        Every weekday (Monday to Friday)
-                    </MenuItem>
+                    <MenuItem value="1">1</MenuItem>
+                    <MenuItem value="2">2</MenuItem>
+                    <MenuItem value="3">3</MenuItem>
+                    <MenuItem value="4">4</MenuItem>
+                    <MenuItem value="5">5</MenuItem>
+                    <MenuItem value="6">6</MenuItem>
+                    <MenuItem value="7">7</MenuItem>
+                    <MenuItem value="8">8</MenuItem>
+                    <MenuItem value="9">9</MenuItem>
+                    <MenuItem value="10">10</MenuItem>
+                    <MenuItem value="11">11</MenuItem>
+                    <MenuItem value="12">12</MenuItem>
+                    <MenuItem value="13">13</MenuItem>
+                    <MenuItem value="14">14</MenuItem>
+                    <MenuItem value="15">15</MenuItem>
+                    <MenuItem value="16">16</MenuItem>
+                    <MenuItem value="17">17</MenuItem>
+                    <MenuItem value="18">18</MenuItem>
+                    <MenuItem value="19">19</MenuItem>
+                    <MenuItem value="20">20</MenuItem>
                 </Select>
               </FormControl>
-            </Grid> */}
+            </Grid>
           </Grid>
         </MuiPickersUtilsProvider>
       </MuiDialogContent>
