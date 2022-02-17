@@ -7,7 +7,7 @@ import ProfileOptions from "../components/ProfileOptions";
 
 import HomeButton from "../assets/images/home_button.svg";
 import NotificationButton from "../assets/images/notification_button.svg";
-import LogoButton from "../assets/images/icontribute_logo_wtext.svg";
+import LogoButton from "../assets/images/new_logo.svg";
 
 const StyledHeader = styled.header`
   position: sticky;
@@ -106,11 +106,11 @@ const Header = () => {
           handleOnClick("/");
         }}
       >
-       <ImageContainer>
-          <img src={LogoButton} alt="logoButton" height = '90%' width = '100%'/>
+        <ImageContainer>
+          <img src={LogoButton} alt="logoButton" height="90%" width="100%" />
         </ImageContainer>
       </HeaderText>
-      
+
       <Tools>
         <ToolButton
           onClick={() => {
