@@ -141,13 +141,13 @@ const dateFormator = (n: number) => {
   return `${month} ${day}, ${year}`;
 };
 
-const ShiftCard = ({ start, end, recurrence, i }: any) => {
+const ShiftCard = ({ start, end, limit, i }: any) => {
   return (
     <EditableCard>
       <H4>Shift{i + 1}</H4>
       <p>Start: {new Date(start).toDateString()}</p>
       <p>End: {new Date(end).toDateString()}</p>
-      <p>{recurrence}</p>
+      <p>Number of Participants: {(limit)}</p>
     </EditableCard>
   );
 };
@@ -311,9 +311,9 @@ const Summary = () => {
             <Map center={center}></Map>
           </ContentContainer>
         </Grid>
-        {shift.map(({ start, end, recurring }: any, i) => (
+        {shift.map(({ start, end, limit }: any, i) => (
           <Grid item xs={6} key={`shift-card-${i}`}>
-            <ShiftCard start={start} end={end} i={i} recurrence={recurring} />
+            <ShiftCard start={start} end={end} limit={limit} i={i} />
           </Grid>
         ))}
       </Grid>

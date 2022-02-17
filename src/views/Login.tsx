@@ -153,7 +153,7 @@ const Login = ({ setShowSignup, setShowForgotPassword }: any) => {
         </InputField>
         <LoginButton onClick={handleLogin}>Login</LoginButton>
         <p>
-          Dont’t have an account yet?{" "}
+          Don’t have an account yet?{" "}
           <a href="javascript:void(0);" onClick={handleSignup}>
             Sign up here!
           </a>
