@@ -28,7 +28,7 @@ jobs:
           node-version: ${{ matrix.node-version }}
 
       - name: Install dependencies for Webapp
-        run: npm install
+        run: rm -rf node_modules && rm -f package-lock.json && npm install
 
       - name: Build
         run: npm run build:dev
