@@ -8,6 +8,7 @@
     "@icontribute-founder/firebase-access": "git+ssh://git@github.com/icontribute-founder/firebase-wrapper.git#dist",
     "@material-ui/core": "^4.11.3",
     "@material-ui/icons": "^4.11.2",
+    "@material-ui/lab": "^4.0.0-alpha.60",
     "@material-ui/pickers": "^3.2.10",
     "@react-google-maps/api": "^2.5.0",
     "@reduxjs/toolkit": "^1.6.1",
