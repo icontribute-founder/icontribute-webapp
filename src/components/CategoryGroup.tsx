@@ -75,7 +75,7 @@ const CategoryGroup = () => {
     { category: EventCategory.Technology, svg: <TechnologyIcon /> },
     { category: EventCategory.Tutoring, svg: <TutoringIcon /> },
     { category: EventCategory.Animal, svg: <AnimalIcon /> },
-    { category: EventCategory.Other, svg: <ReligionIcon /> },
+    { category: EventCategory.Religion, svg: <ReligionIcon /> },
     { category: EventCategory.Other, svg: <OtherIcon /> },
   ];
   const { opportunity } = useSelector((state: RootState) => state.opportunity);
