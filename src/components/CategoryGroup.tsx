@@ -10,6 +10,9 @@ import HealthcareIcon from "./Svgs/HealthcareIcon";
 import EnvironmentIcon from "./Svgs/EnvironmentIcon";
 import TutoringIcon from "./Svgs/TutoringIcon";
 import AnimalIcon from "./Svgs/AnimalIcon";
+import ReligionIcon from "./Svgs/ReligionIcon";
+import TechnologyIcon from "./Svgs/TechnologyIcon";
+import FestivalIcon from "./Svgs/FestivalIcon";
 import OtherIcon from "./Svgs/OtherIcon";
 import { Grid } from "@material-ui/core";
 import { EventCategory } from "@icontribute-founder/firebase-access";
@@ -65,11 +68,14 @@ const CategoryGroup = () => {
     { category: EventCategory.Education, svg: <EducationIcon /> },
     { category: EventCategory.Charity, svg: <CharityIcon /> },
     { category: EventCategory.Art, svg: <ArtIcon /> },
+    { category: EventCategory.Festival, svg: <FestivalIcon /> },
     { category: EventCategory.Sports, svg: <SportsIcon /> },
     { category: EventCategory.Healthcare, svg: <HealthcareIcon /> },
     { category: EventCategory.Environment, svg: <EnvironmentIcon /> },
+    { category: EventCategory.Technology, svg: <TechnologyIcon /> },
     { category: EventCategory.Tutoring, svg: <TutoringIcon /> },
     { category: EventCategory.Animal, svg: <AnimalIcon /> },
+    { category: EventCategory.Religion, svg: <ReligionIcon /> },
     { category: EventCategory.Other, svg: <OtherIcon /> },
   ];
   const { opportunity } = useSelector((state: RootState) => state.opportunity);
@@ -85,11 +91,17 @@ const CategoryGroup = () => {
   };
 
   return (
-    <div style={{ width: "60%" }}>
-      <Grid container spacing={2}>
+    <div style={{ width: "70%" }}>
+      <Grid container spacing={4}>
         {categoriesSvgs.map(({ category, svg }) => {
           return (
-            <Grid item sm={4} key={`${category}-category-grid`}>
+            <Grid
+              container
+              spacing={1}
+              item
+              sm={3}
+              key={`${category}-category-grid`}
+            >
               <ClickableCategoryCard
                 selected={categories.includes(category)}
                 onClick={() => {
