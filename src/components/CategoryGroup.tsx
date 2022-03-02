@@ -68,14 +68,14 @@ const CategoryGroup = () => {
     { category: EventCategory.Education, svg: <EducationIcon /> },
     { category: EventCategory.Charity, svg: <CharityIcon /> },
     { category: EventCategory.Art, svg: <ArtIcon /> },
-    { category: EventCategory.Other, svg: <FestivalIcon /> },
+    { category: EventCategory.Festival, svg: <FestivalIcon /> },
     { category: EventCategory.Sports, svg: <SportsIcon /> },
     { category: EventCategory.Healthcare, svg: <HealthcareIcon /> },
     { category: EventCategory.Environment, svg: <EnvironmentIcon /> },
-    { category: EventCategory.Other, svg: <TechnologyIcon /> },
+    { category: EventCategory.Technology, svg: <TechnologyIcon /> },
     { category: EventCategory.Tutoring, svg: <TutoringIcon /> },
     { category: EventCategory.Animal, svg: <AnimalIcon /> },
-    { category: EventCategory.Other, svg: <ReligionIcon /> },
+    { category: EventCategory.Religion, svg: <ReligionIcon /> },
     { category: EventCategory.Other, svg: <OtherIcon /> },
   ];
   const { opportunity } = useSelector((state: RootState) => state.opportunity);
@@ -95,7 +95,13 @@ const CategoryGroup = () => {
       <Grid container spacing={4}>
         {categoriesSvgs.map(({ category, svg }) => {
           return (
-            <Grid container spacing={1}  item sm={3} key={`${category}-category-grid`}>
+            <Grid
+              container
+              spacing={1}
+              item
+              sm={3}
+              key={`${category}-category-grid`}
+            >
               <ClickableCategoryCard
                 selected={categories.includes(category)}
                 onClick={() => {
