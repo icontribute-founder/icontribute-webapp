@@ -25,6 +25,7 @@ const initialState: InitialState = {
   opportunity: {
     ...defaultEvent,
     coordinates: new GeoPoint(0, 0).toJSON(),
+    ongoing: false
   },
   loading: false,
   error: null,
