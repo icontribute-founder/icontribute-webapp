@@ -1,10 +1,4 @@
 import styled from "styled-components";
-import MuiAlert from "@material-ui/lab/Alert";
-
-function Alert(props: any) {
-return <MuiAlert elevation={6} 
-                 variant="filled" {...props} />;
-}
 
 const AlertComponent = ({ onClick, text }: any) => {
     return (

@@ -50,8 +50,6 @@ const Dashboard = () => {
       history.push("/opportunity/create");
       dispatch(reset());  
     } else {
-      console.log("User is not verified");
-      console.log("Because we are working with students, the iContribute team wants to make sure you are who you say you are. As an addition security measure, we would like to schedule a brief chat with your oganization throug the blue button below.");
       setShowAlert(true);
     }
   };
