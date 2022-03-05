@@ -92,7 +92,7 @@ const SignUp = ({ setShowSignup, setShowSignupConfirm }: any) => {
       signupDetails.email === "" ||
       signupDetails.postalCode === "" ||
       errorVisible === "block" ||
-      signupDetails.isRegisteredCRA === "" ||
+      //signupDetails.isRegisteredCRA === "" ||
       signupDetails.companyName === "" ||
       signupDetails.url === "" ||
       orgImage === null
@@ -273,7 +273,7 @@ const SignUp = ({ setShowSignup, setShowSignupConfirm }: any) => {
               value={confirmPassword}
             />
             <HeaderTwo>Organization details</HeaderTwo>
-            <Paragraph>
+            {/*<Paragraph>
               Are you registered as a charity or non-profit organization on the
               Canada Revenue Agency's website?
             </Paragraph>
@@ -302,7 +302,7 @@ const SignUp = ({ setShowSignup, setShowSignupConfirm }: any) => {
                   </Grid>
                 </Grid>
               </RadioGroup>
-            </div>
+            </div>*/}
             <InputField
               label="Organization Name"
               placeholder="ie. iContribute"
