@@ -4,6 +4,7 @@ import styled from "styled-components";
 import { Grid } from "@material-ui/core";
 import SmallEventCard from "../components/SmallEventCard";
 import Button from "../components/common/Button";
+import AlertComponent from "../components/Alert/AlertComponent";
 import MoreOptions from "../components/MoreOptions";
 import Map from "../components/Map";
 import EmptyDashboard from "./EmptyDashboard";
@@ -31,6 +32,7 @@ const Dashboard = () => {
   );
 
   const { userProfile } = useSelector((state: RootState) => state.user);
+  const [showAlert, setShowAlert] = useState(false);
 
   if (opportunities.length > 0) {
     dispatch(setExistingOpportunity(opportunities[indexSelected]));
@@ -42,10 +44,14 @@ const Dashboard = () => {
   });
 
   const handleOnClick = () => {
-    dispatch(setExistingOpportunity(null));
-    dispatch(setAction("create"));
-    history.push("/opportunity/create");
-    dispatch(reset());
+    if (userProfile.verified) {
+      dispatch(setExistingOpportunity(null));
+      dispatch(setAction("create"));
+      history.push("/opportunity/create");
+      dispatch(reset());  
+    } else {
+      setShowAlert(true);
+    }
   };
 
   const handleCardOnClick = (e: any, i: number, props: any) => {
@@ -143,10 +149,11 @@ const Dashboard = () => {
     <HeaderContainer>
       <LeftBox>
         <HeaderOne>Your organization dashboard</HeaderOne>
+        {showAlert ? <AlertComponent/> : 
         <HeaderFour>
           Here you can view the volunteer opportunities you've posted, edit
           them, or create a new one.
-        </HeaderFour>
+        </HeaderFour> }
       </LeftBox>
       <RightBox>
         <Button onClick={handleOnClick}>Create a new opportunity</Button>
