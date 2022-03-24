@@ -19,6 +19,8 @@ import Section from "./Section";
 import InputField from "../common/InputField";
 import { HostingType } from "@icontribute-founder/firebase-access";
 import styled from "styled-components";
+import Chip from "../Chip";
+import InputChip from "../InputChip";
 
 const ErrorMessage = styled.p`
   color: #d63334;
@@ -128,6 +130,15 @@ const OpportunityDetails = ({ setImageUploading, isHandleDisplayErrorMsg}: any) 
         fullWidth
         rows={8}
       />
+
+      <div>
+        Select and add requirements to help us find you the right candidates.
+        <br/>
+        <Chip title="Minimum Age" options={["12+","13+","14+","15+","16+","17+","18+","19+"]}></Chip>
+        <Chip title="Proof of Vaccination" options={[]}></Chip>
+        <Chip title="Driving License" options={[]}></Chip>
+        <InputChip></InputChip>
+      </div>
 
       <InputField
         label="What will the volunteer accomplish throughout the role *"
