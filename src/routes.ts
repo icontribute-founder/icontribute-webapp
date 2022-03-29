@@ -10,6 +10,7 @@ import Dashboard from "./views/Dashboard";
 import Profile from "./views/Profile";
 import ReviewOpportunity from "./views/ReviewOpportunity";
 import SignUpConfirm from "./views/SignUpConfirm";
+import HelpCentre from "./views/HelpCentre";
 
 export const routes = [
   {
@@ -60,4 +61,9 @@ export const routes = [
     exact: true,
     component: Dashboard,
   },
+  {
+    path: "/help-centre",
+    exact: true,
+    component: HelpCentre
+  }
 ];

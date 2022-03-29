@@ -32,7 +32,7 @@ const ProfileOptions = () => {
   };
 
   const handleHelpCentre = () => {
-    window.location.href = 'https://icontribute.community/#/'
+    history.push("/help-centre");
     handleClose();
   };
 

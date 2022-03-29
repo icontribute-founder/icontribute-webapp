@@ -1,0 +1,87 @@
+/* Style the accordion section */
+.accordion__section {
+  /* display: flex;
+  flex-direction: column; */
+    border-bottom: solid #cccccc 1px;
+    padding: 15px 0px;
+    width: 100%;
+    
+  }
+  
+  /* Style the buttons that are used to open and close the accordion panel */
+  .accordion {
+    /* padding: 8px 40px; */
+    background-color: rgba(255, 255, 255, 0);
+    cursor: pointer;
+    /* display: flex; */
+    align-items: center;
+    border: none;
+    outline: none;
+    width: 100%;
+  }
+  
+  .accordion:hover,
+  .accordion--active {
+    color: #026896;
+  }
+  
+  /* Style the accordion content title */
+  .accordion__title {
+    font-family: Source Sans Pro;
+    font-weight: 700;
+    text-align: left;
+    cursor: pointer;
+    font-size: 24px;
+    margin-top: 15px;
+    margin-bottom: 15px;
+  }
+  
+  /* Style the accordion chevron icon */
+  .accordion__icon {
+    margin-left: auto;
+    margin-right: 5px;
+    transition: transform 0.6s ease;
+    
+  }
+  
+  /* Style to rotate icon when state is active */
+  .rotate {
+    transform: rotate(-45deg);
+  }
+  
+  /* Style the accordion content panel. Note: hidden by default */
+  .accordion__content {
+    overflow: hidden;
+    transition: max-height 0.6s ease;
+    text-align: left;
+  }
+  
+  /* Style the accordion content text */
+  .accordion__text {
+    margin: 20px 0px;
+    padding: 10px 5px;
+    padding-top: 0px;
+    font-size: 21px;
+  }
+  
+  .accordion__text > div > *,
+  .accordion__text > span {
+    line-height: 1.6;
+    margin: 5px 0px;
+  }
+  
+  /* .FAQBlock-quote {
+    background: #f9f9f9;
+    border-left: 10px solid #ccc;
+    margin: 1.5em 10px;
+    padding: 0.5em 10px;
+    quotes: "\201C""\201D""\2018""\2019";
+  }
+  .FAQBlock-quote:before {
+    color: #ccc;
+    content: open-quote;
+    font-size: 4em;
+    line-height: 0.1em;
+    margin-right: 0.25em;
+    vertical-align: -0.4em;
+  } */
