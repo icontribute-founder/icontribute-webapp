@@ -4,15 +4,16 @@ import CheckIcon from "@material-ui/icons/Check";
 import { useState } from "react";
 
 interface Chip {
-  title: string;
+  label: string;
   options: any[];
+  onChange:any;
 }
 
-const Chip = ({ title, options }: Chip) => {
+const Chip = ({ label, options, onChange }: Chip) => {
   const [selectedOption, setSelectedOption] = useState("");
   const [isDropDownShown, setIsDropDownShown] = useState(false);
 
-  //FOR CHIP WITHOUT OPTIONS (dropdown list)
+  //FOR CHIP WITHOUT OPTIONS (dropdown list controller)
   const [isSelected, setIsSelected] = useState(false);
 
   //CLOSE ICON
@@ -20,8 +21,13 @@ const Chip = ({ title, options }: Chip) => {
     setSelectedOption("");
     setIsDropDownShown(false);
     setIsSelected(false);
+    if(options.length === 0){
+      onChange(false)
+      return
+    }
+    onChange("")
   };
-  const StyledCloseIcon = selectedOption ? (
+  const StyledCloseIcon = selectedOption || isSelected ? (
     <CloseIcon
       style={{
         display: "inline-block",
@@ -35,13 +41,13 @@ const Chip = ({ title, options }: Chip) => {
     ""
   );
 
-  //OPTIONS
+  //OPTIONS LIST IN DROP BOX
   const listOptions = options.map((option) => (
     <OptionBox
       isSelected={option == selectedOption}
       onClick={() => {
         setSelectedOption(option);
-        //SET VALUE (selectedOption) TO VARIABLE BASED ON TITLE OR PASS THE VARIABLE NAME IN DISPATCH HERE
+        onChange(option)
         
       }}
     >
@@ -54,17 +60,15 @@ const Chip = ({ title, options }: Chip) => {
     </OptionBox>
   ));
 
-  //TITLE
+  //CHIP LABEL
   const toggleDropdown = () => {
     setIsDropDownShown(isDropDownShown ? false : true);
     if(options.length===0){
-      setIsSelected(true);
-      //CUSTOME "123" FOR
-      setSelectedOption("123");
-      //SET VALUE (selectedOption) BASED ON TITLE OR PASS THE VARIABLE NAME IN DISPATCH HERE
+      setIsSelected(true)
+      onChange(true)
     }
   };
-  const Title = <span onClick={toggleDropdown}>{title}</span>;
+  const Title = <span onClick={toggleDropdown}>{label}</span>;
 
   return (
     <ChipContainer>
@@ -84,7 +88,7 @@ const Chip = ({ title, options }: Chip) => {
 
 const ChipContainer = styled.div`
   display: inline-block; 
-  margin: 0px 16px 0px 0px;
+  margin: 24px 16px 24px 0px;
 `
 
 const DropDownList = styled.div<{ isDropDownShown: boolean }>`
@@ -109,11 +113,10 @@ const OptionBox = styled.div<{ isSelected: boolean }>`
   background-color: ${(props) => (props.isSelected ? "#EDECFF" : "#FFFFFF")};
   cursor: pointer;
 `;
-
 const StyledChip = styled.div<{ selected: boolean }>`
   display: inline-block;
   background-color: ${(props) =>
-    props.selected ? "#FFBC3B" : "rgba(117, 122, 124, 0.16)"};
+    props.selected ? "#FFBC3B" : "#757A7C3D"};
   padding: 8px;
   border-radius: 8px;
   cursor: pointer;
