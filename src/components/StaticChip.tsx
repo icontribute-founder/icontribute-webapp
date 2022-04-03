@@ -19,7 +19,7 @@ const StaticChip = ({label}:StaticChip) => {
 
 const ChipContainer = styled.div`
   display: inline-block; 
-  margin: 24px 16px 24px 0px;
+  margin: 8px 16px 8px 0px;
 `
 
 const StyledChip = styled.div`
@@ -27,7 +27,6 @@ const StyledChip = styled.div`
   background-color: #FFBC3B;
   padding: 8px;
   border-radius: 8px;
-  cursor: pointer;
 `;
 
 export default StaticChip;

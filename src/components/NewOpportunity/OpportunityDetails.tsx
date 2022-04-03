@@ -3,9 +3,12 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   updateDescription,
+  updateDriverLicense,
   updateImage,
   updateLocation,
+  updateMiniumAge,
   updateNotes,
+  updateProofOfVaccination,
   updateRequirements,
   updateRole,
   updateTitle,
@@ -79,13 +82,13 @@ const OpportunityDetails = ({ setImageUploading, isHandleDisplayErrorMsg}: any) 
     dispatch(updateNotes(e.target.value));
   };
   const handleMinimumAgeOnChange = (value:any) => {
-    console.log(value);
+    dispatch(updateMiniumAge(value ? value.replace(/[^0-9]/g,'') : 0));
   }
   const handleProofOfVaccinationOnChange = (value:any) => {
-    console.log(value);
+    dispatch(updateProofOfVaccination(value));
   }
   const handleDriversLicense = (value:any) => {
-    console.log(value);
+    dispatch(updateDriverLicense(value));
   }
 
   const content = (
@@ -146,7 +149,6 @@ const OpportunityDetails = ({ setImageUploading, isHandleDisplayErrorMsg}: any) 
         <Chip label="Minimum Age" options={["12+","13+","14+","15+","16+","17+","18+","19+"]} onChange={handleMinimumAgeOnChange}></Chip>
         <Chip label="Proof of Vaccination" options={[]} onChange={handleProofOfVaccinationOnChange}></Chip>
         <Chip label="Driving License" options={[]} onChange={handleDriversLicense}></Chip>
-        <StaticChip label="asd"></StaticChip>
       </div>
 
       <InputField

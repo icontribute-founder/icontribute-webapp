@@ -11,6 +11,7 @@ import { useEffect } from "react";
 import axios from "axios";
 import { updateCoordinates } from "../features/opportunity";
 import LocationIcon from "./Svgs/LocationIcon";
+import StaticChip from "./StaticChip";
 
 const Title = styled.h3`
   font-weight: bold;
@@ -168,6 +169,9 @@ const Summary = () => {
       categories,
       role,
       requirements,
+      minimumAge,
+      proofOfVaccination,
+      driversLicense,
       notes,
     },
   } = useSelector((state: RootState) => state.opportunity);
@@ -281,6 +285,9 @@ const Summary = () => {
         <Grid item xs={12}>
           <H4>Requirements</H4>
           <ContentContainer>
+            {proofOfVaccination ? <StaticChip label="Proof of Vaccination"></StaticChip> : "" }
+            {driversLicense ? <StaticChip label="Driving License"></StaticChip> : "" }
+            {minimumAge ? <StaticChip label={"Minimum Age: " + minimumAge +"+"} ></StaticChip> : "" }
             <ShowMoreText lines={3} more="Show more" less="Show less">
               {requirements}
             </ShowMoreText>

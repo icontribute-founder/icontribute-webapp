@@ -78,7 +78,7 @@ const Chip = ({ label, options, onChange }: Chip) => {
         {StyledCloseIcon}
       </StyledChip>
 
-      <DropDownList isDropDownShown={isDropDownShown}>
+      <DropDownList isDropDownShown={isDropDownShown} onMouseLeave={() => setIsDropDownShown(false)}>
         {listOptions}
       </DropDownList>
 
