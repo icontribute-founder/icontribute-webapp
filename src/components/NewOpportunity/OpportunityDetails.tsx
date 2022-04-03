@@ -141,18 +141,17 @@ const OpportunityDetails = ({ setImageUploading, isHandleDisplayErrorMsg}: any) 
         <Chip label="Driver's License" options={[]} onChange={handleDriversLicense} value={driversLicense}></Chip>
       </RequirementsContainer>
 
-      {/*<InputField
-        label="Other Requirements *"
+      <InputField
+        label="Other Requirements"
         type="textarea"
         name="opportunity-details-requirements"
         id="opportunity-details-requirements"
         onChange={handleRequirementsOnChange}
         value={requirements}
-        errorMessage={isHandleDisplayErrorMsg && !requirements ?"Please enter the requirements of the opportunity":""}
         placeholder="Enter the necessary requirements"
         fullWidth
         rows={8}
-      />*/}
+      />
 
       <InputField
         label="Role *"

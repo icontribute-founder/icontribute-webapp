@@ -124,7 +124,7 @@ const Opportunity = () => {
       if (scrollIntoItem) {
         scrollIntoItem.scrollIntoView();
       }
-    } else if (!eventName || !address || !requirements || !role || !description) {
+    } else if (!eventName || !address || !role || !description) {
       const scrollIntoItem = document.getElementById(
         "section-opportunity-details"
       );
