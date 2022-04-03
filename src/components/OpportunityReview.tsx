@@ -286,7 +286,7 @@ const Summary = () => {
           <H4>Requirements</H4>
           <ContentContainer>
             {proofOfVaccination ? <StaticChip label="Proof of Vaccination"></StaticChip> : "" }
-            {driversLicense ? <StaticChip label="Driving License"></StaticChip> : "" }
+            {driversLicense ? <StaticChip label="Driver's License"></StaticChip> : "" }
             {minimumAge ? <StaticChip label={"Minimum Age: " + minimumAge +"+"} ></StaticChip> : "" }
             <ShowMoreText lines={3} more="Show more" less="Show less">
               {requirements}

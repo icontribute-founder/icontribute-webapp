@@ -133,8 +133,16 @@ const OpportunityDetails = ({ setImageUploading, isHandleDisplayErrorMsg}: any) 
         rows={8}
       />
 
-      <InputField
-        label="Mandatory Requirements *"
+      <RequirementsContainer>
+        Select and add requirements to help us find you the right candidates.
+        <br/>
+        <Chip label="Minimum Age" options={["13+","14+","15+","16+","17+","18+","19+"]} onChange={handleMinimumAgeOnChange} value={minimumAge?minimumAge+"+" : ""}></Chip>
+        <Chip label="Proof of Vaccination" options={[]} onChange={handleProofOfVaccinationOnChange} value={proofOfVaccination}></Chip>
+        <Chip label="Driver's License" options={[]} onChange={handleDriversLicense} value={driversLicense}></Chip>
+      </RequirementsContainer>
+
+      {/*<InputField
+        label="Other Requirements *"
         type="textarea"
         name="opportunity-details-requirements"
         id="opportunity-details-requirements"
@@ -144,37 +152,29 @@ const OpportunityDetails = ({ setImageUploading, isHandleDisplayErrorMsg}: any) 
         placeholder="Enter the necessary requirements"
         fullWidth
         rows={8}
-      />
-
-      <div>
-        Select and add requirements to help us find you the right candidates.
-        <br/>
-        <Chip label="Minimum Age" options={["12+","13+","14+","15+","16+","17+","18+","19+"]} onChange={handleMinimumAgeOnChange} value={minimumAge?minimumAge+"+" : ""}></Chip>
-        <Chip label="Proof of Vaccination" options={[]} onChange={handleProofOfVaccinationOnChange} value={proofOfVaccination}></Chip>
-        <Chip label="Driving License" options={[]} onChange={handleDriversLicense} value={driversLicense}></Chip>
-      </div>
+      />*/}
 
       <InputField
-        label="What will the volunteer accomplish throughout the role *"
+        label="Role *"
         type="textarea"
         name="opportunity-details-role"
         id="opportunity-details-role"
         onChange={handleRoleOnChange}
         value={role}
         errorMessage={isHandleDisplayErrorMsg && !role ? "Please enter the primary duties and responsibilities in this opportunity":""}
-        placeholder="Enter the possible tasks given"
+        placeholder="Enter the position's primary duties and responsibilities"
         fullWidth
         rows={8}
       />
 
       <InputField
-        label="Other things to note"
+        label="Additional notes"
         type="textarea"
         name="opportunity-details-notes"
         id="opportunity-details-notes"
         onChange={handleNotesOnChange}
         value={notes}
-        placeholder="Enter anything that volunteers should know"
+        placeholder="Enter any additional notes that volunteers should know"
         fullWidth
         rows={8}
       />
@@ -213,5 +213,9 @@ const OpportunityDetails = ({ setImageUploading, isHandleDisplayErrorMsg}: any) 
     />
   );
 };
+
+const RequirementsContainer = styled.div`
+  margin-bottom: -2%;
+`;
 
 export default OpportunityDetails;
