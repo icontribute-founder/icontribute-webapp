@@ -149,7 +149,7 @@ const OpportunityDetails = ({ setImageUploading, isHandleDisplayErrorMsg}: any) 
       <div>
         Select and add requirements to help us find you the right candidates.
         <br/>
-        <Chip label="Minimum Age" options={["12+","13+","14+","15+","16+","17+","18+","19+"]} onChange={handleMinimumAgeOnChange} value={minimumAge+"+"}></Chip>
+        <Chip label="Minimum Age" options={["12+","13+","14+","15+","16+","17+","18+","19+"]} onChange={handleMinimumAgeOnChange} value={minimumAge?minimumAge+"+" : ""}></Chip>
         <Chip label="Proof of Vaccination" options={[]} onChange={handleProofOfVaccinationOnChange} value={proofOfVaccination}></Chip>
         <Chip label="Driving License" options={[]} onChange={handleDriversLicense} value={driversLicense}></Chip>
       </div>
