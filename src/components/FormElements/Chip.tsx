@@ -7,12 +7,12 @@ interface Chip {
   label: string;
   options: any[];
   onChange:any;
+  value: any;
 }
 
-const Chip = ({ label, options, onChange }: Chip) => {
-  const [selectedOption, setSelectedOption] = useState("");
+const Chip = ({ label, options, onChange, value }: Chip) => {
+  const [selectedOption, setSelectedOption] = useState(value);
   const [isDropDownShown, setIsDropDownShown] = useState(false);
-
   //FOR CHIP WITHOUT OPTIONS (dropdown list controller)
   const [isSelected, setIsSelected] = useState(false);
 
