@@ -102,6 +102,15 @@ export const opportunitySlice = createSlice({
     updateRequirements: (state, action: PayloadAction<string>) => {
       state.opportunity.requirements = action.payload;
     },
+    updateMiniumAge: (state, action: PayloadAction<number>) => {
+      state.opportunity.minimumAge = action.payload;
+    },
+    updateProofOfVaccination: (state, action: PayloadAction<boolean>) => {
+      state.opportunity.proofOfVaccination = action.payload;
+    },
+    updateDriverLicense: (state, action: PayloadAction<boolean>) => {
+      state.opportunity.driversLicense = action.payload;
+    },
     updateRole: (state, action: PayloadAction<string>) => {
       state.opportunity.role = action.payload;
     },
@@ -149,6 +158,9 @@ export const opportunitySlice = createSlice({
         address,
         description,
         requirements,
+        minimumAge,
+        proofOfVaccination,
+        driversLicense,
         role,
         notes,
         virtual,
@@ -167,6 +179,9 @@ export const opportunitySlice = createSlice({
       state.opportunity.coordinates = coordinates;
       state.opportunity.description = description;
       state.opportunity.requirements = requirements;
+      state.opportunity.minimumAge = minimumAge;
+      state.opportunity.proofOfVaccination = proofOfVaccination;
+      state.opportunity.driversLicense = driversLicense;
       state.opportunity.role = role;
       state.opportunity.notes = notes;
       state.opportunity.virtual = virtual;
@@ -208,6 +223,9 @@ export const {
   updateTitle,
   updateDescription,
   updateRequirements,
+  updateMiniumAge,
+  updateProofOfVaccination,
+  updateDriverLicense,
   updateRole,
   updateNotes,
   updateLocation,

@@ -22,6 +22,7 @@ import {
 import { HostingType } from "@icontribute-founder/firebase-access";
 import loadinggif from "../assets/images/loading.gif"
 import Demo_Photo2 from "../assets/images/Demo_Photo2.png"
+import StaticChip from "../components/StaticChip";
 
 const Dashboard = () => {
   const history = useHistory();
@@ -127,6 +128,9 @@ const Dashboard = () => {
     companyName,
     description,
     requirements,
+    proofOfVaccination,
+    driversLicense,
+    minimumAge,
     role,
     notes,
     address,
@@ -199,6 +203,14 @@ const Dashboard = () => {
         </Grid>
         <hr />
       </TextGroup>
+      
+      <TextGroup style={{ paddingTop: "0px" }}>
+        <HeaderTwo>Mandatory Requirements</HeaderTwo>
+        {proofOfVaccination ? <StaticChip label="Proof of Vaccination"></StaticChip> : "" }
+        {driversLicense ? <StaticChip label="Driving License"></StaticChip> : "" }
+        {minimumAge ? <StaticChip label={"Minimum Age: " + minimumAge +"+"} ></StaticChip> : "" }
+        <Paragraph>{requirements}</Paragraph>
+      </TextGroup>
 
       <TextGroup style={{ paddingTop: "0px" }}>
         <HeaderTwo>Application details</HeaderTwo>
@@ -218,11 +230,6 @@ const Dashboard = () => {
       <TextGroup style={{ paddingTop: "0px" }}>
         <HeaderTwo>Opportunity details</HeaderTwo>
         <Paragraph>{description}</Paragraph>
-      </TextGroup>
-
-      <TextGroup style={{ paddingTop: "0px" }}>
-        <HeaderTwo>Requirements</HeaderTwo>
-        <Paragraph>{requirements}</Paragraph>
       </TextGroup>
 
       <TextGroup style={{ paddingTop: "0px" }}>

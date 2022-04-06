@@ -3,9 +3,12 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   updateDescription,
+  updateDriverLicense,
   updateImage,
   updateLocation,
+  updateMiniumAge,
   updateNotes,
+  updateProofOfVaccination,
   updateRequirements,
   updateRole,
   updateTitle,
@@ -19,6 +22,8 @@ import Section from "./Section";
 import InputField from "../common/InputField";
 import { HostingType } from "@icontribute-founder/firebase-access";
 import styled from "styled-components";
+import Chip from "../FormElements/Chip";
+import StaticChip from "../StaticChip";
 
 const ErrorMessage = styled.p`
   color: #d63334;
@@ -34,6 +39,9 @@ const OpportunityDetails = ({ setImageUploading, isHandleDisplayErrorMsg}: any) 
       address,
       description,
       requirements,
+      minimumAge,
+      proofOfVaccination,
+      driversLicense,
       role,
       notes,
       shift,
@@ -76,6 +84,15 @@ const OpportunityDetails = ({ setImageUploading, isHandleDisplayErrorMsg}: any) 
   const handleNotesOnChange = (e: any) => {
     dispatch(updateNotes(e.target.value));
   };
+  const handleMinimumAgeOnChange = (value:any) => {
+    dispatch(updateMiniumAge(value ? value.replace(/[^0-9]/g,'') : 0));
+  }
+  const handleProofOfVaccinationOnChange = (value:any) => {
+    dispatch(updateProofOfVaccination(value));
+  }
+  const handleDriversLicense = (value:any) => {
+    dispatch(updateDriverLicense(value));
+  }
 
   const content = (
     <>
@@ -116,40 +133,47 @@ const OpportunityDetails = ({ setImageUploading, isHandleDisplayErrorMsg}: any) 
         rows={8}
       />
 
+      <RequirementsContainer>
+        Select and add any mandatory requirements for this opportunity.
+        <br/>
+        <Chip label="Minimum Age" options={["13+","14+","15+","16+","17+","18+","19+"]} onChange={handleMinimumAgeOnChange} value={minimumAge?minimumAge+"+" : ""}></Chip>
+        <Chip label="Proof of Vaccination" options={[]} onChange={handleProofOfVaccinationOnChange} value={proofOfVaccination}></Chip>
+        <Chip label="Driver's License" options={[]} onChange={handleDriversLicense} value={driversLicense}></Chip>
+      </RequirementsContainer>
+
       <InputField
-        label="Mandatory Requirements *"
+        label="Other Requirements"
         type="textarea"
         name="opportunity-details-requirements"
         id="opportunity-details-requirements"
         onChange={handleRequirementsOnChange}
         value={requirements}
-        errorMessage={isHandleDisplayErrorMsg && !requirements ?"Please enter the requirements of the opportunity":""}
         placeholder="Enter the necessary requirements"
         fullWidth
         rows={8}
       />
 
       <InputField
-        label="What will the volunteer accomplish throughout the role *"
+        label="Role *"
         type="textarea"
         name="opportunity-details-role"
         id="opportunity-details-role"
         onChange={handleRoleOnChange}
         value={role}
         errorMessage={isHandleDisplayErrorMsg && !role ? "Please enter the primary duties and responsibilities in this opportunity":""}
-        placeholder="Enter the possible tasks given"
+        placeholder="Enter the position's primary duties and responsibilities"
         fullWidth
         rows={8}
       />
 
       <InputField
-        label="Other things to note"
+        label="Additional notes"
         type="textarea"
         name="opportunity-details-notes"
         id="opportunity-details-notes"
         onChange={handleNotesOnChange}
         value={notes}
-        placeholder="Enter anything that volunteers should know"
+        placeholder="Enter any additional notes that volunteers should know"
         fullWidth
         rows={8}
       />
@@ -188,5 +212,9 @@ const OpportunityDetails = ({ setImageUploading, isHandleDisplayErrorMsg}: any) 
     />
   );
 };
+
+const RequirementsContainer = styled.div`
+  margin-bottom: -2%;
+`;
 
 export default OpportunityDetails;
