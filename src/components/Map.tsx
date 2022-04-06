@@ -23,7 +23,6 @@ const Map = ({ center }: MapProps) => {
     setMap(null);
   }, []);
 
-  console.log("This is center:", center);
   return isLoaded ? (
     <GoogleMap
       mapContainerStyle={{

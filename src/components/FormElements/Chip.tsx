@@ -28,15 +28,16 @@ const Chip = ({ label, options, onChange, value }: Chip) => {
     onChange("")
   };
   const StyledCloseIcon = selectedOption || isSelected ? (
-    <CloseIcon
-      style={{
-        display: "inline-block",
-        verticalAlign: "middle",
-        fontSize: 15,
-        marginLeft: 4.46,
-      }}
-      onClick={closeIconClick}
-    ></CloseIcon>
+      <CloseIcon
+        style={{
+          display: "inline-block",
+          verticalAlign: "middle",
+          fontSize: 15,
+          marginLeft: 4.46,
+          cursor: 'pointer'
+        }}
+        onClick={closeIconClick}
+      ></CloseIcon>
   ) : (
     ""
   );
@@ -48,7 +49,7 @@ const Chip = ({ label, options, onChange, value }: Chip) => {
       onClick={() => {
         setSelectedOption(option);
         onChange(option)
-        
+ 
       }}
     >
       {option == selectedOption ? (
@@ -119,7 +120,8 @@ const StyledChip = styled.div<{ selected: boolean }>`
     props.selected ? "#FFBC3B" : "#757A7C3D"};
   padding: 8px;
   border-radius: 8px;
-  cursor: pointer;
+  cursor: ${(props) =>
+    props.selected ? "initial" : "pointer"};
 `;
 
 export default Chip;
