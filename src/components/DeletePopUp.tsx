@@ -30,10 +30,20 @@ const DeletePopUp = ({ handleCancel }: DeletePopUpProps) => {
   };
 
   const handleDeleteOpportunityButtonOnClick = () => {
+    const deletedEventId = opportunities[indexSelected].eventID;
+
+    const newEventIdsAfterDelete = [];
+    for (const op of opportunities){
+      if(op.eventID!==deletedEventId){
+        newEventIdsAfterDelete.push(op.eventID);
+      }
+    }
+
     dispatch(
       deleteOpportunity({
         userProfile,
-        eventId: opportunities[indexSelected].eventID,
+        eventId: deletedEventId,
+        newEventIdsAfterDelete
       })
     );
 
