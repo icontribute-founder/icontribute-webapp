@@ -37,7 +37,7 @@ const ProfileOptions = () => {
   };
 
   const handleAbout = () => {
-    window.location.href = 'https://icontribute.community/#/'
+    window.open ('https://icontribute.community/#/');
     handleClose();
   };
 
