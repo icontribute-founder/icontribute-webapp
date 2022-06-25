@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useHistory } from "react-router";
 import styled from "styled-components";
-import { Grid } from "@material-ui/core";
+import { Grid, MenuItem, Select } from "@material-ui/core";
 import SmallEventCard from "../components/SmallEventCard";
 import Button from "../components/common/Button";
 import AlertComponent from "../components/Alert/AlertComponent";
@@ -20,9 +20,10 @@ import {
   setExistingOpportunity,
 } from "../features/opportunity";
 import { HostingType } from "@icontribute-founder/firebase-access";
-import loadinggif from "../assets/images/loading.gif"
-import Demo_Photo2 from "../assets/images/Demo_Photo2.png"
+import loadinggif from "../assets/images/loading.gif";
+import Demo_Photo2 from "../assets/images/Demo_Photo2.png";
 import StaticChip from "../components/StaticChip";
+import { nextTick } from "process";
 
 const Dashboard = () => {
   const history = useHistory();
@@ -34,6 +35,8 @@ const Dashboard = () => {
 
   const { userProfile } = useSelector((state: RootState) => state.user);
   const [showAlert, setShowAlert] = useState(false);
+  const [opportunitiesFilter, setOpportunitiesFilter] = useState("upcoming");
+  const [hideOpDetails, setHideOpDetails] = useState(true);
 
   if (opportunities.length > 0) {
     dispatch(setExistingOpportunity(opportunities[indexSelected]));
@@ -49,13 +52,14 @@ const Dashboard = () => {
       dispatch(setExistingOpportunity(null));
       dispatch(setAction("create"));
       history.push("/opportunity/create");
-      dispatch(reset());  
+      dispatch(reset());
     } else {
       setShowAlert(true);
     }
   };
 
   const handleCardOnClick = (e: any, i: number, props: any) => {
+    setHideOpDetails(false);
     dispatch(selectOpportunity(i));
     setCenter({
       lat: props.coordinates.latitude,
@@ -107,21 +111,38 @@ const Dashboard = () => {
   const formatDate = (date: Date) =>
     `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`;
 
-  const ListEventCardComponents = opportunities.map((props: any, i: number) => {
-    const { eventName, eventImage, dateCreated, description, eventID } = props;
-    return (
-      <SmallEventCard
-        key={eventID}
-        eventImage={eventImage}
-        eventName={eventName}
-        date={new Date(dateCreated)}
-        description={description}
-        eventID={eventID}
-        onClick={(e: any) => handleCardOnClick(e, i, props)}
-        selected={i === indexSelected}
-      />
-    );
-  });
+  const getFilteredOpportunities = (filterOpt: string): any => {
+    return opportunities.map((props: any, i: number) => {
+      const { eventName, eventImage, dateCreated, description, eventID } =
+        props;
+      if (
+        filterOpt == "upcoming" &&
+        Date.parse(new Date(dateCreated).toLocaleDateString()) <
+          Date.parse(new Date(Date.now()).toLocaleDateString())
+      ) {
+        return "";
+      } else if (
+        filterOpt == "past" &&
+        Date.parse(new Date(dateCreated).toLocaleDateString()) >=
+          Date.parse(new Date(Date.now()).toLocaleDateString())
+      ) {
+        return "";
+      } else {
+        return (
+          <SmallEventCard
+            key={eventID}
+            eventImage={eventImage}
+            eventName={eventName}
+            date={new Date(dateCreated)}
+            description={description}
+            eventID={eventID}
+            onClick={(e: any) => handleCardOnClick(e, i, props)}
+            selected={i === indexSelected}
+          />
+        );
+      }
+    });
+  };
 
   const {
     eventName,
@@ -149,15 +170,26 @@ const Dashboard = () => {
     eventImageUrl = eventImage;
   }
 
+  const handleFilterChange = (event: any) => {
+    setOpportunitiesFilter(event.target.value);
+  };
+
   const header = (
     <HeaderContainer>
       <LeftBox>
         <HeaderOne>Your organization dashboard</HeaderOne>
-        {showAlert ? <AlertComponent/> : 
-        <HeaderFour>
-          Here you can view the volunteer opportunities you've posted, edit
-          them, or create a new one.
-        </HeaderFour> }
+        {showAlert ? (
+          <AlertComponent />
+        ) : (
+          <HeaderFour>
+            Here you can view the volunteer opportunities you've posted, edit
+            them, or create a new one.
+          </HeaderFour>
+        )}
+        <Select value={opportunitiesFilter} onChange={handleFilterChange}>
+          <MenuItem value="upcoming">Upcoming</MenuItem>
+          <MenuItem value="past">Past</MenuItem>
+        </Select>
       </LeftBox>
       <RightBox>
         <Button onClick={handleOnClick}>Create a new opportunity</Button>
@@ -203,12 +235,24 @@ const Dashboard = () => {
         </Grid>
         <hr />
       </TextGroup>
-      
+
       <TextGroup style={{ paddingTop: "0px" }}>
         <HeaderTwo>Mandatory Requirements</HeaderTwo>
-        {proofOfVaccination ? <StaticChip label="Proof of Vaccination"></StaticChip> : "" }
-        {driversLicense ? <StaticChip label="Driving License"></StaticChip> : "" }
-        {minimumAge ? <StaticChip label={"Minimum Age: " + minimumAge +"+"} ></StaticChip> : "" }
+        {proofOfVaccination ? (
+          <StaticChip label="Proof of Vaccination"></StaticChip>
+        ) : (
+          ""
+        )}
+        {driversLicense ? (
+          <StaticChip label="Driving License"></StaticChip>
+        ) : (
+          ""
+        )}
+        {minimumAge ? (
+          <StaticChip label={"Minimum Age: " + minimumAge + "+"}></StaticChip>
+        ) : (
+          ""
+        )}
         <Paragraph>{requirements}</Paragraph>
       </TextGroup>
 
@@ -242,7 +286,7 @@ const Dashboard = () => {
           <HeaderTwo>Shift {i + 1}</HeaderTwo>
           <Paragraph>Start: {formatDateTime(new Date(s.start))}</Paragraph>
           <Paragraph>End: {formatDateTime(new Date(s.end))}</Paragraph>
-          <Paragraph>Number of Participants: {(s.limit)}</Paragraph>
+          <Paragraph>Number of Participants: {s.limit}</Paragraph>
           {/*s.repeating ? (
             <Paragraph>Repeats</Paragraph>
           ) : (
@@ -274,11 +318,13 @@ const Dashboard = () => {
       <DashboardContainer>
         <Grid container style={gridStyle}>
           <Grid item xs={5} style={gridStyle}>
-            <EventsListContainer>{ListEventCardComponents}</EventsListContainer>
+            <EventsListContainer>
+              {getFilteredOpportunities(opportunitiesFilter).reverse()}
+            </EventsListContainer>
           </Grid>
 
           <Grid item xs={7} style={gridStyle}>
-            {selectedOpportunityView}
+            {hideOpDetails ? "" : selectedOpportunityView}
           </Grid>
         </Grid>
       </DashboardContainer>
@@ -287,7 +333,7 @@ const Dashboard = () => {
 };
 
 const gridStyle = {
-  height: "100%"
+  height: "100%",
 };
 
 const HeaderContainer = styled.div`
@@ -298,6 +344,7 @@ const HeaderContainer = styled.div`
   justify-content: space-between;
   border-bottom: 2px solid silver;
   margin-top: -1%;
+  padding-bottom: 5px;
   flex-direction: row;
   width: 1;
   height: 0.3;
@@ -332,8 +379,9 @@ const HeaderOne = styled.h1`
 
 const HeaderFour = styled.h3`
   font-family: Source Sans Pro;
-  text-align: left";
-  margin-bottom: 5px;
+  text-align: left;
+  margin-top: 0px;
+  margin-bottom: 10px;
 `;
 
 const SelectedOpportunity = styled.div`
@@ -370,7 +418,7 @@ const OrganizationDashboardPage = styled.div`
 `;
 
 const StyledImage = styled.img`
-  display:block;
+  display: block;
   margin: auto;
   margin-top: 12px;
   height: 300px;
